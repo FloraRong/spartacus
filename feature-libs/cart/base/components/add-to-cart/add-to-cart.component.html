@@ -26,6 +26,16 @@
     ></ng-template>
   </ng-container>
 
+  <div id="tryOnContainer" class="try-on-container" *ngIf="isDetailsPage">
+    <label class="try-on-start-info"
+      >Want to see how it looks on your body?</label
+    >
+    <img class="try-on-start-icon" src="assets/icons/joule.svg" />
+    <button (click)="showTryOnModal()" type="button" class="try-on-start-btn">
+      <label class="try-on-start-text">Visual Try On</label>
+    </button>
+  </div>
+
   <button
     *ngIf="hasStock"
     [ngClass]="

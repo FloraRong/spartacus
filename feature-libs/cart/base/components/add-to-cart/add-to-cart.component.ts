@@ -15,6 +15,7 @@ import {
   Optional,
 } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   ActiveCartFacade,
   CartItemComponentOptions,
@@ -31,10 +32,13 @@ import {
   CmsComponentData,
   CurrentProductService,
   ICON_TYPE,
+  LaunchDialogService,
+  LAUNCH_CALLER,
   ProductListItemContext,
 } from '@spartacus/storefront';
 import { Observable, Subscription } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
+import { ShowTryOnModalEvent } from './try-on.model';
 
 @Component({
   selector: 'cx-add-to-cart',
@@ -53,6 +57,8 @@ export class AddToCartComponent implements OnInit, OnDestroy {
   @Input() product: Product;
 
   maxQuantity: number;
+
+  isDetailsPage: boolean = false;
 
   hasStock: boolean = false;
   inventoryThreshold: boolean = false;
@@ -80,6 +86,8 @@ export class AddToCartComponent implements OnInit, OnDestroy {
     protected activeCartService: ActiveCartFacade,
     protected component: CmsComponentData<CmsAddToCartComponent>,
     protected eventService: EventService,
+    protected activatedRoute: ActivatedRoute,
+    protected launchDialogService: LaunchDialogService,
     @Optional() protected productListItemContext?: ProductListItemContext
   ) {}
 
@@ -106,6 +114,13 @@ export class AddToCartComponent implements OnInit, OnDestroy {
           this.cd.markForCheck();
         });
     }
+    this.activatedRoute.url.subscribe((urlSegments) => {
+      this.isDetailsPage = urlSegments[0].path.indexOf('product') > -1;
+    });
+
+    this.eventService.get(ShowTryOnModalEvent).subscribe((event) => {
+      this.openModal(event);
+    });
   }
 
   protected setStockInfo(product: Product): void {
@@ -145,6 +160,29 @@ export class AddToCartComponent implements OnInit, OnDestroy {
 
   updateCount(value: number): void {
     this.quantity = value;
+  }
+
+  showTryOnModal(): void {
+    const event = new ShowTryOnModalEvent();
+    event.productCode = this.productCode;
+    this.eventService.dispatch(event);
+  }
+
+  protected openModal(event: ShowTryOnModalEvent): void {
+    const data = {
+      productCode: event.productCode,
+    };
+
+    const dialog = this.launchDialogService.openDialog(
+      LAUNCH_CALLER.SHOW_TRY_ON,
+      undefined,
+      undefined,
+      data
+    );
+
+    if (dialog) {
+      dialog.pipe(take(1)).subscribe();
+    }
   }
 
   addToCart() {

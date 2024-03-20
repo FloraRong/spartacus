@@ -17,6 +17,7 @@ import { CartSharedModule } from './cart-shared/cart-shared.module';
 import { CartTotalsModule } from './cart-totals/cart-totals.module';
 import { ActiveCartOrderEntriesContext } from './page-context/active-cart-order-entries.context';
 import { SaveForLaterModule } from './save-for-later/save-for-later.module';
+import { TryOnDialogModule } from './try-on-dialog/try-on-dialog.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { SaveForLaterModule } from './save-for-later/save-for-later.module';
     CartSharedModule,
     SaveForLaterModule,
     ClearCartModule,
+    TryOnDialogModule,
     OutletModule.forChild(),
   ],
   exports: [

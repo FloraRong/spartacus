@@ -6,6 +6,7 @@
 
 export * from './abstract-order-context/index';
 export * from './added-to-cart-dialog/index';
+export * from './try-on-dialog/index';
 export * from './cart-base-components.module';
 export * from './cart-coupon/index';
 export * from './cart-details/cart-details.component';
