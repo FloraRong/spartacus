@@ -9,6 +9,7 @@ import { FeatureConfigService, Product, ProductScope } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { CurrentProductService } from '../current-product.service';
 import { ProductDetailOutlets } from '../product-outlets.model';
+import { ModalService } from './_service';
 
 @Component({
   selector: 'cx-product-summary',
@@ -19,6 +20,7 @@ export class ProductSummaryComponent {
   private featureConfig = inject(FeatureConfigService);
 
   outlets = ProductDetailOutlets;
+  bodyText = 'This text can be updated in modal 1';
 
   product$: Observable<Product | null> = this.getProduct();
 
@@ -30,5 +32,8 @@ export class ProductSummaryComponent {
     return this.currentProductService.getProduct(productScopes);
   }
 
-  constructor(protected currentProductService: CurrentProductService) {}
+  constructor(protected currentProductService: CurrentProductService, protected modalService: ModalService) {}
+  
+  changeLayout(): void {}
+
 }

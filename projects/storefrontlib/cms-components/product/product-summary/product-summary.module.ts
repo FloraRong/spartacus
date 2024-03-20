@@ -16,8 +16,11 @@ import {
 import { OutletModule } from '../../../cms-structure/outlet/outlet.module';
 import { ProductSummaryComponent } from './product-summary.component';
 import { PromotionsModule } from '../../misc/promotions/promotions.module';
+import { FormsModule } from '@angular/forms';
+import { ModalComponent } from './_components';
 
 @NgModule({
+  imports: [CommonModule, OutletModule, I18nModule],
   providers: [
     provideDefaultConfig(<CmsConfig | FeaturesConfig>{
       cmsComponents: {
@@ -30,7 +33,7 @@ import { PromotionsModule } from '../../misc/promotions/promotions.module';
       },
     }),
   ],
-  declarations: [ProductSummaryComponent],
+  declarations: [ProductSummaryComponent,ModalComponent],
   exports: [ProductSummaryComponent],
   imports: [
     CommonModule,
