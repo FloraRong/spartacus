@@ -1,17 +1,30 @@
 <div class="try-on-dialog-container">
   <div class="header">
     <label class="title">Visual Try On</label>
-    <button (click)="closeModal()" class="close-btn">x</button>
+    <button class="close-btn">x</button>
   </div>
 
   <div class="content-container">
     <div class="content-block">
       <div class="title">Your Model</div>
-      <cx-model-display></cx-model-display>
     </div>
 
     <div class="content-block">
       <div class="title">Select Products</div>
+      <ui-tabs>
+        <product-tab-item tabName="products" [active]="true" [content]="productsContent">
+          <ng-template #productsContent let-tab>
+            <h2>products</h2>
+            <div>Tab 1 Content</div>
+          </ng-template>
+        </product-tab-item>
+        <product-tab-item tabName="carts" [content]="cartsContent">
+          <ng-template #cartsContent let-tab>
+            <h2>carts</h2>
+            <div>Tab 2 Content</div>
+          </ng-template>
+        </product-tab-item>
+      </ui-tabs>
     </div>
   </div>
 

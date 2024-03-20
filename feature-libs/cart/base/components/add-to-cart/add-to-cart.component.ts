@@ -115,7 +115,7 @@ export class AddToCartComponent implements OnInit, OnDestroy {
         });
     }
     this.activatedRoute.url.subscribe((urlSegments) => {
-      this.isDetailsPage = urlSegments[0].path.indexOf('product') > -1;
+      this.isDetailsPage = urlSegments[0].path.indexOf('product') > -1 || urlSegments[0].path.indexOf('Categories') > -1;
     });
 
     this.eventService.get(ShowTryOnModalEvent).subscribe((event) => {

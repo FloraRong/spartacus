@@ -20,6 +20,8 @@ import { CartSharedModule } from '../cart-shared/cart-shared.module';
 import { TryOnDialogComponent } from './try-on-dialog.component';
 import { ModelDisplayComponent } from './components/model/model-display.component';
 import { defaultTryOnLayoutConfig } from './default-try-on-layout.config';
+import { ProductTabItemComponent } from './components/product-tab-item/product-tab-item.component';
+import { UiTabsComponent } from './components/tabs/tabs-display.component';
 
 @NgModule({
   imports: [
@@ -36,8 +38,8 @@ import { defaultTryOnLayoutConfig } from './default-try-on-layout.config';
     KeyboardFocusModule,
   ],
   providers: [provideDefaultConfig(defaultTryOnLayoutConfig)],
-  declarations: [TryOnDialogComponent, ModelDisplayComponent],
-  exports: [TryOnDialogComponent, ModelDisplayComponent],
+  declarations: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent],
+  exports: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent],
 })
 export class TryOnDialogModule {
   constructor() {
