@@ -18,6 +18,7 @@ import {
 } from '@spartacus/storefront';
 import { CartSharedModule } from '../cart-shared/cart-shared.module';
 import { TryOnDialogComponent } from './try-on-dialog.component';
+import { ModelDisplayComponent } from './components/model/model-display.component';
 import { defaultTryOnLayoutConfig } from './default-try-on-layout.config';
 
 @NgModule({
@@ -35,8 +36,8 @@ import { defaultTryOnLayoutConfig } from './default-try-on-layout.config';
     KeyboardFocusModule,
   ],
   providers: [provideDefaultConfig(defaultTryOnLayoutConfig)],
-  declarations: [TryOnDialogComponent],
-  exports: [TryOnDialogComponent],
+  declarations: [TryOnDialogComponent, ModelDisplayComponent],
+  exports: [TryOnDialogComponent, ModelDisplayComponent],
 })
 export class TryOnDialogModule {
   constructor() {
