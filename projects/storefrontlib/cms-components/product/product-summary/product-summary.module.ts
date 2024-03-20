@@ -9,9 +9,11 @@ import { NgModule } from '@angular/core';
 import { CmsConfig, I18nModule, provideDefaultConfig } from '@spartacus/core';
 import { OutletModule } from '../../../cms-structure/outlet/outlet.module';
 import { ProductSummaryComponent } from './product-summary.component';
+import { FormsModule } from '@angular/forms';
+import { ModalComponent } from './_components';
 
 @NgModule({
-  imports: [CommonModule, OutletModule, I18nModule],
+  imports: [CommonModule, OutletModule, I18nModule, FormsModule],
   providers: [
     provideDefaultConfig(<CmsConfig>{
       cmsComponents: {
@@ -21,7 +23,7 @@ import { ProductSummaryComponent } from './product-summary.component';
       },
     }),
   ],
-  declarations: [ProductSummaryComponent],
+  declarations: [ProductSummaryComponent,ModalComponent],
   exports: [ProductSummaryComponent],
 })
 export class ProductSummaryModule {}

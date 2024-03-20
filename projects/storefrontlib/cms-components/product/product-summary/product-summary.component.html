@@ -18,6 +18,35 @@
     <p [innerHTML]="product?.summary" class="summary"></p>
   </ng-template>
 
+ 
+  <p class="summary">Want to see how it looks on your body? -></p>
+  <button (click)="modalService.open('modal-visual_try_on')">Visual Try On</button>
+
+  <jw-modal id="modal-visual_try_on">
+    <h1>Visual Try On</h1>
+    <div>
+      <p>Your Model</p>
+      <img height=60 width=60 src="assets/images/model.jpg"/>
+      <select label="gender" name="gender" id="gender">
+        <option value="female">female</option>
+        <option value="male">male</option>
+      </select>
+      <select label="body_type" name="body_type" id="body_type">
+        <option value="fat">fat</option>
+        <option value="medium">medium</option>
+        <option value="thin">thin</option>
+      </select>
+      <select label="hair" name="hair" id="hair">
+        <option value="long">long</option>
+        <option value="short">short</option>
+      </select>
+      <br>
+      <img height=600 width=1000 src="assets/images/model.jpg"/>
+    </div>
+    <p>Home page text: <input type="text" [(ngModel)]="bodyText" /></p>
+    <button (click)="modalService.close();">Close</button>
+  </jw-modal>
+
   <!-- @TODO: Temp. Comment out share link while not in use by CMS -->
   <!-- <ng-container *cxOutlet="outlets.SHARE">
         <div>
