@@ -20,7 +20,14 @@ import { FormsModule } from '@angular/forms';
 import { ModalComponent } from './_components';
 
 @NgModule({
-  imports: [CommonModule, OutletModule, I18nModule],
+  imports: [
+    CommonModule,
+    OutletModule,
+    I18nModule,
+    PromotionsModule,
+    FormsModule,
+    FeaturesConfigModule,
+  ],
   providers: [
     provideDefaultConfig(<CmsConfig | FeaturesConfig>{
       cmsComponents: {
@@ -33,14 +40,7 @@ import { ModalComponent } from './_components';
       },
     }),
   ],
-  declarations: [ProductSummaryComponent,ModalComponent],
+  declarations: [ProductSummaryComponent, ModalComponent],
   exports: [ProductSummaryComponent],
-  imports: [
-    CommonModule,
-    OutletModule,
-    I18nModule,
-    PromotionsModule,
-    FeaturesConfigModule,
-  ],
 })
 export class ProductSummaryModule {}

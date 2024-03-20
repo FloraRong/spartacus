@@ -5,3 +5,37 @@
 @import './product-summary';
 @import './stock-notification/stock-notification-dialog';
 @import './stock-notification/stock-notification';
+
+.try-on-container {
+  display: flex;
+}
+.try-on-start {
+  &-info {
+    display: flex;
+    align-items: center;
+    height: 44px;
+  }
+
+  &-btn {
+    height: 44px;
+    background: transparent;
+    border: 1px solid #c3cbde;
+    width: 188px;
+    border-radius: 24px;
+    margin-bottom: 24px;
+  }
+
+  &-text {
+    position: relative;
+    top: 3px;
+    right: -8px;
+    cursor: pointer;
+  }
+
+  &-icon {
+    position: relative;
+    right: -40px;
+    top: -14px;
+    cursor: pointer;
+  }
+}
