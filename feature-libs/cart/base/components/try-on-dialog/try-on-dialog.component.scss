@@ -47,6 +47,14 @@
                     margin: 0;
                     line-height: 44px;
                 }
+                .results {
+                    display: grid;
+                    column-gap: 14px;
+                    row-gap: 14px;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 200px));
+                    margin-top: 25px;
+                    justify-content: space-around;
+                }
             }
         }
 

@@ -22,6 +22,7 @@ import { ModelDisplayComponent } from './components/model/model-display.componen
 import { defaultTryOnLayoutConfig } from './default-try-on-layout.config';
 import { ProductTabItemComponent } from './components/product-tab-item/product-tab-item.component';
 import { UiTabsComponent } from './components/tabs/tabs-display.component';
+import { RecommendProductComponent } from './components/recommend-product/recommend-product.component';
 
 @NgModule({
   imports: [
@@ -38,8 +39,8 @@ import { UiTabsComponent } from './components/tabs/tabs-display.component';
     KeyboardFocusModule,
   ],
   providers: [provideDefaultConfig(defaultTryOnLayoutConfig)],
-  declarations: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent],
-  exports: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent],
+  declarations: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent, RecommendProductComponent],
+  exports: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent, RecommendProductComponent],
 })
 export class TryOnDialogModule {
   constructor() {

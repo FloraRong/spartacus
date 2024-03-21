@@ -12,16 +12,26 @@
     <div class="content-block">
       <div class="title">Select Products</div>
       <ui-tabs>
-        <product-tab-item tabName="products" [active]="true" [content]="productsContent">
+        <product-tab-item tabName="You may like" [active]="true" [content]="productsContent">
           <ng-template #productsContent let-tab>
-            <h2>products</h2>
-            <div>Tab 1 Content</div>
+            <section class="results">
+            <recommend-products
+              *ngFor="let recommendProduct of recommendProductList"
+              [recommendProduct]="recommendProduct">
+            </recommend-products>
+            </section>
           </ng-template>
         </product-tab-item>
-        <product-tab-item tabName="carts" [content]="cartsContent">
+        <product-tab-item tabName="Carts" [content]="cartsContent">
           <ng-template #cartsContent let-tab>
-            <h2>carts</h2>
-            <div>Tab 2 Content</div>
+            <h2>{{tab.tabName}}</h2>
+            <div>carts Content</div>
+          </ng-template>
+        </product-tab-item>
+        <product-tab-item tabName="My wishlist" [content]="wishListContent">
+          <ng-template #wishListContent let-tab>
+            <h2>{{tab.tabName}}</h2>
+            <div>My Wishlist Content</div>
           </ng-template>
         </product-tab-item>
       </ui-tabs>
