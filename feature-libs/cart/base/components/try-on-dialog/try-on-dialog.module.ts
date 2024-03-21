@@ -23,11 +23,13 @@ import { defaultTryOnLayoutConfig } from './default-try-on-layout.config';
 import { ProductTabItemComponent } from './components/product-tab-item/product-tab-item.component';
 import { UiTabsComponent } from './components/tabs/tabs-display.component';
 import { RecommendProductComponent } from './components/recommend-product/recommend-product.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     CartSharedModule,
     RouterModule,
     SpinnerModule,

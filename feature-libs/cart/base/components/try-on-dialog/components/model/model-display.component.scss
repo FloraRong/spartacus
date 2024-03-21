@@ -16,6 +16,14 @@
 
         .edit-block {
 
+            .must-item {
+                &::after {
+                    content: "*";
+                    color: #BA066C;
+                    margin-left: 4px;
+                }
+            }
+
             input[type=radio]:checked {
                 &::after {
                     display: none;
@@ -53,6 +61,17 @@
                     justify-content: end;
                     height: 44px;
                     padding: 4px, 16px, 4px, 16px;
+                }
+
+                select::-ms-expand {
+                    display: none;
+                }
+
+                &-select {
+                    height: 36px;
+                    padding: 2px;
+                    width: 200px;
+                    border: 1px solid #d9d9d9;
                 }
 
                 &-action {
@@ -135,12 +154,15 @@
     .preview {
         &-container {
             margin-top: 8px;
-            min-height: 1248px;
+            min-height: 358px;
             width: 100%;
         }
 
         &-background {
             background-color: rgba(0, 0, 0, 0.15);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
