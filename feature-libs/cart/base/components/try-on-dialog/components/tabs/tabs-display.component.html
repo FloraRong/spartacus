@@ -1,4 +1,4 @@
 <div class="tab">
-    <button class="tabName" *ngFor="let tab of tabs" (click)="activateTab(tab)">{{tab.tabName}}</button>
+    <button  [ngClass]="tab.active ? 'tabActive' : 'tabDefault'" *ngFor="let tab of tabs" (click)="activateTab(tab)">{{tab.tabName}}</button>
 </div>
 <ng-container *ngTemplateOutlet="activeComponent.content; context: activeComponent.context"></ng-container>
