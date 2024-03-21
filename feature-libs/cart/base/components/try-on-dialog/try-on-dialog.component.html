@@ -12,7 +12,7 @@
     <div class="content-block">
       <div class="title">Select Products</div>
       <ui-tabs>
-        <product-tab-item tabName="You may like" [active]="true" [content]="productsContent">
+        <product-tab-item tabName="You May Like" [active]="true" [content]="productsContent">
           <ng-template #productsContent let-tab>
             <section class="results">
             <recommend-products
@@ -28,7 +28,7 @@
             <div>carts Content</div>
           </ng-template>
         </product-tab-item>
-        <product-tab-item tabName="My wishlist" [content]="wishListContent">
+        <product-tab-item tabName="My Wishlist" [content]="wishListContent">
           <ng-template #wishListContent let-tab>
             <h2>{{tab.tabName}}</h2>
             <div>My Wishlist Content</div>

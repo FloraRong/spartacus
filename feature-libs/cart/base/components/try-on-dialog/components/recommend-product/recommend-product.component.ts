@@ -6,8 +6,8 @@ import { RecommendProduct } from '../../recommendProduct';
   template: `
     <section class="listing">
       <img class="listing-photo" [src]="recommendProduct.photo" >
-      <h5 class="listing-heading">{{ recommendProduct.name }}</h5>
-      <p class="listing-location">{{ recommendProduct.money}}</p>
+      <h5 class="listing-name">{{ recommendProduct.name }}</h5>
+      <p class="listing-money">{{ recommendProduct.money}}</p>
     </section>
   `,
   styleUrls: ['./recommend-product.component.scss'],

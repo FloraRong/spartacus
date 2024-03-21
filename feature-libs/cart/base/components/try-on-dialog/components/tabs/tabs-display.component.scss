@@ -8,13 +8,15 @@
         border: none;
         font-weight: 400;
         height: 40px;
+        margin-left:32px;
     }
     .tabActive {
         background: none;
         border: none;
-        border-bottom: 2px solid blue;
-        color:blue;
+        border-bottom: 2px solid rgb(0, 100, 217);
+        color:rgb(0, 100, 217);
         font-weight:600;
         height: 40px;
+        margin-left:32px;
     }
   }

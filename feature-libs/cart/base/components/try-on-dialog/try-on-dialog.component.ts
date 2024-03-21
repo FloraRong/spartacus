@@ -58,15 +58,15 @@ export class TryOnDialogComponent implements OnInit, OnDestroy {
     },
     {
       id: 4,
-      name: 'White Long Skirt-1',
+      name: 'Blue Ripped Long jeans-1Blue Long jeans-1',
       money: '$123.95',
-      photo: "assets/images/cloth1.jpeg"
+      photo: "assets/images/pants5.jpg"
     },
     {
       id: 5,
-      name: 'White Long Skirt-2',
+      name: 'Blue Long jeans-2',
       money: '$89.95',
-      photo: "assets/images/cloth2.jpg"
+      photo: "assets/images/pants6.jpg"
     }
   ]
 
