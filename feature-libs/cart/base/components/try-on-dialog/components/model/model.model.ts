@@ -5,18 +5,21 @@ export interface BodyModel {
 
 export enum Sex {
     MALE= 'Male',
-    FEMALE = 'Female'
+    FEMALE = 'Female',
+    UNKNOWN = 'Unknown'
 }
 
 export enum BodySize {
-    THIN = 'Thin',
-    MEDIUM = 'Medium',
-    FAT = 'Fat'
+    RECTANGLE = 'Rectangle',
+    PEAR = 'Pear',
+    INVERTED_TRIANGLE = 'InvertedTriangle',
+    HOURGLASS = 'Hourglass',
+    ROUND = 'Round'
 }
 
 
 export const DefaultModel: BodyModel = {
     sex: Sex.FEMALE,
-    size: BodySize.MEDIUM
+    size: BodySize.INVERTED_TRIANGLE
 };
 
