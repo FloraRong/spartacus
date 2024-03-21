@@ -1,5 +1,5 @@
-import { CxEvent } from '@spartacus/core';
+import { CxEvent, Product } from '@spartacus/core';
 
 export class ShowTryOnModalEvent extends CxEvent {
-  productCode: string;
+  product: Product;
 }

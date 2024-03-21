@@ -2,27 +2,47 @@
     <div class="header">
         <div id="displayBlock" *ngIf="!eidtMode" class="display-block">
             <div class="body-size-container">
-                <img class="body-size" [src]="getCurrentBodySizeImage(selectedModel).url" />
+                <img class="body-size" [src]="modelPicSrc" />
             </div>
 
             <div class="body-info">
-                <label class="info-item">{{selectedModel.sex}}</label> |
-                <label class="info-item">{{selectedModel.size}}</label>
+                <label class="info-item">{{selectedModel.sex}}</label> 
+                <label *ngIf="selectedModel?.weight" class="info-item">| &nbsp; {{selectedModel?.weight}} KG</label>
+                <label *ngIf="selectedModel?.height" class="info-item">| &nbsp; {{selectedModel?.height}} CM</label>
             </div>
 
             <button (click)="changeEditMode()" class="model-icon-button body-edit"></button>
         </div>
 
         <div id="editBlock" *ngIf="eidtMode" class="edit-block">
-            <div class="form-item">
-                <label class="sub-title must-item">Gender</label>
+            <div class="form-item" style="display: flex; justify-content: space-between;">
+                <div>
+                    <label class="sub-title must-item">Gender</label>
 
-                <div class="form-item-content" >
-                    <select class="form-select" [(ngModel)]="nextSelectedModel.sex">
-                        <option *ngFor="let sex of SexOption" [value]="sex">
-                          {{ sex }}
-                        </option>
-                    </select>
+                    <div class="form-item-content" >
+                        <select class="form-item-input" [(ngModel)]="nextSelectedModel.sex">
+                            <option *ngFor="let sex of SexOption" [value]="sex">
+                              {{ sex }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="sub-title must-item">Weight</label>
+
+                    <div class="form-item-content" >
+                        <input class="form-item-input" [value]="nextSelectedModel.weight"> 
+                        <label class="unit">KG</label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="sub-title must-item">Height</label>
+
+                    <div class="form-item-content" >
+                        <input class="form-item-input" [value]="nextSelectedModel.height"/> <label class="unit">CM</label>
+                    </div>
                 </div>
 
             </div>
@@ -31,7 +51,7 @@
                 <label class="sub-title" style="margin-bottom: 8px;">Choose your body shape</label>
                 <div class="form-item-content">
                     <div style="cursor: pointer; margin-right: 16px;" class="body-size-container" *ngFor="let image of bodyImages" [ngClass]="isSelectedBody(image.size) ? 'slected-body' : ''" (click)="changeBodySize(image.size)">
-                        <img class="body-size" [src]="image.url" />
+                        <img class="body-size" [src]="image.url" [alt]="image.size" />
                     </div>
                 </div>
             </div>
@@ -40,15 +60,16 @@
                 <label class="sub-title" style="margin-bottom: 8px;">Upload a full-body photo of yourself to generate your model</label>
                 <div class="form-item-content">
                     <div class="upload-container" (click)="upload()">
-                        <img src="assets/images/upload.png" class="upload-image" />
+                        <img *ngIf="!uploadedPreview" src="assets/images/upload.png" class="upload-image" />
                         <input id="uploadInput" type="file" #uploadInput style="display: none;">
+                        <img *ngIf="uploadedPreview" class="preview-image" [src]="uploadedPreview" />
                     </div>
                 </div>
             </div>
 
             <div class="form-actions">
                 <button (click)="saveModel()" class="form-action" style="font-weight: 700; margin-right: 16px;">Save</button>
-                <button (click)="changeEditMode()" class="form-action-transparent">Cancel</button>
+                <button (click)="cancle()" class="form-action-transparent">Cancel</button>
             </div>
 
         </div>
@@ -56,7 +77,9 @@
     </div>
     <div class="preview-container">
         <div style="background-image: url('assets/images/preview-bg.png');" class="preview-background">
-            <img class="preview-image" [src]="modelPicSrc" />
+            <img class="preview-image" [src]="getProductImage()" />
+            <button class="transparent-btn start"></button>
+            <!-- <button calss="transparent-btn compare"></button> -->
         </div>
     </div>
 </div>

@@ -12,12 +12,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { RoutingService } from '@spartacus/core';
+import { Product, RoutingService } from '@spartacus/core';
 import {
   LaunchDialogService,
 } from '@spartacus/storefront';
 import { Observable, Subscription } from 'rxjs';
 import { RecommendProduct } from './recommendProduct';
+import { ShowTryOnModalEvent } from '../add-to-cart/try-on.model';
 
 @Component({
   selector: 'cx-try-on-dialog',
@@ -30,6 +31,8 @@ export class TryOnDialogComponent implements OnInit, OnDestroy {
   protected quantityControl$: Observable<UntypedFormControl>;
 
   protected subscription = new Subscription();
+
+  currentProduct: Product;
 
   recommendProductList: RecommendProduct[] = [
     {
@@ -68,7 +71,7 @@ export class TryOnDialogComponent implements OnInit, OnDestroy {
       money: '$89.95',
       photo: "assets/images/pants6.jpg"
     }
-  ]
+  ];
 
   constructor(
     protected launchDialogService: LaunchDialogService,
@@ -78,6 +81,13 @@ export class TryOnDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log("try on init");
+    this.launchDialogService.data$.subscribe(
+      (dialogData: ShowTryOnModalEvent) => {
+        if (dialogData.product) {
+          this.currentProduct = dialogData.product;
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {

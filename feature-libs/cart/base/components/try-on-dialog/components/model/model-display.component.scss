@@ -46,6 +46,12 @@
                 &-content {
                     display: flex;
                     flex-direction: row;
+
+                    .unit {
+                        position: relative;
+                        right: 34px;
+                        line-height: 34px;
+                    }
                 }
             }
 
@@ -59,7 +65,7 @@
                 &-actions {
                     display: flex;
                     justify-content: end;
-                    height: 44px;
+                    height: 36px;
                     padding: 4px, 16px, 4px, 16px;
                 }
 
@@ -67,11 +73,13 @@
                     display: none;
                 }
 
-                &-select {
+                &-item-input {
                     height: 36px;
-                    padding: 2px;
-                    width: 200px;
+                    padding: 2px 8px;
+                    width: 180px;
                     border: 1px solid #d9d9d9;
+                    border-bottom: 2px solid black;
+                    border-radius: 4px;
                 }
 
                 &-action {
@@ -83,7 +91,7 @@
                         border-radius: 8px;
                         font-size: 16px;
                         width: 64px;
-                        height: 44px;
+                        height: 36px;
                         border: none;
                     }
 
@@ -96,7 +104,7 @@
 
             .upload {
                 &-container {
-                    height: 160px;
+                    min-height: 160px;
                     width: 100%;
                     display: flex;
                     align-items: center;
@@ -156,6 +164,28 @@
             margin-top: 8px;
             min-height: 358px;
             width: 100%;
+            position: relative;
+
+            .transparent-btn {
+                background: white;
+                height: 36px;
+                width: 36px;
+                color: #0070F2;
+                font-family: 'Font Awesome 6 Free';
+                border: 1px solid #d9d9d9;
+                border-radius: 8px;
+                position: absolute;
+                right: 32px;
+                top: 32px;
+    
+                &.compare::after {
+                    content: "\f144";
+                }
+    
+                &.start::after {
+                    content: "\f144";
+                }
+            }
         }
 
         &-background {
@@ -166,12 +196,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 16px;
         }
 
         &-image {
-            height: 358px;
-            width: 179px;
+            max-height: 400px;
+            max-width: 400px;
         }
+
     }
 
     .model-icon-button {
