@@ -1,0 +1,17 @@
+.tab {
+    width: auto;
+    height: 40px;
+    border-bottom: 1px solid lightgray;
+
+    .tabName {
+        background: none;
+        border: none;
+        font-weight: 400;
+        height: 40px;
+    }
+    .tabName:active {
+        border-bottom: 2px solid blue;
+        color:blue;
+        font-weight:600;
+    }
+  }

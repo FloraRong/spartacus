@@ -11,7 +11,7 @@ export class UiTabsComponent implements AfterContentInit {
   activeComponent: ProductTabItemComponent;
 
   ngAfterContentInit() {
-    this.activateTab(this.tabs.toArray()[1]); // 默认激活第二个选项卡
+    this.activateTab(this.tabs.toArray()[0]); // 默认激活第一个选项卡
   }
 
   activateTab(tab: ProductTabItemComponent) {
