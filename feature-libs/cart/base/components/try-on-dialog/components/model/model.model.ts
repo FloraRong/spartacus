@@ -1,6 +1,9 @@
 export interface BodyModel {
     sex: Sex;
     size: BodySize;
+    age?: number;
+    height?: number;
+    weight?: number;
 }
 
 export enum Sex {
@@ -20,6 +23,9 @@ export enum BodySize {
 
 export const DefaultModel: BodyModel = {
     sex: Sex.FEMALE,
-    size: BodySize.INVERTED_TRIANGLE
+    age: 21,
+    height: 165,
+    weight: 48,
+    size: BodySize.PEAR
 };
 

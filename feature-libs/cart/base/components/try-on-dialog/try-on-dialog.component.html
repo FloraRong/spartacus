@@ -1,13 +1,13 @@
 <div class="try-on-dialog-container">
   <div class="header">
     <label class="title">Visual Try On</label>
-    <button class="close-btn">x</button>
+    <button (click)="closeModal()" class="close-btn">x</button>
   </div>
 
   <div class="content-container">
     <div class="content-block">
       <div class="title">Your Model</div>
-      <cx-model-display></cx-model-display>
+      <cx-model-display [currentProduct]="currentProduct"></cx-model-display>
     </div>
 
     <div class="content-block">

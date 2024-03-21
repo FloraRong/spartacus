@@ -6,12 +6,14 @@
 
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { RoutingService } from '@spartacus/core';
+import { Product, RoutingService } from '@spartacus/core';
 import { LaunchDialogService } from '@spartacus/storefront';
 import { BodyModel, BodySize, DefaultModel, Sex } from './model.model';
 
@@ -22,6 +24,9 @@ import { BodyModel, BodySize, DefaultModel, Sex } from './model.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModelDisplayComponent implements OnInit, OnDestroy {
+
+  @Input() currentProduct: Product;
+
   defaultModel: BodyModel = DefaultModel;
   defaultModelPic = this.getModelPath(this.defaultModel);
   selectedModel: BodyModel;
@@ -30,6 +35,8 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
   nextSelectedModel: BodyModel;
   SexOption = [Sex.FEMALE, Sex.MALE, Sex.UNKNOWN];
   uploadedModelPic: any;
+  fileReader = new FileReader();
+  uploadedPreview = '';
 
   bodyImages: { size: BodySize; url: string }[] = [
     {
@@ -57,7 +64,8 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
   constructor(
     protected launchDialogService: LaunchDialogService,
     protected routingService: RoutingService,
-    protected el: ElementRef
+    protected el: ElementRef,
+    protected def: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -71,11 +79,17 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
   }
 
   getModelPath(bodyModel: BodyModel): string {
-    return `assets/images/model/${bodyModel.sex.toLocaleLowerCase()}/${bodyModel.size.toLowerCase()}/1.jpg`;
+    return `assets/images/model/${bodyModel.sex.toLocaleLowerCase()}/${bodyModel.size.toLowerCase()}/1.png`;
   }
 
-  getCurrentBodySizeImage(bodyModel: BodyModel): { size: BodySize; url: string} {
-    return this.bodyImages.find(image => image.size === bodyModel.size) || this.bodyImages[0];
+  getCurrentBodySizeImage(bodyModel: BodyModel): {
+    size: BodySize;
+    url: string;
+  } {
+    return (
+      this.bodyImages.find((image) => image.size === bodyModel.size) ||
+      this.bodyImages[0]
+    );
   }
 
   changeEditMode() {
@@ -88,6 +102,7 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
 
   changeBodySize(size: BodySize) {
     this.nextSelectedModel.size = size;
+    this.modelPicSrc = this.getModelPath(this.nextSelectedModel);
   }
 
   changeSex(sex: Sex) {
@@ -96,29 +111,51 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
 
   saveModel() {
     this.selectedModel = this.nextSelectedModel;
-    this.eidtMode = false;
-    this.modelPicSrc = this.getModelPath(this.selectedModel);
-
+    this.modelPicSrc = this.uploadedPreview || this.getModelPath(this.selectedModel);
+    this.changeEditMode();
   }
 
   upload() {
-    console.log('upload');
-    var uploadInput: any = document.querySelector("#uploadInput") || document.getElementById("uploadInput");
+    var uploadInput: any =
+      document.querySelector('#uploadInput') ||
+      document.getElementById('uploadInput');
     if (uploadInput) {
       uploadInput.click();
       uploadInput.onchange = (event: any) => {
         const file = event.target.files[0];
         if (file) {
-          // 创建FormData对象并添加文件
-          const formData = new FormData();
-          formData.append('image', file);
-          console.log(formData);
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => this.uploadedPreview = reader.result?.toString() || '';
         }
+        setTimeout(() => {
+          console.log("detectChanges");
+          this.def.detectChanges();
+        }, 1500);
       };
     }
   }
 
+  changeModelUrl(url: string) {
+    this.modelPicSrc = url;
+  }
+
   onFileSelected(event: any) {
     this.uploadedModelPic = event.target.files[0];
+  }
+
+  cancle() {
+    this.changeEditMode();
+    this.modelPicSrc = this.getModelPath(this.selectedModel);
+  }
+
+  getProductImage(): string {
+    if (this.currentProduct.images) {
+      var group = this.currentProduct.images['GALLERY'];
+      if (group) {
+        return group[0].product.url;
+      }
+    }
+    return '';
   }
 }

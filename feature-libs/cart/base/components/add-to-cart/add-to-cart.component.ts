@@ -39,6 +39,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { ShowTryOnModalEvent } from './try-on.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'cx-add-to-cart',
@@ -84,6 +85,7 @@ export class AddToCartComponent implements OnInit, OnDestroy {
     protected currentProductService: CurrentProductService,
     protected cd: ChangeDetectorRef,
     protected activeCartService: ActiveCartFacade,
+    protected store: Store,
     protected component: CmsComponentData<CmsAddToCartComponent>,
     protected eventService: EventService,
     protected activatedRoute: ActivatedRoute,
@@ -109,6 +111,7 @@ export class AddToCartComponent implements OnInit, OnDestroy {
       )
         .pipe(filter(isNotNullable))
         .subscribe((product) => {
+          this.product = product;
           this.productCode = product.code ?? '';
           this.setStockInfo(product);
           this.cd.markForCheck();
@@ -164,13 +167,13 @@ export class AddToCartComponent implements OnInit, OnDestroy {
 
   showTryOnModal(): void {
     const event = new ShowTryOnModalEvent();
-    event.productCode = this.productCode;
+    event.product = this.product;
     this.eventService.dispatch(event);
   }
 
   protected openModal(event: ShowTryOnModalEvent): void {
     const data = {
-      productCode: event.productCode,
+      product: event.product,
     };
 
     const dialog = this.launchDialogService.openDialog(
