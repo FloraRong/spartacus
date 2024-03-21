@@ -1,0 +1,17 @@
+<div class="checkout-container">
+    <div class="quantity-select-container">
+        <select name="quantity" id="quantity">
+            <option value="1">One-Pieces</option>
+            <option value="2">Two-Pieces</option>
+        </select>
+    </div>
+    <div class="selected-clothes">
+        <img class="image" [src]="selectedClothImageUrl" />
+        <button class="remove-icon-button" (click)="removeSelectedCloth()" ></button>
+        <div class="checkout-confirm">
+            <label class="checkout-info">Want to see how it looks on your body?</label>
+            <button (click)="checkout()" class="checkout">checkout</button>
+        </div>
+
+    </div>
+</div>

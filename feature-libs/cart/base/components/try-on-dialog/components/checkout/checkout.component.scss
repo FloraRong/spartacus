@@ -1,0 +1,61 @@
+.checkout-container {
+  margin: 20px 3% 20px 3%;
+  width: 94%;
+
+  .quantity-select-container {
+    width: 100%;
+
+    #quantity {
+      width: 100%;
+    }
+  }
+
+  .selected-clothes {
+    margin: 10px 0 10px 0;
+    position: relative;
+    display: flex;
+
+    .image {
+      padding: 2px;
+      border: 1px solid #d9d9d9;
+      border-radius: 8px;
+      margin-right: 8px;
+      height: 64px;
+      width: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .checkout-confirm {
+      margin-left: 48px;
+
+      .checkout-info {}
+
+      .checkout {
+        height: 44px;
+        width: auto;
+        background: black;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+      }
+    }
+
+
+    .remove-icon-button {
+
+      background: transparent;
+      border: none;
+      color: var(--cx-color-primary);
+      position: absolute;
+      top: 6px;
+      left: 64px;
+      font-family: 'Font Awesome 6 Free';
+
+      &::after {
+        content: "\f2ed";
+      }
+    }
+  }
+}
