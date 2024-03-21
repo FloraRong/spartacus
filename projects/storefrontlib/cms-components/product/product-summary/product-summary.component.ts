@@ -32,8 +32,10 @@ export class ProductSummaryComponent {
     return this.currentProductService.getProduct(productScopes);
   }
 
-  constructor(protected currentProductService: CurrentProductService, protected modalService: ModalService) {}
-  
-  changeLayout(): void {}
+  constructor(
+    protected currentProductService: CurrentProductService,
+    protected modalService: ModalService
+  ) {}
 
+  changeLayout(): void {}
 }
