@@ -16,6 +16,8 @@ import {
 import { Product, RoutingService } from '@spartacus/core';
 import { LaunchDialogService } from '@spartacus/storefront';
 import { BodyModel, BodySize, DefaultModel, Sex } from './model.model';
+import { TryOnService } from '../../services/tryon.service';
+import { RecommendProduct } from '../../recommendProduct';
 
 @Component({
   selector: 'cx-model-display',
@@ -25,7 +27,8 @@ import { BodyModel, BodySize, DefaultModel, Sex } from './model.model';
 })
 export class ModelDisplayComponent implements OnInit, OnDestroy {
 
-  @Input() currentProduct: Product;
+  @Input() currentProduct: Product | RecommendProduct;
+  @Input() testMode: boolean;
 
   defaultModel: BodyModel = DefaultModel;
   defaultModelPic = this.getModelPath(this.defaultModel);
@@ -37,6 +40,13 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
   uploadedModelPic: any;
   fileReader = new FileReader();
   uploadedPreview = '';
+  tryOnImageSrc = '';
+  isLoading = false;
+  showLarge = false;
+  reStartNeeded = false;
+  couldCompare = false;
+  compareMode = false;
+  comparedTryOn: Product | RecommendProduct;
 
   bodyImages: { size: BodySize; url: string }[] = [
     {
@@ -66,12 +76,26 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
     protected routingService: RoutingService,
     protected el: ElementRef,
     protected def: ChangeDetectorRef,
+    protected tryOnService: TryOnService,
   ) {}
 
   ngOnInit(): void {
     this.modelPicSrc = this.defaultModelPic;
     this.selectedModel = this.defaultModel;
     this.nextSelectedModel = this.selectedModel;
+    if (this.testMode) {
+      this.currentProduct = this.tryOnService.getAllRecommendProduct()[0];
+      this.tryOnImageSrc =  'assets/images/cloth1.jpeg';
+    } else {
+      if (this.currentProduct) {
+        this.tryOnImageSrc = this.tryOnService.getProductImage(this.currentProduct as Product);
+      }
+    }
+
+    this.tryOnService.subscribeSelectedProduct(() => {
+      this.reStartNeeded = true;
+      this.def.detectChanges();
+    });
   }
 
   ngOnDestroy(): void {
@@ -112,6 +136,7 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
   saveModel() {
     this.selectedModel = this.nextSelectedModel;
     this.modelPicSrc = this.uploadedPreview || this.getModelPath(this.selectedModel);
+    this.reStartNeeded = true;
     this.changeEditMode();
   }
 
@@ -149,13 +174,24 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
     this.modelPicSrc = this.getModelPath(this.selectedModel);
   }
 
-  getProductImage(): string {
-    if (this.currentProduct.images) {
-      var group = this.currentProduct.images['GALLERY'];
-      if (group) {
-        return group[0].product.url;
-      }
-    }
-    return '';
+  startTryOn() {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+      this.reStartNeeded = false;
+      this.couldCompare = this.tryOnService.compareEnabled();
+      if (this.couldCompare) this.comparedTryOn = this.tryOnService.getLastTriedProduct();
+      this.tryOnImageSrc = this.tryOnService.tryOn();
+      this.def.detectChanges();
+    }, 2500);
+  }
+
+  compare() {
+    this.compareMode = true;
+  }
+
+  getLastTriedImage() {
+    console.log(this.comparedTryOn);
+    return this.tryOnService.getRecommendProductTryOnImage(this.comparedTryOn);
   }
 }

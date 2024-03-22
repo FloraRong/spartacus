@@ -1,7 +1,10 @@
+<div class="preview-large" *ngIf="showLarge">
+    <img class="preview-large-image" [src]="modelPicSrc" />
+</div>
 <div class="model-container">
     <div class="header">
         <div id="displayBlock" *ngIf="!eidtMode" class="display-block">
-            <div class="body-size-container">
+            <div class="body-size-container" (mouseover)="showLarge = true" (mouseleave)="showLarge = false">
                 <img class="body-size" [src]="modelPicSrc" />
             </div>
 
@@ -77,9 +80,16 @@
     </div>
     <div class="preview-container">
         <div style="background-image: url('assets/images/preview-bg.png');" class="preview-background">
-            <img class="preview-image" [src]="getProductImage()" />
-            <button class="transparent-btn start"></button>
-            <!-- <button calss="transparent-btn compare"></button> -->
+            <div *ngIf="isLoading" class="loader">
+                <div class="loader-inner ball-clip-rotate">
+                    <div></div>
+                </div>
+            </div>
+            <img *ngIf="!isLoading" class="preview-image" [src]="tryOnImageSrc" [ngClass]="compareMode? 'image-compare-mode' : ''" />
+            <img *ngIf="compareMode && !isLoading" class="image-compare-mode" [src]="getLastTriedImage()" />
+            <button *ngIf="!isLoading" [ngClass]="reStartNeeded ? 'active' : ''" (click)="startTryOn()" class="transparent-btn start"></button>
+            <button *ngIf="!isLoading && couldCompare && !compareMode" (click)="compare()" class="transparent-btn compare"><i class="fa-solid fa-code-compare"></i></button>
+            <button *ngIf="!isLoading && compareMode" (click)="compareMode = !compareMode" class="transparent-btn revert"><i class="fa-solid fa-rotate-left"></i></button>
         </div>
     </div>
 </div>

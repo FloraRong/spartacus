@@ -3,12 +3,12 @@ import { RecommendProduct } from '../../recommendProduct';
 import { TryOnService } from '../../services/tryon.service'
 
 @Component({
-  selector: 'recommend-products',
+  selector: 'cx-recommend-products',
   template: `
-    <section class="listing">
+    <section style="cursor: pointer;" class="listing">
       <img class="listing-photo" [src]="recommendProduct.photo" (click)="tryOnProduct()">
       <h5 class="listing-name">{{ recommendProduct.name }}</h5>
-      <p class="listing-money">{{ recommendProduct.money}}</p>
+      <p class="listing-price">{{ recommendProduct.price}}</p>
     </section>
   `,
   styleUrls: ['./recommend-product.component.scss'],
@@ -22,7 +22,7 @@ export class RecommendProductComponent {
 
   tryOnProduct()
   {
-    this.tryOnService.selecteProduct(this.recommendProduct);
+    this.tryOnService.selectProduct(this.recommendProduct);
   }
 
 }

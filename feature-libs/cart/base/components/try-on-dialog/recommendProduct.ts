@@ -1,6 +1,6 @@
 export interface RecommendProduct {
-    id: number;
-    name: string;
-    photo: string;
-    money: string;
-  }
+  code: string;
+  name: string;
+  photo?: string;
+  price?: string;
+}

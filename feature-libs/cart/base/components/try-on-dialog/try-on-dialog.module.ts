@@ -24,7 +24,7 @@ import { ProductTabItemComponent } from './components/product-tab-item/product-t
 import { UiTabsComponent } from './components/tabs/tabs-display.component';
 import { RecommendProductComponent } from './components/recommend-product/recommend-product.component';
 import { FormsModule } from '@angular/forms';
-import { CheckoutComponent } from './components/checkout/checkout.component'
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   imports: [
@@ -42,8 +42,22 @@ import { CheckoutComponent } from './components/checkout/checkout.component'
     KeyboardFocusModule,
   ],
   providers: [provideDefaultConfig(defaultTryOnLayoutConfig)],
-  declarations: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent, RecommendProductComponent, CheckoutComponent],
-  exports: [TryOnDialogComponent, ModelDisplayComponent, ProductTabItemComponent, UiTabsComponent, RecommendProductComponent, CheckoutComponent],
+  declarations: [
+    TryOnDialogComponent,
+    ModelDisplayComponent,
+    ProductTabItemComponent,
+    UiTabsComponent,
+    RecommendProductComponent,
+    CheckoutComponent,
+  ],
+  exports: [
+    TryOnDialogComponent,
+    ModelDisplayComponent,
+    ProductTabItemComponent,
+    UiTabsComponent,
+    RecommendProductComponent,
+    CheckoutComponent,
+  ],
 })
 export class TryOnDialogModule {
   constructor() {

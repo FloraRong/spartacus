@@ -7,8 +7,8 @@
   <div class="content-container">
     <div class="content-block">
       <div class="title">Your Model</div>
-      <cx-model-display></cx-model-display>
-      <checkout-part></checkout-part>
+      <cx-model-display [currentProduct]="currentProduct" [testMode]="testMode"></cx-model-display>
+      <cx-checkout-part [currentProduct]="currentProduct" [testMode]="testMode"></cx-checkout-part>
     </div>
 
     <div class="content-block">
@@ -17,10 +17,10 @@
         <product-tab-item tabName="You May Like" [active]="true" [content]="productsContent">
           <ng-template #productsContent let-tab>
             <section class="results">
-            <recommend-products
+            <cx-recommend-products
               *ngFor="let recommendProduct of recommendProductList"
               [recommendProduct]="recommendProduct">
-            </recommend-products>
+            </cx-recommend-products>
             </section>
           </ng-template>
         </product-tab-item>

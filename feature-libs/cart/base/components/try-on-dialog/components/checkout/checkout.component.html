@@ -1,15 +1,19 @@
 <div class="checkout-container">
     <div class="quantity-select-container">
-        <select name="quantity" id="quantity">
+        <select class="select-unit" name="quantity" id="quantity">
             <option value="1">One-Pieces</option>
             <option value="2">Two-Pieces</option>
         </select>
     </div>
     <div class="selected-clothes">
-        <img class="image" [src]="selectedClothImageUrl" />
-        <button class="remove-icon-button" (click)="removeSelectedCloth()" ></button>
+        <div class="selected-clothes-container" style="position: relative;">
+            <cx-icon style="font-size: 32px;" *ngIf="!selectedClothImageUrl" class="cx-icon fas fa-shopping-cart" ng-reflect-type="CART"></cx-icon>
+            <img *ngIf="selectedClothImageUrl" class="image" [src]="selectedClothImageUrl" />
+            <button  *ngIf="selectedClothImageUrl" class="remove-icon-button" (click)="removeSelectedCloth()" ></button>
+        </div>
+
         <div class="checkout-confirm">
-            <label class="checkout-info">Want to see how it looks on your body?</label>
+            <label class="checkout-info">Looks good? Order now and get a discount</label>
             <button (click)="checkout()" class="checkout">checkout</button>
         </div>
 

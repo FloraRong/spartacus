@@ -19,6 +19,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { RecommendProduct } from './recommendProduct';
 import { ShowTryOnModalEvent } from '../add-to-cart/try-on.model';
+import { TryOnService } from './services/tryon.service';
 
 @Component({
   selector: 'cx-try-on-dialog',
@@ -32,59 +33,32 @@ export class TryOnDialogComponent implements OnInit, OnDestroy {
 
   protected subscription = new Subscription();
 
-  currentProduct: Product;
+  recommendProductList: RecommendProduct[];
 
-  recommendProductList: RecommendProduct[] = [
-    {
-      id: 0,
-      name: 'Polka Dot-Light Green-Long Skirt',
-      money: '$110.95',
-      photo: "assets/images/cloth1.jpeg"
-    },
-    {
-      id: 1,
-      name: 'Black-Long Skirt',
-      money: '$120.95',
-      photo: "assets/images/cloth2.jpg"
-    },
-    {
-      id: 2,
-      name: 'Red-Floral--Long Skirt',
-      money: '$90.95',
-      photo: "assets/images/cloth3.jpg"
-    },
-    {
-      id: 3,
-      name: 'Light Brown-Polka-Long Skirt',
-      money: '$170.95',
-      photo: "assets/images/cloth4.jpeg"
-    },
-    {
-      id: 4,
-      name: 'Blue Ripped Long jeans-1Blue Long jeans-1',
-      money: '$123.95',
-      photo: "assets/images/pants5.jpg"
-    },
-    {
-      id: 5,
-      name: 'Blue Long jeans-2',
-      money: '$89.95',
-      photo: "assets/images/pants6.jpg"
-    }
-  ];
+  testMode: boolean;
+
+  currentProduct: Product;
 
   constructor(
     protected launchDialogService: LaunchDialogService,
     protected routingService: RoutingService,
-    protected el: ElementRef
+    protected el: ElementRef,
+    private tryOnService: TryOnService
   ) {}
 
   ngOnInit(): void {
-    console.log("try on init");
+    this.testMode = this.tryOnService.isDevMode();
+    this.recommendProductList = this.tryOnService.getAllRecommendProduct();
     this.launchDialogService.data$.subscribe(
       (dialogData: ShowTryOnModalEvent) => {
         if (dialogData.product) {
           this.currentProduct = dialogData.product;
+          this.tryOnService.selectProduct({
+            code: this.currentProduct.code || '',
+            name: this.currentProduct.name || '',
+            photo: this.tryOnService.getProductImage(this.currentProduct),
+            price: (this.currentProduct.price?.value || '') + (this.currentProduct.price?.currencyIso || '')
+          });
         }
       }
     );
