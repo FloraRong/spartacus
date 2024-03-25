@@ -35,7 +35,7 @@
                     <label class="sub-title must-item">Weight</label>
 
                     <div class="form-item-content" >
-                        <input class="form-item-input" [value]="nextSelectedModel.weight"> 
+                        <input class="form-item-input" [(ngModel)]="nextSelectedModel.weight"> 
                         <label class="unit">KG</label>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                     <label class="sub-title must-item">Height</label>
 
                     <div class="form-item-content" >
-                        <input class="form-item-input" [value]="nextSelectedModel.height"/> <label class="unit">CM</label>
+                        <input class="form-item-input" [(ngModel)]="nextSelectedModel.height"/> <label class="unit">CM</label>
                     </div>
                 </div>
 
@@ -60,7 +60,7 @@
             </div>
 
             <div class="form-item">
-                <label class="sub-title" style="margin-bottom: 8px;">Upload a full-body photo of yourself to generate your model</label>
+                <label class="sub-title" style="margin-bottom: 8px;">Upload a head portrait of yourself to generate your model</label>
                 <div class="form-item-content">
                     <div class="upload-container" (click)="upload()">
                         <img *ngIf="!uploadedPreview" src="assets/images/upload.png" class="upload-image" />
