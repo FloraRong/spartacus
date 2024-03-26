@@ -3,4 +3,5 @@ export interface RecommendProduct {
   name: string;
   photo?: string;
   price?: string;
+  realCode?: string;
 }

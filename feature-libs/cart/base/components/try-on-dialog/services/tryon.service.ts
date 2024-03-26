@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { RecommendProduct } from '../recommendProduct';
-import { Subject } from 'rxjs';
 import { Product } from '@spartacus/core';
+import { Subject } from 'rxjs';
 import { BodyModel } from '../components/model/model.model';
+import { RecommendProduct } from '../recommendProduct';
 
 @Injectable({
   providedIn: 'root',
@@ -10,41 +10,42 @@ import { BodyModel } from '../components/model/model.model';
 export class TryOnService {
   defaultRecommendProductList: RecommendProduct[] = [
     {
-      code: "1",
+      code: '1',
       name: 'Polka Dot-Light Green-Long Skirt',
       price: '$110.95',
-      photo: "assets/images/cloth1.jpeg"
+      photo: 'assets/images/cloth1.jpeg',
     },
     {
-      code: "2",
-      name: 'Black-Long Skirt',
+      code: '2',
+      name: 'Digital-Printed POLO Shirt',
       price: '$120.95',
-      photo: "assets/images/cloth2.jpg"
+      photo: 'assets/images/cloth2.jpg',
+      realCode: 'hackthon_p1',
     },
     {
-      code: "3",
-      name: 'Red-Floral--Long Skirt',
+      code: '3',
+      name: 'Simple Letters Shirt',
       price: '$90.95',
-      photo: "assets/images/cloth3.jpg"
+      photo: 'assets/images/cloth3.jpg',
     },
     {
-      code: "4",
+      code: '4',
       name: 'Light Brown-Polka-Long Skirt',
       price: '$170.95',
-      photo: "assets/images/cloth4.jpeg"
+      photo: 'assets/images/cloth4.jpeg',
     },
     {
-      code: "5",
+      code: '5',
       name: 'Blue Ripped Long jeans-1Blue Long jeans-1',
       price: '$123.95',
-      photo: "assets/images/pants5.jpg"
+      photo: 'assets/images/pants5.jpg',
     },
     {
-      code: "6",
+      code: '6',
       name: 'Blue Long jeans-2',
       price: '$89.95',
-      photo: "assets/images/pants6.jpg"
-    }
+      photo: 'assets/images/pants6.jpg',
+    },
   ];
 
   selectedPoduct: RecommendProduct;
@@ -81,9 +82,10 @@ export class TryOnService {
 
   getProductImage(product: Product): string {
     if (product.images) {
-      var group = product.images['GALLERY'];
-      if (group) {
-        return group[0].product.url;
+      var group = product.images['GALLERY'] as any[];
+      if (group && group.length > 1) {
+        console.log(group);
+        return group[1].zoom.url;
       }
     }
     return '';
@@ -104,7 +106,7 @@ export class TryOnService {
   tryOn(model?: BodyModel, product?: Product | RecommendProduct): string {
     if (this.isDevMode()) {
       const url = this.getRecommendProductTryOnImage(this.selectedPoduct);
-      console.log("[Dev Mode]: " + url);
+      console.log('[Dev Mode]: ' + url);
       this.lastTriedProduct = this.selectedPoduct;
       return url;
     } else {

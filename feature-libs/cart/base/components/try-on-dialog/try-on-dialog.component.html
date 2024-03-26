@@ -1,6 +1,6 @@
 <div class="try-on-dialog-container">
   <div class="header">
-    <label class="title">Visual Try On</label>
+    <label class="title">Visual Try-on</label>
     <button (click)="closeModal()" class="close-btn">x</button>
   </div>
 
@@ -17,10 +17,9 @@
         <product-tab-item tabName="You May Like" [active]="true" [content]="productsContent">
           <ng-template #productsContent let-tab>
             <section class="results">
-            <cx-recommend-products
-              *ngFor="let recommendProduct of recommendProductList"
-              [recommendProduct]="recommendProduct">
-            </cx-recommend-products>
+              <cx-recommend-products *ngFor="let recommendProduct of recommendProductList"
+                [recommendProduct]="recommendProduct">
+              </cx-recommend-products>
             </section>
           </ng-template>
         </product-tab-item>

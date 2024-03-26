@@ -2,67 +2,46 @@
   <div class="quantity" *ngIf="showQuantity">
     <label>{{ 'addToCart.quantity' | cxTranslate }}</label>
     <div class="cx-counter-stock">
-      <cx-item-counter
-        *ngIf="hasStock"
-        [max]="maxQuantity"
-        [control]="addToCartForm.get('quantity')"
-      ></cx-item-counter>
+      <cx-item-counter *ngIf="hasStock" [max]="maxQuantity" [control]="addToCartForm.get('quantity')"></cx-item-counter>
 
       <span class="info">
         <span *ngIf="showInventory$ | async">{{ getInventory() }}</span>
         {{
-          hasStock
-            ? ('addToCart.inStock' | cxTranslate)
-            : ('addToCart.outOfStock' | cxTranslate)
-        }}</span
-      >
+        hasStock
+        ? ('addToCart.inStock' | cxTranslate)
+        : ('addToCart.outOfStock' | cxTranslate)
+        }}</span>
     </div>
   </div>
 
   <ng-container *ngIf="hasStock">
-    <ng-template
-      [cxOutlet]="CartOutlets.ADD_TO_CART_PICKUP_OPTION"
-      [(cxComponentRef)]="pickupOptionCompRef"
-    ></ng-template>
+    <ng-template [cxOutlet]="CartOutlets.ADD_TO_CART_PICKUP_OPTION"
+      [(cxComponentRef)]="pickupOptionCompRef"></ng-template>
   </ng-container>
 
   <div id="tryOnContainer" class="try-on-container" *ngIf="isDetailsPage">
-    <label class="try-on-start-info"
-      >Want to see how it looks on your body?</label
-    >
+    <label class="try-on-start-info">Want to see how it looks on your body?</label>
     <img class="try-on-start-icon" src="assets/icons/joule.svg" />
     <button (click)="showTryOnModal()" type="button" class="try-on-start-btn">
-      <label class="try-on-start-text">Visual Try On</label>
+      <label class="try-on-start-text">Visual Try-on</label>
     </button>
   </div>
 
-  <button
-    *ngIf="hasStock"
-    [ngClass]="
+  <button *ngIf="hasStock" [ngClass]="
       options?.displayAddToCart
         ? 'btn btn-tertiary'
         : 'btn btn-primary btn-block'
-    "
-    type="submit"
-    [disabled]="quantity <= 0 || quantity > maxQuantity"
-  >
-    <span
-      *ngIf="
+    " type="submit" [disabled]="quantity <= 0 || quantity > maxQuantity">
+    <span *ngIf="
         options?.addToCartString === ('addToCart.buyItAgain' | cxTranslate)
-      "
-      class="repeat-icon"
-      ><cx-icon [type]="iconTypes.REPEAT"></cx-icon
-    ></span>
-    <span
-      attr.aria-label="{{
+      " class="repeat-icon"><cx-icon [type]="iconTypes.REPEAT"></cx-icon></span>
+    <span attr.aria-label="{{
         options?.addToCartString ?? ('addToCart.addToCart' | cxTranslate)
-      }}"
-      [ngClass]="
+      }}" [ngClass]="
         options?.addToCartString === ('addToCart.buyItAgain' | cxTranslate)
           ? 'buyItAgainLink'
           : ''
-      "
-    >
+      ">
       {{ options?.addToCartString ?? ('addToCart.addToCart' | cxTranslate) }}
     </span>
   </button>

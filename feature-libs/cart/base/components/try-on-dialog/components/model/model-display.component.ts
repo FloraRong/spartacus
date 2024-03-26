@@ -15,9 +15,9 @@ import {
 } from '@angular/core';
 import { Product, RoutingService } from '@spartacus/core';
 import { LaunchDialogService } from '@spartacus/storefront';
-import { BodyModel, BodySize, DefaultModel, Sex } from './model.model';
-import { TryOnService } from '../../services/tryon.service';
 import { RecommendProduct } from '../../recommendProduct';
+import { TryOnService } from '../../services/tryon.service';
+import { BodyModel, BodySize, DefaultModel, Sex } from './model.model';
 
 @Component({
   selector: 'cx-model-display',
@@ -26,7 +26,6 @@ import { RecommendProduct } from '../../recommendProduct';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModelDisplayComponent implements OnInit, OnDestroy {
-
   @Input() currentProduct: Product | RecommendProduct;
   @Input() testMode: boolean;
 
@@ -76,21 +75,24 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
     protected routingService: RoutingService,
     protected el: ElementRef,
     protected def: ChangeDetectorRef,
-    protected tryOnService: TryOnService,
+    protected tryOnService: TryOnService
   ) {}
 
   ngOnInit(): void {
     this.modelPicSrc = this.defaultModelPic;
     this.selectedModel = this.defaultModel;
     this.nextSelectedModel = this.selectedModel;
-    if (this.testMode) {
-      this.currentProduct = this.tryOnService.getAllRecommendProduct()[0];
-      this.tryOnImageSrc =  'assets/images/cloth1.jpeg';
-    } else {
-      if (this.currentProduct) {
-        this.tryOnImageSrc = this.tryOnService.getProductImage(this.currentProduct as Product);
-      }
+    if (this.currentProduct) {
+      this.tryOnImageSrc = this.tryOnService.getProductImage(this.currentProduct as Product);
     }
+    // if (this.testMode) {
+    //   this.currentProduct = this.tryOnService.getAllRecommendProduct()[0];
+    //   this.tryOnImageSrc =  'assets/images/cloth1.jpeg';
+    // } else {
+    //   if (this.currentProduct) {
+    //     this.tryOnImageSrc = this.tryOnService.getProductImage(this.currentProduct as Product);
+    //   }
+    // }
 
     this.tryOnService.subscribeSelectedProduct(() => {
       this.reStartNeeded = true;
@@ -110,10 +112,7 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
     size: BodySize;
     url: string;
   } {
-    return (
-      this.bodyImages.find((image) => image.size === bodyModel.size) ||
-      this.bodyImages[0]
-    );
+    return this.bodyImages.find((image) => image.size === bodyModel.size) || this.bodyImages[0];
   }
 
   changeEditMode() {
@@ -141,9 +140,7 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
   }
 
   upload() {
-    var uploadInput: any =
-      document.querySelector('#uploadInput') ||
-      document.getElementById('uploadInput');
+    var uploadInput: any = document.querySelector('#uploadInput') || document.getElementById('uploadInput');
     if (uploadInput) {
       uploadInput.click();
       uploadInput.onchange = (event: any) => {
@@ -151,10 +148,10 @@ export class ModelDisplayComponent implements OnInit, OnDestroy {
         if (file) {
           const reader = new FileReader();
           reader.readAsDataURL(file);
-          reader.onload = () => this.uploadedPreview = reader.result?.toString() || '';
+          reader.onload = () => (this.uploadedPreview = reader.result?.toString() || '');
         }
         setTimeout(() => {
-          console.log("detectChanges");
+          console.log('detectChanges');
           this.def.detectChanges();
         }, 1500);
       };
