@@ -5,4 +5,3 @@
  */
 
 export * from './dp-checkout.model';
-export * from './augmented.model';

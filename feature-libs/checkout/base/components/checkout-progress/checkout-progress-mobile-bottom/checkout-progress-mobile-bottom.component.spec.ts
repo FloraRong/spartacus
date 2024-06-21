@@ -47,18 +47,20 @@ describe('CheckoutProgressMobileBottomComponent', () => {
   let component: CheckoutProgressMobileBottomComponent;
   let fixture: ComponentFixture<CheckoutProgressMobileBottomComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, I18nTestingModule],
-      declarations: [
-        CheckoutProgressMobileBottomComponent,
-        MockTranslateUrlPipe,
-      ],
-      providers: [
-        { provide: CheckoutStepService, useClass: MockCheckoutStepService },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule, I18nTestingModule],
+        declarations: [
+          CheckoutProgressMobileBottomComponent,
+          MockTranslateUrlPipe,
+        ],
+        providers: [
+          { provide: CheckoutStepService, useClass: MockCheckoutStepService },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckoutProgressMobileBottomComponent);

@@ -5,4 +5,3 @@
  */
 
 export * from './user-account.facade';
-export * from './verification-token.facade';

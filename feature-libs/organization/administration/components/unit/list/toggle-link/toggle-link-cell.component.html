@@ -1,12 +1,8 @@
 <a
   *ngIf="hasItem"
-  [id]="model.uid"
   class="hide-focus-border"
   [routerLink]="{ cxRoute: route, params: routeModel } | cxUrl"
-  (keydown)="onKeydown($event)"
-  [attr.aria-haspopup]="isSwitchable"
-  [attr.data-depth]="model.depthLevel"
-  role="treeitem"
+  [tabIndex]="tabIndex"
 >
   <button
     *ngIf="isSwitchable"
@@ -15,7 +11,6 @@
     [attr.aria-expanded]="expanded"
     [attr.aria-label]="'orgUnit.tree.explore' | cxTranslate"
     (click)="toggleItem($event)"
-    tabindex="-1"
   >
     <cx-icon [type]="expanded ? 'CARET_DOWN' : 'CARET_RIGHT'"></cx-icon>
   </button>

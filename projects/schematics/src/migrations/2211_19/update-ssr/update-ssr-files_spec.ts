@@ -2,12 +2,13 @@ import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
+import { SPARTACUS_SCHEMATICS } from '../../../shared/libs-constants';
+import path from 'path';
+import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import {
   Schema as ApplicationOptions,
   Style,
 } from '@schematics/angular/application/schema';
-import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
-import path from 'path';
 import { Schema as SpartacusOptions } from '../../../add-spartacus/schema';
 import {
   EXPRESS_TOKENS,
@@ -18,7 +19,6 @@ import {
   SERVER_FILENAME,
   SSR_SETUP_IMPORT,
 } from '../../../shared/constants';
-import { SPARTACUS_SCHEMATICS } from '../../../shared/libs-constants';
 
 const updateSsrCollectionPath = path.join(
   __dirname,
@@ -47,6 +47,7 @@ describe('Update SSR', () => {
     name: 'schematics-test',
     inlineStyle: false,
     inlineTemplate: false,
+    routing: false,
     style: Style.Scss,
     skipTests: false,
     projectRoot: '',

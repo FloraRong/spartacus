@@ -57,27 +57,29 @@ class MockItemCounterComponent {
 }
 
 describe(' ConfiguratorAttributeQuantityComponent', () => {
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ConfiguratorAttributeQuantityComponent,
-        MockItemCounterComponent,
-      ],
-      imports: [I18nTestingModule],
-      providers: [
-        {
-          provide: ConfiguratorUISettingsConfig,
-          useValue: TestConfiguratorUISettings,
-        },
-      ],
-    })
-      .overrideComponent(ConfiguratorAttributeQuantityComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ConfiguratorAttributeQuantityComponent,
+          MockItemCounterComponent,
+        ],
+        imports: [I18nTestingModule],
+        providers: [
+          {
+            provide: ConfiguratorUISettingsConfig,
+            useValue: TestConfiguratorUISettings,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorAttributeQuantityComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   it('should create', () => {
     initialize(false);

@@ -37,16 +37,18 @@ describe('MessageComponent', () => {
   let fixture: ComponentFixture<MessageComponent>;
   let el: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [
-        MessageComponent,
-        MockCxIconComponent,
-        MockAtMessageDirective,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [
+          MessageComponent,
+          MockCxIconComponent,
+          MockAtMessageDirective,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MessageComponent);

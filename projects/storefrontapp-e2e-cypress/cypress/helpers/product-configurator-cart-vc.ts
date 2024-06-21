@@ -4,10 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { user } from '../sample-data/checkout-flow';
 import * as checkoutForms from './checkout-forms';
 import * as checkout from './checkout-flow';
 import * as configurationCart from './product-configurator-cart';
-import { SampleUser } from '../sample-data/checkout-flow';
+
+const shippingAddressData: checkoutForms.AddressData = user;
+const billingAddress: checkoutForms.AddressData = user;
+const paymentDetailsData: checkoutForms.PaymentDetails = user;
 
 /**
  * Verifies whether the issues banner is displayed.
@@ -81,18 +85,20 @@ export function placeOrder(): void {
     'getOrderConfirmationPage'
   );
   cy.get('cx-place-order button.btn-primary').should('be.enabled').click();
-  cy.wait(`@${orderConfirmationPage}`);
+  cy.wait(`@${orderConfirmationPage}`)
+    .its('response.statusCode')
+    .should('eq', 200);
 }
 
 /**
  * Conducts the checkout.
  */
-export function completeCheckout(user: SampleUser): void {
+export function completeCheckout(): void {
   cy.log('Fulfill shipping address form and submit');
-  checkoutForms.fillShippingAddress(<any>user, true);
+  checkoutForms.fillShippingAddress(shippingAddressData, true);
   checkout.verifyDeliveryMethod();
   cy.log('Fulfill payment details form');
-  checkoutForms.fillPaymentDetails(user, <any>user, true);
+  checkoutForms.fillPaymentDetails(paymentDetailsData, billingAddress, true);
   checkTermsAndConditions();
   placeOrder();
   cy.log('Define order number alias');

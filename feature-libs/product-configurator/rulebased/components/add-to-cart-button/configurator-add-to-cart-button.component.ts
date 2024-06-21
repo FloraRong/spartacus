@@ -12,7 +12,7 @@ import {
   inject,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { ActiveCartFacade, MultiCartFacade } from '@spartacus/cart/base/root';
+import { MultiCartFacade } from '@spartacus/cart/base/root';
 import {
   GlobalMessageService,
   GlobalMessageType,
@@ -59,7 +59,6 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
   protected subscription = new Subscription();
   protected multiCartFacade = inject(MultiCartFacade);
   protected focusService = inject(KeyboardFocusService);
-  protected activeCartFacade = inject(ActiveCartFacade);
   quantityControl = new UntypedFormControl(1);
   iconType = ICON_TYPE;
 
@@ -129,17 +128,13 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
 
   protected navigateToOverview(
     configuratorType: string,
-    owner: CommonConfigurator.Owner,
-    productCode?: string
+    owner: CommonConfigurator.Owner
   ): void {
     this.routingService
-      .go(
-        {
-          cxRoute: 'configureOverview' + configuratorType,
-          params: { ownerType: 'cartEntry', entityKey: owner.id },
-        },
-        { queryParams: { productCode: productCode } }
-      )
+      .go({
+        cxRoute: 'configureOverview' + configuratorType,
+        params: { ownerType: 'cartEntry', entityKey: owner.id },
+      })
       .then(() => {
         this.focusOverviewInTabBar();
       });
@@ -169,30 +164,6 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
     );
   }
 
-  protected isQuoteCartActive(): Observable<boolean> {
-    return this.activeCartFacade
-      .getActive()
-      .pipe(map((cart) => cart.quoteCode !== undefined));
-  }
-
-  protected getTranslationKeyForAddToCart(
-    isAddToCart: boolean
-  ): Observable<string> {
-    return this.isQuoteCartActive().pipe(
-      map((isActive) => {
-        if (isActive) {
-          return 'configurator.addToCart.confirmationQuoteUpdate';
-        } else {
-          if (!isAddToCart) {
-            return 'configurator.addToCart.confirmationUpdate';
-          } else {
-            return 'configurator.addToCart.confirmation';
-          }
-        }
-      })
-    );
-  }
-
   /**
    * Performs the navigation to the corresponding location (cart or overview pages).
    *
@@ -207,20 +178,18 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
     owner: CommonConfigurator.Owner,
     isAdd: boolean,
     isOverview: boolean,
-    showMessage: boolean,
-    productCode?: string
+    showMessage: boolean
   ): void {
+    const messageKey = isAdd
+      ? 'configurator.addToCart.confirmation'
+      : 'configurator.addToCart.confirmationUpdate';
     if (isOverview) {
       this.navigateToCart();
     } else {
-      this.navigateToOverview(configuratorType, owner, productCode);
+      this.navigateToOverview(configuratorType, owner);
     }
     if (showMessage) {
-      this.getTranslationKeyForAddToCart(isAdd)
-        .pipe(take(1))
-        .subscribe((translationKey) => {
-          this.displayConfirmationMessage(translationKey);
-        });
+      this.displayConfirmationMessage(messageKey);
     }
   }
 
@@ -228,18 +197,16 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
    * Decides on the resource key for the button. Depending on the business process (owner of the configuration) and the
    * need for a cart update, the text will differ.
    *
-   * @param routerData - Reflects the current router state
-   * @param configuration - Configuration
-   * @param isQuoteActive - Is quote active
-   * @returns - The resource key that controls the button description
+   * @param {ConfiguratorRouter.Data} routerData - Reflects the current router state
+   * @param {Configurator.Configuration} configuration - Configuration
+   * @returns {string} The resource key that controls the button description
    */
   getButtonResourceKey(
     routerData: ConfiguratorRouter.Data,
-    configuration: Configurator.Configuration,
-    isQuoteActive: boolean | null = false
+    configuration: Configurator.Configuration
   ): string {
     if (
-      (routerData.isOwnerCartEntry || isQuoteActive) &&
+      routerData.isOwnerCartEntry &&
       configuration.isCartEntryUpdateRequired
     ) {
       return 'configurator.addToCart.buttonUpdateCart';
@@ -247,11 +214,7 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
       routerData.isOwnerCartEntry &&
       !configuration.isCartEntryUpdateRequired
     ) {
-      if (isQuoteActive) {
-        return 'configurator.addToCart.buttonForQuote';
-      } else {
-        return 'configurator.addToCart.buttonAfterAddToCart';
-      }
+      return 'configurator.addToCart.buttonAfterAddToCart';
     } else {
       return 'configurator.addToCart.button';
     }
@@ -283,9 +246,6 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
     const isOwnerCartEntry =
       routerData.owner.type === CommonConfigurator.OwnerType.CART_ENTRY;
     const owner = configuration.owner;
-    const productCode = !!routerData.productCode
-      ? routerData.productCode
-      : configuration.productCode;
 
     const currentGroup = configuration.interactionState.currentGroup;
     if (currentGroup) {
@@ -301,20 +261,13 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         if (isOwnerCartEntry) {
-          this.onUpdateCart(
-            configuration,
-            configuratorType,
-            owner,
-            isOverview,
-            productCode
-          );
+          this.onUpdateCart(configuration, configuratorType, owner, isOverview);
         } else {
           this.onAddToCartForProduct(
             owner,
             configuration,
             configuratorType,
-            isOverview,
-            productCode
+            isOverview
           );
         }
       });
@@ -324,8 +277,7 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
     owner: CommonConfigurator.Owner,
     configuration: Configurator.Configuration,
     configuratorType: string,
-    isOverview: boolean,
-    productCode?: string
+    isOverview: boolean
   ) {
     const quantity = this.quantityControl.value;
     this.configuratorCartService.addToCart(
@@ -348,8 +300,7 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
         this.navigateForProductBound(
           configWithNextOwner,
           configuratorType,
-          isOverview,
-          productCode
+          isOverview
         );
       });
   }
@@ -357,21 +308,13 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
   protected navigateForProductBound(
     configWithNextOwner: Configurator.Configuration,
     configuratorType: string,
-    isOverview: boolean,
-    productCode?: string
+    isOverview: boolean
   ) {
     const nextOwner =
       configWithNextOwner.nextOwner ??
       ConfiguratorModelUtils.createInitialOwner();
 
-    this.performNavigation(
-      configuratorType,
-      nextOwner,
-      true,
-      isOverview,
-      true,
-      productCode
-    );
+    this.performNavigation(configuratorType, nextOwner, true, isOverview, true);
 
     // we clean up the cart entry related configuration, as we might have a
     // configuration for the same cart entry number stored already.
@@ -391,8 +334,7 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
     configuration: Configurator.Configuration,
     configuratorType: string,
     owner: CommonConfigurator.Owner,
-    isOverview: boolean,
-    productCode?: string
+    isOverview: boolean
   ) {
     if (configuration.isCartEntryUpdateRequired) {
       this.configuratorCartService.updateCartEntry(configuration);
@@ -403,8 +345,7 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
       owner,
       false,
       isOverview,
-      configuration.isCartEntryUpdateRequired ?? false,
-      productCode
+      configuration.isCartEntryUpdateRequired ?? false
     );
     //Only remove if we are on configuration page, because on final cart navigation,
     //the configuration will anyhow be removed
@@ -430,19 +371,6 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
         CommonConfigurator.OwnerType.SAVED_CART_ENTRY
       ) {
         this.goToSavedCartDetails(container.routerData.owner);
-      } else if (
-        container.routerData.owner.type ===
-          CommonConfigurator.OwnerType.CART_ENTRY &&
-        !container.routerData.navigateToCheckout
-      ) {
-        this.routingService.go({ cxRoute: 'cart' });
-      } else if (
-        container.routerData.owner.type === CommonConfigurator.OwnerType.PRODUCT
-      ) {
-        this.routingService.go({
-          cxRoute: 'product',
-          params: { code: container.routerData.owner.id },
-        });
       } else {
         this.routingService.go({ cxRoute: 'checkoutReviewOrder' });
       }
@@ -473,7 +401,6 @@ export class ConfiguratorAddToCartButtonComponent implements OnInit, OnDestroy {
       params: { quoteId: entryKeys.documentId },
     });
   }
-
   /**
    * Navigates to the quote that is attached to the saved cart. At the moment we
    * only support saved carts if linked to quotes.

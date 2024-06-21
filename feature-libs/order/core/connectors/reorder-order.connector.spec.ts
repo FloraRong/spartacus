@@ -21,17 +21,19 @@ describe('ReorderOrderConnector', () => {
   let adapter: ReorderOrderAdapter;
   let connector: ReorderOrderConnector;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        ReorderOrderConnector,
-        {
-          provide: ReorderOrderAdapter,
-          useClass: MockReorderOrderAdapter,
-        },
-      ],
-    });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          ReorderOrderConnector,
+          {
+            provide: ReorderOrderAdapter,
+            useClass: MockReorderOrderAdapter,
+          },
+        ],
+      });
+    })
+  );
 
   beforeEach(() => {
     adapter = TestBed.inject(ReorderOrderAdapter);

@@ -66,25 +66,27 @@ describe('ProductDetailsTabComponent', () => {
   let productDetailsTabComponent: ProductDetailsTabComponent;
   let fixture: ComponentFixture<ProductDetailsTabComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ProductDetailsTabComponent],
-      providers: [
-        {
-          provide: CurrentProductService,
-          useClass: MockCurrentProductService,
-        },
-        {
-          provide: CmsComponentData,
-          useClass: MockCmsComponentData,
-        },
-        {
-          provide: CmsService,
-          useClass: MockCmsService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ProductDetailsTabComponent],
+        providers: [
+          {
+            provide: CurrentProductService,
+            useClass: MockCurrentProductService,
+          },
+          {
+            provide: CmsComponentData,
+            useClass: MockCmsComponentData,
+          },
+          {
+            provide: CmsService,
+            useClass: MockCmsService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductDetailsTabComponent);

@@ -4,23 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Provider } from '@angular/core';
-import {
-  UserAccountFacade,
-  VerificationTokenFacade,
-} from '@spartacus/user/account/root';
 import { UserAccountService } from './user-account.service';
-import { VerificationTokenService } from './verification-token.service';
+import { UserAccountFacade } from '@spartacus/user/account/root';
+import { Provider } from '@angular/core';
 
 export const facadeProviders: Provider[] = [
   UserAccountService,
   {
     provide: UserAccountFacade,
     useExisting: UserAccountService,
-  },
-  VerificationTokenService,
-  {
-    provide: VerificationTokenFacade,
-    useExisting: VerificationTokenService,
   },
 ];

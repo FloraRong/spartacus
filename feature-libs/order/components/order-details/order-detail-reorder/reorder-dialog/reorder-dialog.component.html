@@ -2,8 +2,6 @@
   [cxFocus]="focusConfig"
   (esc)="close('Escape clicked')"
   class="cx-modal-container"
-  role="dialog"
-  aria-modal="true"
 >
   <div class="cx-modal-content">
     <ng-container>
@@ -54,7 +52,7 @@
         </ng-container>
         <ng-template #result>
           <ng-container *ngIf="!(loading$ | async); else loading">
-            <p aria-live="polite">
+            <p>
               <ng-container
                 *ngIf="!cartModifications?.length; else cartResponse"
               >

@@ -10,12 +10,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
   CmsConfig,
-  FeaturesConfigModule,
   I18nModule,
   provideDefaultConfig,
   UrlModule,
 } from '@spartacus/core';
-import { AtMessageModule, FormErrorsModule } from '@spartacus/storefront';
+import { AtMessageModule } from '@spartacus/storefront';
 import { CartNotEmptyGuard } from '../guards/cart-not-empty.guard';
 import { CheckoutAuthGuard } from '../guards/checkout-auth.guard';
 import { CheckoutPlaceOrderComponent } from './checkout-place-order.component';
@@ -29,8 +28,6 @@ import { defaultPlaceOrderSpinnerLayoutConfig } from './default-place-order-spin
     UrlModule,
     I18nModule,
     ReactiveFormsModule,
-    FormErrorsModule,
-    FeaturesConfigModule,
   ],
   providers: [
     provideDefaultConfig(defaultPlaceOrderSpinnerLayoutConfig),

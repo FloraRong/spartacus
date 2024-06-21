@@ -4,17 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Optional,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { Title } from '@spartacus/user/profile/root';
 import { Observable } from 'rxjs';
 import { UpdateProfileComponentService } from './update-profile-component.service';
-import { RoutingService } from '@spartacus/core';
 
 @Component({
   selector: 'cx-update-profile',
@@ -23,10 +17,6 @@ import { RoutingService } from '@spartacus/core';
   host: { class: 'user-form' },
 })
 export class UpdateProfileComponent {
-  @Optional() protected routingService = inject(RoutingService, {
-    optional: true,
-  });
-
   constructor(protected service: UpdateProfileComponentService) {}
 
   form: UntypedFormGroup = this.service.form;
@@ -35,9 +25,5 @@ export class UpdateProfileComponent {
 
   onSubmit(): void {
     this.service.updateProfile();
-  }
-
-  navigateTo(cxRoute: string): void {
-    this.routingService?.go({ cxRoute });
   }
 }

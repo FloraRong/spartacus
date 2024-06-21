@@ -5,4 +5,3 @@
  */
 
 export * from './user-account.service';
-export * from './verification-token.service';

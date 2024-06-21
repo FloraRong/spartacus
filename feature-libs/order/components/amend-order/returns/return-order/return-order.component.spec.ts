@@ -44,19 +44,21 @@ describe('ReturnOrderComponent', () => {
   let component: ReturnOrderComponent;
   let fixture: ComponentFixture<ReturnOrderComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormErrorsModule],
-      providers: [
-        { provide: OrderAmendService, useClass: MockOrderAmendService },
-      ],
-      declarations: [
-        ReturnOrderComponent,
-        MockAmendOrderActionComponent,
-        MockCancelOrReturnItemsComponent,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule, FormErrorsModule],
+        providers: [
+          { provide: OrderAmendService, useClass: MockOrderAmendService },
+        ],
+        declarations: [
+          ReturnOrderComponent,
+          MockAmendOrderActionComponent,
+          MockCancelOrReturnItemsComponent,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReturnOrderComponent);

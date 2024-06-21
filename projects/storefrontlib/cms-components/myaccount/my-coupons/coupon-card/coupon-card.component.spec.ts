@@ -88,25 +88,27 @@ describe('CouponCardComponent', () => {
     'MyCouponsComponentService',
     ['launchSearchPage']
   );
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [CouponCardComponent, MyCouponsComponent, MockUrlPipe],
-      imports: [I18nTestingModule, RouterTestingModule],
-      providers: [
-        { provide: LaunchDialogService, useClass: MockLaunchDialogService },
-        {
-          provide: MyCouponsComponentService,
-          useValue: couponComponentService,
-        },
-        {
-          provide: FeaturesConfig,
-          useValue: {
-            features: { level: '5.1' },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [CouponCardComponent, MyCouponsComponent, MockUrlPipe],
+        imports: [I18nTestingModule, RouterTestingModule],
+        providers: [
+          { provide: LaunchDialogService, useClass: MockLaunchDialogService },
+          {
+            provide: MyCouponsComponentService,
+            useValue: couponComponentService,
           },
-        },
-      ],
-    }).compileComponents();
-  }));
+          {
+            provide: FeaturesConfig,
+            useValue: {
+              features: { level: '5.1' },
+            },
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MyCouponsComponent);

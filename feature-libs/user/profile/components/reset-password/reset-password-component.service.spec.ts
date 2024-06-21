@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import {
-  FeaturesConfigModule,
   GlobalMessageService,
   GlobalMessageType,
   HttpErrorModel,
@@ -57,7 +56,6 @@ describe('ResetPasswordComponentService', () => {
         I18nTestingModule,
         FormErrorsModule,
         PasswordVisibilityToggleModule,
-        FeaturesConfigModule,
       ],
       providers: [
         ResetPasswordComponentService,

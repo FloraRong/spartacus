@@ -131,11 +131,13 @@ const groupListWithConflictsAndAttributesOnRootLevel: Configurator.Group[] = [
 describe('ConfiguratorBasicEffectService', () => {
   let classUnderTest: ConfiguratorBasicEffectService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      providers: [ConfiguratorBasicEffectService],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        providers: [ConfiguratorBasicEffectService],
+      }).compileComponents();
+    })
+  );
   beforeEach(() => {
     classUnderTest = TestBed.inject(
       ConfiguratorBasicEffectService as Type<ConfiguratorBasicEffectService>

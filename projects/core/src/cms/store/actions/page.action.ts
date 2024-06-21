@@ -44,10 +44,7 @@ export class CmsSetPageSuccessIndex extends StateUtils.EntitySuccessAction {
 
 export class CmsSetPageFailIndex extends StateUtils.EntityFailAction {
   readonly type = CMS_SET_PAGE_FAIL_INDEX;
-  constructor(
-    pageContext: PageContext,
-    public payload: string
-  ) {
+  constructor(pageContext: PageContext, public payload: string) {
     super(pageContext.type ?? '', pageContext.id);
   }
 }

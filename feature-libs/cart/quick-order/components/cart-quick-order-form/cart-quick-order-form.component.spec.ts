@@ -9,15 +9,13 @@ import {
 } from '@spartacus/cart/base/root';
 import {
   EventService,
-  FeatureConfigService,
   GlobalMessageService,
   GlobalMessageType,
   I18nTestingModule,
   Translatable,
 } from '@spartacus/core';
 import { FormErrorsModule } from '@spartacus/storefront';
-import { MockFeatureDirective } from 'projects/storefrontlib/shared/test/mock-feature-directive';
-import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { CartQuickOrderFormComponent } from './cart-quick-order-form.component';
 
 const mockCart: Cart = {
@@ -102,7 +100,6 @@ describe('CartQuickOrderFormComponent', () => {
   let activeCartService: ActiveCartFacade;
   let eventService: EventService;
   let globalMessageService: GlobalMessageService;
-  let featureConfigService: FeatureConfigService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -112,7 +109,7 @@ describe('CartQuickOrderFormComponent', () => {
         I18nTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [CartQuickOrderFormComponent, MockFeatureDirective],
+      declarations: [CartQuickOrderFormComponent],
       providers: [
         { provide: ActiveCartFacade, useClass: MockActiveCartService },
         {
@@ -129,7 +126,6 @@ describe('CartQuickOrderFormComponent', () => {
     activeCartService = TestBed.inject(ActiveCartFacade);
     eventService = TestBed.inject(EventService);
     globalMessageService = TestBed.inject(GlobalMessageService);
-    featureConfigService = TestBed.inject(FeatureConfigService);
 
     fixture.detectChanges();
   });
@@ -211,33 +207,20 @@ describe('CartQuickOrderFormComponent', () => {
     });
   });
 
-  describe('global error message', () => {
-    it('should not show global error message on add entry fail event in case cartQuickOrderRemoveListeningToFailEvent is enabled', () => {
-      spyOn(globalMessageService, 'add').and.callThrough();
-      component.ngOnInit();
-      component.quickOrderForm.controls['productCode'].setValue('test');
-      spyOn(featureConfigService, 'isEnabled').and.returnValue(true);
+  it('should show global error message on add entry fail event', () => {
+    spyOn(globalMessageService, 'add').and.callThrough();
+    spyOn(eventService, 'get').and.callThrough();
 
-      component.applyQuickOrder();
-      expect(globalMessageService.add).not.toHaveBeenCalled();
-    });
+    component.ngOnInit();
+    component.quickOrderForm.controls['productCode'].setValue('test');
+    component.applyQuickOrder();
+    addEntryCartEvent$.next(mockCartAddEntryFailEvent);
 
-    it('should show global error message on add entry fail event in case cartQuickOrderRemoveListeningToFailEvent is disabled', () => {
-      spyOn(globalMessageService, 'add').and.callThrough();
-      spyOn(eventService, 'get').and.callThrough();
-      component.ngOnInit();
-      component.quickOrderForm.controls['productCode'].setValue('test');
-      spyOn(featureConfigService, 'isEnabled').and.returnValue(false);
-
-      component.applyQuickOrder();
-      addEntryCartEvent$.next(mockCartAddEntryFailEvent);
-
-      expect(globalMessageService.add).toHaveBeenCalledWith(
-        {
-          key: 'quickOrderCartForm.noResults',
-        },
-        GlobalMessageType.MSG_TYPE_ERROR
-      );
-    });
+    expect(globalMessageService.add).toHaveBeenCalledWith(
+      {
+        key: 'quickOrderCartForm.noResults',
+      },
+      GlobalMessageType.MSG_TYPE_ERROR
+    );
   });
 });

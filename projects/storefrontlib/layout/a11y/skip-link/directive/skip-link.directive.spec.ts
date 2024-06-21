@@ -18,19 +18,21 @@ describe('SkipLinkDirective', () => {
   let fixture: ComponentFixture<TestContainerComponent>;
   let service: SkipLinkService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [],
-      declarations: [TestContainerComponent, SkipLinkDirective],
-      providers: [
-        SkipLinkService,
-        {
-          provide: SkipLinkConfig,
-          useValue: { skipLinks: [] },
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [],
+        declarations: [TestContainerComponent, SkipLinkDirective],
+        providers: [
+          SkipLinkService,
+          {
+            provide: SkipLinkConfig,
+            useValue: { skipLinks: [] },
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestContainerComponent);

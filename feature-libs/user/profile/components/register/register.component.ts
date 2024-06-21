@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -18,7 +18,6 @@ import {
   AnonymousConsentsService,
   AuthConfigService,
   ConsentTemplate,
-  FeatureConfigService,
   GlobalMessageEntities,
   GlobalMessageService,
   GlobalMessageType,
@@ -27,7 +26,7 @@ import {
 } from '@spartacus/core';
 import { CustomFormValidators, sortTitles } from '@spartacus/storefront';
 import { Title, UserSignUp } from '@spartacus/user/profile/root';
-import { BehaviorSubject, Observable, Subscription, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RegisterComponentService } from './register-component.service';
 
@@ -36,15 +35,6 @@ import { RegisterComponentService } from './register-component.service';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  // TODO: (CXSPA-7315) Remove feature toggle in the next major
-  private featureConfigService = inject(FeatureConfigService);
-
-  protected passwordValidators = this.featureConfigService?.isEnabled(
-    'formErrorsDescriptiveMessages'
-  )
-    ? [CustomFormValidators.passwordValidator]
-    : CustomFormValidators.passwordValidators;
-
   titles$: Observable<Title[]>;
 
   isLoading$ = new BehaviorSubject(false);
@@ -62,7 +52,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, CustomFormValidators.emailValidator]],
-      password: ['', [Validators.required, ...this.passwordValidators]],
+      password: [
+        '',
+        [Validators.required, CustomFormValidators.passwordValidator],
+      ],
       passwordconf: ['', Validators.required],
       newsletter: new UntypedFormControl({
         value: false,
@@ -147,7 +140,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       map(
         ([consent, template]: [
           AnonymousConsent | undefined,
-          ConsentTemplate | undefined,
+          ConsentTemplate | undefined
         ]) => {
           return {
             consent,

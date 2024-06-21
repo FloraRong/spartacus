@@ -97,47 +97,49 @@ describe('ConfiguratorAttributeMultiSelectionBundleComponent', () => {
     return value;
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        I18nTestingModule,
-        RouterTestingModule,
-        UrlTestingModule,
-        ReactiveFormsModule,
-        MediaModule,
-      ],
-      declarations: [
-        ConfiguratorAttributeMultiSelectionBundleComponent,
-        ConfiguratorShowMoreComponent,
-        ItemCounterComponent,
-        MockProductCardComponent,
-        MockConfiguratorAttributeQuantityComponent,
-        MockConfiguratorPriceComponent,
-      ],
-      providers: [
-        {
-          provide: ConfiguratorAttributeCompositionContext,
-          useValue: ConfiguratorTestUtils.getAttributeContext(),
-        },
-        {
-          provide: ConfiguratorCommonsService,
-          useClass: MockConfiguratorCommonsService,
-        },
-      ],
-    })
-      .overrideComponent(ConfiguratorAttributeMultiSelectionBundleComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-          providers: [
-            {
-              provide: ConfiguratorAttributeProductCardComponent,
-              useClass: MockProductCardComponent,
-            },
-          ],
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          I18nTestingModule,
+          RouterTestingModule,
+          UrlTestingModule,
+          ReactiveFormsModule,
+          MediaModule,
+        ],
+        declarations: [
+          ConfiguratorAttributeMultiSelectionBundleComponent,
+          ConfiguratorShowMoreComponent,
+          ItemCounterComponent,
+          MockProductCardComponent,
+          MockConfiguratorAttributeQuantityComponent,
+          MockConfiguratorPriceComponent,
+        ],
+        providers: [
+          {
+            provide: ConfiguratorAttributeCompositionContext,
+            useValue: ConfiguratorTestUtils.getAttributeContext(),
+          },
+          {
+            provide: ConfiguratorCommonsService,
+            useClass: MockConfiguratorCommonsService,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorAttributeMultiSelectionBundleComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+            providers: [
+              {
+                provide: ConfiguratorAttributeProductCardComponent,
+                useClass: MockProductCardComponent,
+              },
+            ],
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     const values: Configurator.Value[] = [

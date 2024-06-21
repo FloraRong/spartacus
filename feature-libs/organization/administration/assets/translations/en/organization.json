@@ -53,10 +53,9 @@
         "unknown": "Server validation error."
       }
     },
-    "information": "More information about {{title}}"
+    "information": "Information"
   },
   "orgCostCenter": {
-    "groupName": "Cost Centers",
     "header": "All cost centers ({{count}})",
     "code": "Code",
     "active": "Status",
@@ -120,7 +119,6 @@
     "unassigned": "Budget {{ item.name }} unassigned successfully"
   },
   "orgBudget": {
-    "groupName": "Budgets",
     "header": "All budgets ({{count}})",
     "code": "Code",
     "name": "Name",
@@ -178,7 +176,6 @@
     "subtitle": "Budget: {{ item.name }}"
   },
   "orgUnit": {
-    "groupName": "Units",
     "header": "All units ({{count}})",
     "unit": "Unit",
     "name": "Name",
@@ -358,7 +355,7 @@
     "zipCode": "Zip code",
     "phoneNumber": "Phone number (optional)",
     "streetAddress": "Street Address",
-    "aptSuite": "Apartment Number",
+    "aptSuite": "Apt, Suite",
     "selectOne": "Select One...",
     "hint": "When a buyer is checking out using the \"Account\" purchase method, they much choose a cost center. The delivery addresses available to the buyer depend on the unit of the cost center chosen.",
     "details": {
@@ -383,7 +380,6 @@
     }
   },
   "orgUserGroup": {
-    "groupName": "User Groups",
     "header": "All user groups ({{count}})",
     "disabled": "(disabled)",
     "uid": "Code",
@@ -455,7 +451,6 @@
     "unassigned": "Purchase limits {{item.code}} unassigned successfully"
   },
   "orgUser": {
-    "groupName": "Users",
     "header": "All users ({{count}})",
     "disabled": "(disabled)",
     "uid": "Email",
@@ -605,7 +600,6 @@
     "unassigned": "Purchase limit {{ item.code }} unassigned successfully"
   },
   "orgPurchaseLimit": {
-    "groupName": "Purchase Limits",
     "header": "All purchase limits ({{count}})",
     "name": "Name",
     "code": "Code",

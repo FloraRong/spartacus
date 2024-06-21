@@ -53,21 +53,23 @@ describe('OrderDetailTotalsComponent', () => {
   let fixture: ComponentFixture<OrderDetailTotalsComponent>;
   let mockOrderDetailsService: OrderDetailsService;
 
-  beforeEach(waitForAsync(() => {
-    mockOrderDetailsService = <OrderDetailsService>{
-      getOrderDetails() {
-        return of(mockOrder);
-      },
-    };
+  beforeEach(
+    waitForAsync(() => {
+      mockOrderDetailsService = <OrderDetailsService>{
+        getOrderDetails() {
+          return of(mockOrder);
+        },
+      };
 
-    TestBed.configureTestingModule({
-      imports: [OutletModule],
-      providers: [
-        { provide: OrderDetailsService, useValue: mockOrderDetailsService },
-      ],
-      declarations: [OrderDetailTotalsComponent],
-    }).compileComponents();
-  }));
+      TestBed.configureTestingModule({
+        imports: [OutletModule],
+        providers: [
+          { provide: OrderDetailsService, useValue: mockOrderDetailsService },
+        ],
+        declarations: [OrderDetailTotalsComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OrderDetailTotalsComponent);

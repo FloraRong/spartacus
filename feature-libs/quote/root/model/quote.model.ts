@@ -24,7 +24,6 @@ export interface OccQuote {
   quoteDiscounts?: Price;
   sapQuoteDiscountsRate?: number;
   sapQuoteDiscountsType?: QuoteDiscountType;
-  sapAttachments?: QuoteAttachment[];
   state: QuoteState;
   subTotalWithDiscounts?: Price;
   threshold?: number;
@@ -132,9 +131,4 @@ export type QuoteActionsByState = { [key in QuoteState]: QuoteActionType[] };
 export interface QuotesStateParams {
   currentPage$: Observable<number>;
   sort$: Observable<string>;
-}
-
-export interface QuoteAttachment {
-  id: string;
-  filename?: string;
 }

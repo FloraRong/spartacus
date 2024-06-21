@@ -5,11 +5,13 @@ describe('MultiStepCheckoutOrchestratorComponent', () => {
   let component: CheckoutOrchestratorComponent;
   let fixture: ComponentFixture<CheckoutOrchestratorComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [CheckoutOrchestratorComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [CheckoutOrchestratorComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckoutOrchestratorComponent);

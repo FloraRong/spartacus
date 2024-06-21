@@ -9,10 +9,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FeaturesConfigModule, I18nModule, UrlModule } from '@spartacus/core';
+import { I18nModule, UrlModule } from '@spartacus/core';
 import { DatePickerModule, FormErrorsModule } from '@spartacus/storefront';
-import { FormModule } from '../../shared/form/form.module';
 import { ItemActiveModule } from '../../shared/item-active.module';
+import { FormModule } from '../../shared/form/form.module';
 import { BudgetFormComponent } from './budget-form.component';
 
 @NgModule({
@@ -27,7 +27,6 @@ import { BudgetFormComponent } from './budget-form.component';
     FormErrorsModule,
     ItemActiveModule,
     DatePickerModule,
-    FeaturesConfigModule,
   ],
   declarations: [BudgetFormComponent],
 })

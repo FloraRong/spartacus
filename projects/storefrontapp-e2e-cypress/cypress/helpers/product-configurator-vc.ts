@@ -6,7 +6,6 @@
 
 import * as configuration from './product-configurator';
 import * as common from './common';
-import { registerCartRefreshRoute, removeCartItem } from './cart';
 
 const addToCartButtonSelector =
   'cx-configurator-add-to-cart-button button.cx-add-to-cart-btn';
@@ -108,14 +107,6 @@ export function goToCart(shopName: string) {
   });
 }
 
-export function removeAllItemsFromCart(products) {
-  registerCartRefreshRoute();
-  products.forEach((product) => {
-    removeCartItem(product);
-  });
-  cy.wait('@refresh_cart').its('response.statusCode').should('eq', 200);
-}
-
 /**
  * Verifies whether the global message is not displayed on the top of the configuration.
  */
@@ -132,27 +123,16 @@ export function checkGlobalMessageContains(text: string): void {
 }
 
 /**
- * Clicks on 'Configure' button in catalog list.
+ * Clicks on 'Add to Cart' button in catalog list.
  */
-export function clickOnConfigureBtnInCatalog(): void {
-  cy.get('cx-configure-product button')
-    .contains('Configure')
+export function clickOnConfigureBtnInCatalog(productName: string): void {
+  cy.get(
+    `cx-configure-product a[href*='/configure/vc/product/entityKey/${productName}'`
+  )
     .click()
     .then(() => {
       cy.location('pathname').should('contain', '/product/entityKey/');
-      checkConfigPageDisplayed();
-    });
-}
-
-/**
- * Clicks on 'Show details' button in the catalog list or the product details page.
- */
-export function clickOnShowDetailsBtn(): void {
-  cy.get('cx-configure-product button')
-    .contains('Show details')
-    .click()
-    .then(() => {
-      cy.location('pathname').should('contain', '/product/entityKey/');
+      this.checkConfigPageDisplayed();
     });
 }
 
@@ -262,11 +242,7 @@ export function checkConflictDetectedMsgNotDisplayed(
   attributeName: string
 ): void {
   const attributeId = configuration.getAttributeLabelId(attributeName);
-  cy.get(`#${attributeId}`)
-    .parent()
-    .within(() => {
-      cy.get('.cx-conflict-msg').should('not.exist');
-    });
+  cy.get(`#${attributeId}`).next().should('not.exist');
 }
 
 /**

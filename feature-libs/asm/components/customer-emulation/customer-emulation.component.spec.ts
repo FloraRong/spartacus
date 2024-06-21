@@ -59,31 +59,33 @@ describe('CustomerEmulationComponent', () => {
   let el: DebugElement;
   let featureModulesService: FeatureModulesService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [
-        CustomerEmulationComponent,
-        MockFeatureLevelDirective,
-        MockAsmBindCartComponent,
-      ],
-      providers: [
-        {
-          provide: FeatureModulesService,
-          useClass: mockFeatureModulesService,
-        },
-        { provide: UserAccountFacade, useClass: MockUserAccountFacade },
-        { provide: AsmComponentService, useClass: MockAsmComponentService },
-        { provide: LaunchDialogService, useClass: MockLaunchDialogService },
-        {
-          provide: FeaturesConfig,
-          useValue: {
-            features: { level: '6.3' },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [
+          CustomerEmulationComponent,
+          MockFeatureLevelDirective,
+          MockAsmBindCartComponent,
+        ],
+        providers: [
+          {
+            provide: FeatureModulesService,
+            useClass: mockFeatureModulesService,
           },
-        },
-      ],
-    }).compileComponents();
-  }));
+          { provide: UserAccountFacade, useClass: MockUserAccountFacade },
+          { provide: AsmComponentService, useClass: MockAsmComponentService },
+          { provide: LaunchDialogService, useClass: MockLaunchDialogService },
+          {
+            provide: FeaturesConfig,
+            useValue: {
+              features: { level: '6.3' },
+            },
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomerEmulationComponent);

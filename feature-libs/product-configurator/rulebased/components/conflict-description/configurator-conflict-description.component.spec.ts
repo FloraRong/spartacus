@@ -19,22 +19,24 @@ describe('ConfigurationConflictDescriptionComponent', () => {
   let fixture: ComponentFixture<ConfiguratorConflictDescriptionComponent>;
   let htmlElem: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ConfiguratorConflictDescriptionComponent,
-        MockCxIconComponent,
-      ],
-      imports: [],
-      providers: [],
-    })
-      .overrideComponent(ConfiguratorConflictDescriptionComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ConfiguratorConflictDescriptionComponent,
+          MockCxIconComponent,
+        ],
+        imports: [],
+        providers: [],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorConflictDescriptionComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfiguratorConflictDescriptionComponent);

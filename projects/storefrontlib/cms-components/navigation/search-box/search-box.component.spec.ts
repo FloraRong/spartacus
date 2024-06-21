@@ -11,7 +11,7 @@ import {
   RouterState,
   RoutingService,
 } from '@spartacus/core';
-import { BehaviorSubject, EMPTY, Observable, ReplaySubject, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of, ReplaySubject } from 'rxjs';
 import { CmsComponentData } from '../../../cms-structure/page/model/cms-component-data';
 import { SearchBoxComponentService } from './search-box-component.service';
 import { SearchBoxComponent } from './search-box.component';
@@ -138,40 +138,42 @@ describe('SearchBoxComponent', () => {
     clearResults() {}
   }
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        BrowserAnimationsModule,
-        RouterModule.forRoot([]),
-        I18nTestingModule,
-      ],
-      declarations: [
-        SearchBoxComponent,
-        MockUrlPipe,
-        MockHighlightPipe,
-        MockCxIconComponent,
-        MockMediaComponent,
-      ],
-      providers: [
-        {
-          provide: ProductSearchService,
-          useValue: {},
-        },
-        {
-          provide: CmsComponentData,
-          useClass: MockCmsComponentData,
-        },
-        {
-          provide: SearchBoxComponentService,
-          useClass: SearchBoxComponentServiceSpy,
-        },
-        {
-          provide: RoutingService,
-          useClass: MockRoutingService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          BrowserAnimationsModule,
+          RouterModule.forRoot([]),
+          I18nTestingModule,
+        ],
+        declarations: [
+          SearchBoxComponent,
+          MockUrlPipe,
+          MockHighlightPipe,
+          MockCxIconComponent,
+          MockMediaComponent,
+        ],
+        providers: [
+          {
+            provide: ProductSearchService,
+            useValue: {},
+          },
+          {
+            provide: CmsComponentData,
+            useClass: MockCmsComponentData,
+          },
+          {
+            provide: SearchBoxComponentService,
+            useClass: SearchBoxComponentServiceSpy,
+          },
+          {
+            provide: RoutingService,
+            useClass: MockRoutingService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   describe('Default config', () => {
     beforeEach(() => {
@@ -240,12 +242,15 @@ describe('SearchBoxComponent', () => {
         expect(fixture.debugElement.query(By.css('.results'))).toBeFalsy();
       });
 
-      it('should contain search results panel after search input', waitForAsync(() => {
-        searchBoxComponent.queryText = 'test input';
-        fixture.detectChanges();
+      it(
+        'should contain search results panel after search input',
+        waitForAsync(() => {
+          searchBoxComponent.queryText = 'test input';
+          fixture.detectChanges();
 
-        expect(fixture.debugElement.query(By.css('.results'))).toBeTruthy();
-      }));
+          expect(fixture.debugElement.query(By.css('.results'))).toBeTruthy();
+        })
+      );
 
       it('should contain 2 suggestion after search', () => {
         searchBoxComponent.queryText = 'te';
@@ -278,14 +283,6 @@ describe('SearchBoxComponent', () => {
 
         expect(box.value).toBe('');
         expect(box).toBe(getFocusedElement());
-      });
-
-      it('should not be focusable while hidden on mobile', () => {
-        searchBoxComponent.searchBoxActive = false;
-        expect(searchBoxComponent.getTabIndex(true)).toBe(-1);
-        searchBoxComponent.searchBoxActive = true;
-        expect(searchBoxComponent.getTabIndex(true)).toBe(0);
-        expect(searchBoxComponent.getTabIndex(false)).toBe(0);
       });
     });
 

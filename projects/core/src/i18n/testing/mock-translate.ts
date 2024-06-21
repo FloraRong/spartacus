@@ -4,15 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export function mockTranslate(
-  key: string | string[] | undefined,
-  options: any = {}
-) {
-  const keyString = Array.isArray(key) ? key.join(',') : key;
+export function mockTranslate(key: string | undefined, options: any = {}) {
   const optionsString = Object.keys(options)
     .sort()
     .map((optionName) => `${optionName}:${options[optionName]}`)
     .join(' ');
-
-  return optionsString ? `${keyString} ${optionsString}` : keyString;
+  return optionsString ? `${key} ${optionsString}` : key;
 }

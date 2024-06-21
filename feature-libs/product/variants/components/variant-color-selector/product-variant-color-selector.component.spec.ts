@@ -48,15 +48,17 @@ describe('ProductVariantColorSelectorComponent', () => {
   let fixture: ComponentFixture<ProductVariantColorSelectorComponent>;
   let routingService: RoutingService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ProductVariantColorSelectorComponent],
-      imports: [RouterTestingModule, I18nTestingModule],
-      providers: [{ provide: RoutingService, useClass: MockRoutingService }],
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ProductVariantColorSelectorComponent],
+        imports: [RouterTestingModule, I18nTestingModule],
+        providers: [{ provide: RoutingService, useClass: MockRoutingService }],
+      }).compileComponents();
 
-    routingService = TestBed.inject(RoutingService);
-  }));
+      routingService = TestBed.inject(RoutingService);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductVariantColorSelectorComponent);

@@ -24,19 +24,21 @@ describe('StoreFinderStoreDescriptionComponent', () => {
   let component: StoreFinderStoreDescriptionComponent;
   let fixture: ComponentFixture<StoreFinderStoreDescriptionComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, I18nTestingModule],
-      declarations: [
-        StoreFinderStoreDescriptionComponent,
-        MockScheduleComponent,
-        MockStoreFinderMapComponent,
-      ],
-      providers: [
-        { provide: StoreFinderService, useClass: StoreFinderServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule, I18nTestingModule],
+        declarations: [
+          StoreFinderStoreDescriptionComponent,
+          MockScheduleComponent,
+          MockStoreFinderMapComponent,
+        ],
+        providers: [
+          { provide: StoreFinderService, useClass: StoreFinderServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(StoreFinderStoreDescriptionComponent);

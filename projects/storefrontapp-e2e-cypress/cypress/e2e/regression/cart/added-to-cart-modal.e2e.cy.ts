@@ -64,8 +64,16 @@ describe('Added to cart modal - Anonymous user', () => {
         cy.get('.cx-dialog-total').should('contain', '2 items');
 
         // check action button links
-        cy.get('button.btn-primary').scrollIntoView().should('be.visible');
-        cy.get('button.btn-secondary').should('be.visible');
+        cy.get('.btn-primary')
+          .should('have.attr', 'href')
+          .then(($href) => {
+            expect($href).contain('/cart');
+          });
+        cy.get('.btn-secondary')
+          .should('have.attr', 'href')
+          .then(($href) => {
+            expect($href).contain('/checkout');
+          });
 
         cy.get('[aria-label="Close Modal"]').click();
       });

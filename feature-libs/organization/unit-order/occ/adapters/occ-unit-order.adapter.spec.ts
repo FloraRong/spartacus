@@ -101,20 +101,23 @@ describe('OccUnitOrderAdapter', () => {
   });
 
   describe('loadUnitOrderDetail', () => {
-    it('should fetch a single unit-level order', waitForAsync(() => {
-      occOrderHistoryAdapter
-        .loadUnitOrderDetail(userId, orderDetailCode)
-        .subscribe();
-      httpMock.expectOne((req: HttpRequest<any>) => {
-        return req.method === 'GET';
-      }, `GET a single order`);
-      expect(occEnpointsService.buildUrl).toHaveBeenCalledWith(
-        'unitLevelOrderDetail',
-        {
-          urlParams: { userId, orderId: orderDetailCode },
-        }
-      );
-    }));
+    it(
+      'should fetch a single unit-level order',
+      waitForAsync(() => {
+        occOrderHistoryAdapter
+          .loadUnitOrderDetail(userId, orderDetailCode)
+          .subscribe();
+        httpMock.expectOne((req: HttpRequest<any>) => {
+          return req.method === 'GET';
+        }, `GET a single order`);
+        expect(occEnpointsService.buildUrl).toHaveBeenCalledWith(
+          'unitLevelOrderDetail',
+          {
+            urlParams: { userId, orderId: orderDetailCode },
+          }
+        );
+      })
+    );
 
     it('should use converter', () => {
       occOrderHistoryAdapter

@@ -39,18 +39,20 @@ describe('ConfiguratorPriceComponent', () => {
   let htmlElem: HTMLElement;
   let directionService: DirectionService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ConfiguratorPriceComponent, MockNumericPipe],
-      imports: [I18nTestingModule],
-      providers: [
-        {
-          provide: DirectionService,
-          useClass: MockDirectionService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ConfiguratorPriceComponent, MockNumericPipe],
+        imports: [I18nTestingModule],
+        providers: [
+          {
+            provide: DirectionService,
+            useClass: MockDirectionService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfiguratorPriceComponent);

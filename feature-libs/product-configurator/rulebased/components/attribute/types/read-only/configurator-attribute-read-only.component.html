@@ -10,9 +10,8 @@
         <div *ngIf="value.selected" class="form-check">
           <span
             id="{{
-              createValueUiKey('aria-label', attribute.name, value.valueCode)
+              createValueUiKey('label', attribute.name, value.valueCode)
             }}"
-            role="note"
             tabindex="0"
             class="cx-visually-hidden"
           >
@@ -52,12 +51,11 @@
         <span
           id="{{
             createValueUiKey(
-              'aria-label',
+              'label',
               attribute.name,
               attribute.selectedSingleValue
             )
           }}"
-          role="note"
           tabindex="0"
           class="cx-visually-hidden"
         >
@@ -70,9 +68,8 @@
       <ng-container *ngIf="attribute.userInput">
         <span
           id="{{
-            createValueUiKey('aria-label', attribute.name, attribute.userInput)
+            createValueUiKey('label', attribute.name, attribute.userInput)
           }}"
-          role="note"
           tabindex="0"
           class="cx-visually-hidden"
         >

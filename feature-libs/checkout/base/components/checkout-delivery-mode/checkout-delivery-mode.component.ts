@@ -4,12 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Optional,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -18,17 +13,12 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { ActiveCartFacade, CartOutlets } from '@spartacus/cart/base/root';
 import { CheckoutDeliveryModesFacade } from '@spartacus/checkout/base/root';
-import {
-  FeatureConfigService,
-  GlobalMessageService,
-  GlobalMessageType,
-} from '@spartacus/core';
+import { GlobalMessageService, GlobalMessageType } from '@spartacus/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
   map,
-  take,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -46,10 +36,6 @@ export class CheckoutDeliveryModeComponent {
   protected readonly isSetDeliveryModeHttpErrorSub = new BehaviorSubject(false);
 
   readonly CartOutlets = CartOutlets;
-
-  @Optional() featureConfigService = inject(FeatureConfigService, {
-    optional: true,
-  });
 
   isSetDeliveryModeHttpError$ =
     this.isSetDeliveryModeHttpErrorSub.asObservable();
@@ -114,26 +100,17 @@ export class CheckoutDeliveryModeComponent {
     protected activeCartFacade: ActiveCartFacade
   ) {}
 
-  changeMode(code: string | undefined, event?: Event): void {
+  changeMode(code: string | undefined): void {
     if (!code) {
       return;
     }
-    const lastFocusedId = (<HTMLElement>event?.target)?.id;
+
     this.busy$.next(true);
+
     this.checkoutDeliveryModesFacade.setDeliveryMode(code).subscribe({
       complete: () => this.onSuccess(),
       error: () => this.onError(),
     });
-
-    // TODO: (CXSPA-6599) - Remove feature flag next major release
-    if (this.featureConfigService?.isEnabled('a11yCheckoutDeliveryFocus')) {
-      const isTriggeredByKeyboard = (<MouseEvent>event)?.screenX === 0;
-      if (isTriggeredByKeyboard) {
-        this.restoreFocus(lastFocusedId, code);
-        return;
-      }
-      this.mode.setValue({ deliveryModeId: code });
-    }
   }
 
   next(): void {
@@ -161,23 +138,5 @@ export class CheckoutDeliveryModeComponent {
 
     this.isSetDeliveryModeHttpErrorSub.next(true);
     this.busy$.next(false);
-  }
-
-  /**
-   * Restores focus after data is updated.
-   */
-  protected restoreFocus(lastFocusedId: string, code: string): void {
-    this.isUpdating$
-      .pipe(
-        filter((isUpdating) => !isUpdating),
-        take(1)
-      )
-      .subscribe(() => {
-        setTimeout(() => {
-          document.querySelector('main')?.classList.remove('mouse-focus');
-          this.mode.setValue({ deliveryModeId: code });
-          document.getElementById(lastFocusedId)?.focus();
-        }, 0);
-      });
   }
 }

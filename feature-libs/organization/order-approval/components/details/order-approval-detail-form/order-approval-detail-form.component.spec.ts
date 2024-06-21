@@ -6,11 +6,10 @@ import {
   PipeTransform,
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { I18nTestingModule } from '@spartacus/core';
-import { MockFeatureDirective } from 'projects/storefrontlib/shared/test/mock-feature-directive';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import {
   OrderApproval,
@@ -50,8 +49,6 @@ class MockOrderApprovalDetailService {
 })
 class MockFormErrorsComponent {
   @Input() control: UntypedFormControl;
-  @Input()
-  translationParams: { [key: string]: string | null };
 }
 
 @Component({
@@ -95,7 +92,6 @@ describe('OrderApprovalDetailFormComponent', () => {
         MockFormErrorsComponent,
         MockSpinnerComponent,
         MockUrlPipe,
-        MockFeatureDirective,
       ],
       providers: [
         {

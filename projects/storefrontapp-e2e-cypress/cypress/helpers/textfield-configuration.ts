@@ -51,7 +51,7 @@ export function goToProductDetailsPage(
  */
 export function clickOnConfigureButton(): void {
   cy.log("Click on 'Configure' button");
-  cy.get('cx-configure-product button')
+  cy.get('cx-configure-product a')
     .click()
     .then(() => {
       checkConfigurationPageIsDisplayed();

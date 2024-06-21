@@ -406,7 +406,9 @@ describe('Profile-tag events', () => {
 
   it('should not send a Navigated event when merchandising banner is clicked', () => {
     const categoryPage = checkoutFlow.waitForCategoryPage('578', 'getCategory');
-    cy.get('.Section1 cx-banner cx-generic-link a').first().click();
+    cy.get(
+      'cx-page-slot cx-banner img[alt="Save Big On Select SLR & DSLR Cameras"]'
+    ).click();
     cy.wait(`@${categoryPage}`).its('response.statusCode').should('eq', 200);
     cy.window().should((win) => {
       expect(
@@ -437,7 +439,7 @@ describe('Consent Changed', () => {
             win,
             profileTagHelper.EventNames.CONSENT_CHANGED
           )
-        ).to.equal(2);
+        ).to.equal(1);
         const consentRejected = profileTagHelper.getEvent(
           win,
           profileTagHelper.EventNames.CONSENT_CHANGED
@@ -453,11 +455,11 @@ describe('Consent Changed', () => {
           win,
           profileTagHelper.EventNames.CONSENT_CHANGED
         )
-      ).to.equal(3);
+      ).to.equal(2);
       const consentAccepted = profileTagHelper.getEvent(
         win,
         profileTagHelper.EventNames.CONSENT_CHANGED
-      )[2];
+      )[1];
       expect(consentAccepted.data.granted).to.eq(true);
     });
   });
@@ -546,7 +548,7 @@ function goToProductPage(): Cypress.Chainable<number> {
     productCode,
     'getProductPage'
   );
-  cy.get('.Section4 cx-banner').first().find('a').click({ force: true });
+  cy.get('.Section4 cx-banner').first().find('img').click({ force: true });
   return cy
     .wait(`@${productPage}`)
     .its('response.statusCode')

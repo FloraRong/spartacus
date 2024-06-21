@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
 import {
   CmsConfig,
   ConfigModule,
-  FeaturesConfigModule,
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
@@ -36,7 +35,6 @@ import { ConfigureProductComponent } from './configure-product.component';
     UrlModule,
     I18nModule,
     IconModule,
-    FeaturesConfigModule,
   ],
   providers: [
     provideOutlet({

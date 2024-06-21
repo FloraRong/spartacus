@@ -151,37 +151,39 @@ describe('ConfiguratorAttributeProductCardComponent', () => {
     return configValue;
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        I18nTestingModule,
-        ReactiveFormsModule,
-        RouterTestingModule,
-        UrlTestingModule,
-        MediaModule,
-      ],
-      declarations: [
-        ConfiguratorAttributeProductCardComponent,
-        ConfiguratorShowMoreComponent,
-        ItemCounterComponent,
-        MockConfiguratorPriceComponent,
-        MockFocusDirective,
-        MockConfiguratorAttributeQuantityComponent,
-      ],
-      providers: [
-        {
-          provide: ProductService,
-          useClass: MockProductService,
-        },
-      ],
-    })
-      .overrideComponent(ConfiguratorAttributeProductCardComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          I18nTestingModule,
+          ReactiveFormsModule,
+          RouterTestingModule,
+          UrlTestingModule,
+          MediaModule,
+        ],
+        declarations: [
+          ConfiguratorAttributeProductCardComponent,
+          ConfiguratorShowMoreComponent,
+          ItemCounterComponent,
+          MockConfiguratorPriceComponent,
+          MockFocusDirective,
+          MockConfiguratorAttributeQuantityComponent,
+        ],
+        providers: [
+          {
+            provide: ProductService,
+            useClass: MockProductService,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorAttributeProductCardComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(

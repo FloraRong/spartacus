@@ -14,19 +14,21 @@ describe('ConfiguratorShowMoreComponent', () => {
   let htmlElem: HTMLElement;
   let config: Config;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [ConfiguratorShowMoreComponent],
-      providers: [{ provide: Config, useClass: MockConfig }],
-    })
-      .overrideComponent(ConfiguratorShowMoreComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [ConfiguratorShowMoreComponent],
+        providers: [{ provide: Config, useClass: MockConfig }],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorShowMoreComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfiguratorShowMoreComponent);

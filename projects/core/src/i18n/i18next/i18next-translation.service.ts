@@ -28,7 +28,7 @@ export class I18nextTranslationService implements TranslationService {
   ) {}
 
   translate(
-    key: string | string[],
+    key: string,
     options: any = {},
     whitespaceUntilLoaded: boolean = false
   ): Observable<string> {
@@ -39,48 +39,30 @@ export class I18nextTranslationService implements TranslationService {
     // Otherwise, we the will trigger additional deferred change detection in a view that consumes the returned observable,
     // which together with `switchMap` operator may lead to an infinite loop.
 
-    const translationKeys = Array.isArray(key) ? key : [key];
-
-    const chunkNamesByKeys: Map<string, string> = new Map();
-    const namespacedKeys: string[] = [];
-
-    translationKeys.forEach((translationKey) => {
-      const chunkName =
-        this.translationChunk.getChunkNameForKey(translationKey);
-      const namespacedKey = this.getNamespacedKey(translationKey, chunkName);
-      namespacedKeys.push(namespacedKey);
-      chunkNamesByKeys.set(translationKey, chunkName);
-    });
+    const chunkName = this.translationChunk.getChunkNameForKey(key);
+    const namespacedKey = this.getNamespacedKey(key, chunkName);
 
     return new Observable<string>((subscriber) => {
       const translate = () => {
         if (!this.i18next.isInitialized) {
           return;
         }
-
-        // make sure chunks are loaded
-        let namespacesLoaded = false;
-
-        // loadNamespaces has cache under the hood, so it won't load the same chunk twice
-        // when namespaces are already loaded, the callback will be called synchronously:
-        this.i18next.loadNamespaces(
-          Array.from(chunkNamesByKeys.values()),
-          () => {
-            namespacesLoaded = true;
-            if (this.i18next.exists(namespacedKeys, options)) {
-              subscriber.next(
-                this.i18next.t(namespacedKeys, options as TOptions)
-              );
-            } else {
-              this.reportMissingKey(chunkNamesByKeys);
-              subscriber.next(this.getFallbackValue(namespacedKeys));
-            }
+        if (this.i18next.exists(namespacedKey, options)) {
+          subscriber.next(this.i18next.t(namespacedKey, options as TOptions));
+        } else {
+          if (whitespaceUntilLoaded) {
+            subscriber.next(this.NON_BREAKING_SPACE);
           }
-        );
-
-        // if namespaces are not loaded yet, we can emit a non-breaking space
-        if (!namespacesLoaded && whitespaceUntilLoaded) {
-          subscriber.next(this.NON_BREAKING_SPACE);
+          this.i18next.loadNamespaces(chunkName, () => {
+            if (!this.i18next.exists(namespacedKey, options)) {
+              this.reportMissingKey(key, chunkName);
+              subscriber.next(this.getFallbackValue(namespacedKey));
+            } else {
+              subscriber.next(
+                this.i18next.t(namespacedKey, options as TOptions)
+              );
+            }
+          });
         }
       };
 
@@ -95,25 +77,17 @@ export class I18nextTranslationService implements TranslationService {
   }
 
   /**
-   * Returns a fallback value in case when the all given keys are missing
+   * Returns a fallback value in case when the given key is missing
+   * @param key
    */
-  protected getFallbackValue(keyOrKeys: string | string[]): string {
-    const formattedKey = Array.isArray(keyOrKeys)
-      ? keyOrKeys.join(', ')
-      : keyOrKeys;
-
-    return isDevMode() ? `[${formattedKey}]` : this.NON_BREAKING_SPACE;
+  protected getFallbackValue(key: string): string {
+    return isDevMode() ? `[${key}]` : this.NON_BREAKING_SPACE;
   }
 
-  private reportMissingKey(chunkNamesByKeys: Map<string, string>) {
-    const keys = [...chunkNamesByKeys.keys()];
+  private reportMissingKey(key: string, chunkName: string) {
     if (isDevMode()) {
       this.logger.warn(
-        `Translation keys missing [${keys.join(', ')}]. Attempted to load ${[
-          ...chunkNamesByKeys,
-        ]
-          .map(([key, chunk]) => `'${key}' from chunk '${chunk}'`)
-          .join(', ')}.`
+        `Translation key missing '${key}' in the chunk '${chunkName}'`
       );
     }
   }

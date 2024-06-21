@@ -35,7 +35,6 @@ export class ConfiguratorGroupTitleComponent implements OnInit, OnDestroy {
   @HostBinding('class.ghost') ghostStyle = true;
   protected subscription = new Subscription();
   protected readonly PRE_HEADER = '.PreHeader';
-  protected readonly ADD_TO_CART_BUTTON = 'cx-configurator-add-to-cart-button';
 
   displayedGroup$: Observable<Configurator.Group> =
     this.configRouterExtractorService.extractRouterData().pipe(
@@ -68,28 +67,11 @@ export class ConfiguratorGroupTitleComponent implements OnInit, OnDestroy {
             'display',
             'none'
           );
-          this.configuratorStorefrontUtilsService.changeStyling(
-            this.ADD_TO_CART_BUTTON,
-            'z-index',
-            'calc(var(--cx-popover-z-index) + 10)'
-          );
-
-          this.configuratorStorefrontUtilsService.focusFirstActiveElement(
-            '.cx-group-title'
-          );
         } else {
           this.configuratorStorefrontUtilsService.changeStyling(
             this.PRE_HEADER,
             'display',
             'block'
-          );
-          this.configuratorStorefrontUtilsService.changeStyling(
-            this.ADD_TO_CART_BUTTON,
-            'z-index',
-            '0'
-          );
-          this.configuratorStorefrontUtilsService.focusFirstActiveElement(
-            'cx-hamburger-menu'
           );
         }
       })

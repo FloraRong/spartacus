@@ -46,17 +46,19 @@ describe('SaveForLaterComponent', () => {
     'getComponentData',
   ]);
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [SaveForLaterComponent, MockCartItemListComponent],
-      imports: [I18nTestingModule],
-      providers: [
-        { provide: CmsService, useValue: mockCmsService },
-        { provide: ActiveCartFacade, useValue: mockActiveCartService },
-        { provide: SelectiveCartFacade, useValue: mockSelectiveCartService },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SaveForLaterComponent, MockCartItemListComponent],
+        imports: [I18nTestingModule],
+        providers: [
+          { provide: CmsService, useValue: mockCmsService },
+          { provide: ActiveCartFacade, useValue: mockActiveCartService },
+          { provide: SelectiveCartFacade, useValue: mockSelectiveCartService },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SaveForLaterComponent);

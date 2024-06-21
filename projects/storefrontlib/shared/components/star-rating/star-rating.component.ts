@@ -13,7 +13,6 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { useFeatureStyles } from '@spartacus/core';
 import { ICON_TYPE } from '../../../cms-components/misc/index';
 
 /**
@@ -52,10 +51,6 @@ export class StarRatingComponent {
    */
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() change = new EventEmitter<number>();
-
-  constructor() {
-    useFeatureStyles('a11yVisibleFocusOverflows');
-  }
 
   setRate(value: number): void {
     if (this.disabled) {

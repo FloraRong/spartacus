@@ -85,22 +85,24 @@ describe('WishListItemComponent', () => {
   let el: DebugElement;
   let componentInjector: Injector;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule, RouterTestingModule],
-      declarations: [
-        WishListItemComponent,
-        MockPictureComponent,
-        MockAddToCartComponent,
-        MockUrlPipe,
-        MockAtMessageDirective,
-      ],
-    })
-      .overrideComponent(WishListItemComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule, RouterTestingModule],
+        declarations: [
+          WishListItemComponent,
+          MockPictureComponent,
+          MockAddToCartComponent,
+          MockUrlPipe,
+          MockAtMessageDirective,
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(WishListItemComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WishListItemComponent);

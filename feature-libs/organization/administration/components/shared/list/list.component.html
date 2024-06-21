@@ -2,9 +2,8 @@
   <ng-container *ngIf="structure$ | async as structure">
     <cx-view class="list" *ngIf="listData$ | async as data">
       <div class="header">
-        <div aria-live="polite" class="title">
-          <!-- TODO: (CXSPA-6624) - Remove feature flag next major release -->
-          <h2 *cxFeature="'a11yOrganizationListHeadingOrder'">
+        <div class="title">
+          <h3>
             {{
               viewType + '.header' | cxTranslate: { count: getListCount(data) }
             }}
@@ -17,27 +16,6 @@
                 displayCloseButton: true
               }"
               [attr.aria-label]="'organization.information' | cxTranslate"
-            >
-              <cx-icon [type]="iconTypes.INFO"> </cx-icon>
-            </button>
-          </h2>
-
-          <h3 *cxFeature="'!a11yOrganizationListHeadingOrder'">
-            {{
-              viewType + '.header' | cxTranslate: { count: getListCount(data) }
-            }}
-            <button
-              [cxPopover]="listHint"
-              [cxPopoverOptions]="{
-                placement: 'auto',
-                class: 'hint-popover',
-                displayCloseButton: true
-              }"
-              [attr.aria-label]="
-                'organization.information'
-                  | cxTranslate
-                    : { title: viewType + '.groupName' | cxTranslate }
-              "
             >
               <cx-icon [type]="iconTypes.INFO"> </cx-icon>
             </button>
@@ -98,7 +76,7 @@
         [i18nRoot]="domainType"
         [currentItem]="{ property: key, value: currentKey$ | async }"
         (launch)="launchItem($event)"
-        role="tree"
+        [cxFocus]="{ trap: trapFocus.both }"
       >
       </cx-table>
 

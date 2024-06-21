@@ -3,17 +3,12 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { I18nTestingModule, RoutingService } from '@spartacus/core';
+import { I18nTestingModule } from '@spartacus/core';
 import { LoginRegisterComponent } from './login-register.component';
-import { MockFeatureDirective } from 'projects/storefrontlib/shared/test/mock-feature-directive';
-class MockRoutingService implements Partial<RoutingService> {
-  go = () => Promise.resolve(true);
-}
 
 describe('LoginRegisterComponent', () => {
   let component: LoginRegisterComponent;
   let fixture: ComponentFixture<LoginRegisterComponent>;
-  let routingService: RoutingService;
 
   @Pipe({
     name: 'cxUrl',
@@ -32,17 +27,13 @@ describe('LoginRegisterComponent', () => {
 
   const testBedDefaults = {
     imports: [RouterTestingModule, I18nTestingModule],
-    declarations: [LoginRegisterComponent, MockUrlPipe, MockFeatureDirective],
-    providers: [
-      { provide: ActivatedRoute, useClass: MockActivatedRoute },
-      { provide: RoutingService, useClass: MockRoutingService },
-    ],
+    declarations: [LoginRegisterComponent, MockUrlPipe],
+    providers: [{ provide: ActivatedRoute, useClass: MockActivatedRoute }],
   };
 
   function createComponent() {
     fixture = TestBed.createComponent(LoginRegisterComponent);
     component = fixture.componentInstance;
-    routingService = TestBed.inject(RoutingService);
   }
 
   function callNgInit() {
@@ -50,9 +41,11 @@ describe('LoginRegisterComponent', () => {
     fixture.detectChanges();
   }
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule(testBedDefaults).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule(testBedDefaults).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     createComponent();
@@ -104,40 +97,6 @@ describe('LoginRegisterComponent', () => {
 
       expect(registerLink).toBeFalsy();
       expect(guestLinkElement).toBeTruthy();
-    });
-
-    it('should navigate to register', () => {
-      spyOn(routingService, 'go');
-      const registerLink = getRegisterLink();
-
-      registerLink.triggerEventHandler('click');
-      expect(routingService.go).toHaveBeenCalledWith({
-        cxRoute: 'register',
-      });
-    });
-
-    it('should navigate to checkout login for Guest Checkout', () => {
-      TestBed.resetTestingModule();
-      TestBed.configureTestingModule(testBedDefaults);
-      TestBed.overrideProvider(ActivatedRoute, {
-        useValue: {
-          snapshot: {
-            queryParams: {
-              forced: true,
-            },
-          },
-        },
-      });
-      TestBed.compileComponents();
-      createComponent();
-      callNgInit();
-      spyOn(routingService, 'go');
-      const guestLinkElement = getGuestCheckoutLink();
-
-      guestLinkElement.triggerEventHandler('click');
-      expect(routingService.go).toHaveBeenCalledWith({
-        cxRoute: 'checkoutLogin',
-      });
     });
   });
 });

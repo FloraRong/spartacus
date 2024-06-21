@@ -1,19 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Type } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  I18nTestingModule,
-  Product,
-  ProductService,
-  RouterState,
-  RoutingService,
-} from '@spartacus/core';
+import { I18nTestingModule } from '@spartacus/core';
 import {
   CommonConfigurator,
   ConfiguratorRouter,
   ConfiguratorRouterExtractorService,
 } from '@spartacus/product-configurator/common';
-import { EMPTY, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CommonConfiguratorTestUtilsService } from '../../../common/testing/common-configurator-test-utils.service';
 import { ConfiguratorCommonsService } from '../../core/facade/configurator-commons.service';
 import { Configurator } from '../../core/model/configurator.model';
@@ -44,7 +38,7 @@ function initTestComponent() {
   component.ghostStyle = false;
   fixture.detectChanges();
   configuratorStorefrontUtilsService = TestBed.inject(
-    ConfiguratorStorefrontUtilsService
+    ConfiguratorStorefrontUtilsService as Type<ConfiguratorStorefrontUtilsService>
   );
 
   spyOn(configuratorStorefrontUtilsService, 'getElement').and.callThrough();
@@ -76,21 +70,6 @@ class MockConfiguratorStorefrontUtilsService {
   createOvMenuItemId(): void {}
   getSpareViewportHeight(): void {}
   getVerticallyScrolledPixels(): void {}
-  isDisplayOnlyVariant(): void {}
-}
-
-class MockRoutingService {
-  getRouterState(): Observable<RouterState> {
-    return of(ConfigurationTestData.mockRouterState);
-  }
-
-  go = () => Promise.resolve(true);
-}
-
-class MockProductService {
-  get(): Observable<Product> {
-    return EMPTY;
-  }
 }
 
 @Component({
@@ -111,37 +90,31 @@ class MockConfiguratorOverviewMenuComponent {
 }
 
 describe('ConfiguratorOverviewSidebarComponent', () => {
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [
-        MockConfiguratorOverviewFilterComponent,
-        MockConfiguratorOverviewMenuComponent,
-      ],
-      providers: [
-        {
-          provide: ConfiguratorCommonsService,
-          useClass: MockConfiguratorCommonsService,
-        },
-        {
-          provide: ConfiguratorRouterExtractorService,
-          useClass: MockConfiguratorRouterExtractorService,
-        },
-        {
-          provide: ConfiguratorStorefrontUtilsService,
-          useClass: MockConfiguratorStorefrontUtilsService,
-        },
-        {
-          provide: RoutingService,
-          useClass: MockRoutingService,
-        },
-        {
-          provide: ProductService,
-          useClass: MockProductService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [
+          MockConfiguratorOverviewFilterComponent,
+          MockConfiguratorOverviewMenuComponent,
+        ],
+        providers: [
+          {
+            provide: ConfiguratorCommonsService,
+            useClass: MockConfiguratorCommonsService,
+          },
+          {
+            provide: ConfiguratorRouterExtractorService,
+            useClass: MockConfiguratorRouterExtractorService,
+          },
+          {
+            provide: ConfiguratorStorefrontUtilsService,
+            useClass: MockConfiguratorStorefrontUtilsService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   it('should create component', () => {
     initTestComponent();

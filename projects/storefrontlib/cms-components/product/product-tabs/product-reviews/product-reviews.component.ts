@@ -30,6 +30,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
+import { CustomFormValidators } from '../../../../shared/index';
 import { CurrentProductService } from '../../current-product.service';
 
 @Component({
@@ -130,7 +131,7 @@ export class ProductReviewsComponent {
     this.reviewForm = this.fb.group({
       title: ['', Validators.required],
       comment: ['', Validators.required],
-      rating: [null, Validators.required],
+      rating: [null, CustomFormValidators.starRatingEmpty],
       reviewerName: '',
     });
   }

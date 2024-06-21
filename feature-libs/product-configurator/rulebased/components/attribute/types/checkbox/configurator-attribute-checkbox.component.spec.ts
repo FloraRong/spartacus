@@ -51,33 +51,35 @@ describe('ConfigAttributeCheckBoxComponent', () => {
   let fixture: ComponentFixture<ConfiguratorAttributeCheckBoxComponent>;
   let htmlElem: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ConfiguratorAttributeCheckBoxComponent,
-        MockFocusDirective,
-        MockConfiguratorPriceComponent,
-        MockConfiguratorShowMoreComponent,
-      ],
-      imports: [ReactiveFormsModule, NgSelectModule, I18nTestingModule],
-      providers: [
-        {
-          provide: ConfiguratorAttributeCompositionContext,
-          useValue: ConfiguratorTestUtils.getAttributeContext(),
-        },
-        {
-          provide: ConfiguratorCommonsService,
-          useClass: MockConfiguratorCommonsService,
-        },
-      ],
-    })
-      .overrideComponent(ConfiguratorAttributeCheckBoxComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ConfiguratorAttributeCheckBoxComponent,
+          MockFocusDirective,
+          MockConfiguratorPriceComponent,
+          MockConfiguratorShowMoreComponent,
+        ],
+        imports: [ReactiveFormsModule, NgSelectModule, I18nTestingModule],
+        providers: [
+          {
+            provide: ConfiguratorAttributeCompositionContext,
+            useValue: ConfiguratorTestUtils.getAttributeContext(),
+          },
+          {
+            provide: ConfiguratorCommonsService,
+            useClass: MockConfiguratorCommonsService,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorAttributeCheckBoxComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   function createValue(code: string, name: string, isSelected: boolean) {
     const value: Configurator.Value = {
@@ -191,7 +193,7 @@ describe('ConfigAttributeCheckBoxComponent', () => {
         'form-check-input',
         0,
         'aria-describedby',
-        'cx-configurator--label--attributeName'
+        'cx-configurator--label--attributeName cx-configurator--attribute-msg--attributeName'
       );
     });
 

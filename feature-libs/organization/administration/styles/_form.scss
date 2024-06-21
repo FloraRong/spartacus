@@ -47,10 +47,6 @@
         padding-inline-start: 30px;
         font-size: 16px;
         font-weight: normal;
-
-        @include forFeature('a11yImproveContrast') {
-          @include type('6');
-        }
       }
     }
   }

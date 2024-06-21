@@ -37,28 +37,29 @@ class MockConfigureCartEntryComponent {
   @Input() msgBanner: boolean;
   @Input() disabled: boolean;
 }
-
 describe('ConfiguratorCartEntryInfoComponent', () => {
   let component: ConfiguratorCartEntryInfoComponent;
   let fixture: ComponentFixture<ConfiguratorCartEntryInfoComponent>;
   let htmlElem: HTMLElement;
   let mockCartItemContext: MockCartItemContext;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ReactiveFormsModule, I18nTestingModule],
-      declarations: [
-        ConfiguratorCartEntryInfoComponent,
-        MockConfigureCartEntryComponent,
-      ],
-      providers: [
-        { provide: CartItemContext, useClass: MockCartItemContext },
-        {
-          provide: ControlContainer,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule, ReactiveFormsModule, I18nTestingModule],
+        declarations: [
+          ConfiguratorCartEntryInfoComponent,
+          MockConfigureCartEntryComponent,
+        ],
+        providers: [
+          { provide: CartItemContext, useClass: MockCartItemContext },
+          {
+            provide: ControlContainer,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfiguratorCartEntryInfoComponent);
@@ -98,6 +99,7 @@ describe('ConfiguratorCartEntryInfoComponent', () => {
       expect(values).toEqual([true, false]);
       done();
     });
+
     mockCartItemContext.readonly$.next(true);
     mockCartItemContext.readonly$.next(false);
   });
@@ -215,61 +217,6 @@ describe('ConfiguratorCartEntryInfoComponent', () => {
           ],
         });
       });
-
-      describe('readonly$', () => {
-        beforeEach(() => {
-          mockCartItemContext.location$.next(PromotionLocation.ActiveCart);
-        });
-
-        it('should expose readonly$ as false in case readonly$ is undefined', () => {
-          mockCartItemContext.readonly$?.next(undefined);
-          fixture.detectChanges();
-          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
-            htmlElem,
-            'cx-configure-cart-entry'
-          );
-
-          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
-          expect(element.getAttribute('ng-reflect-read-only')).toBe('false');
-        });
-
-        it('should expose readonly$ as false in case readonly$ is null', () => {
-          mockCartItemContext.readonly$?.next(null);
-          fixture.detectChanges();
-          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
-            htmlElem,
-            'cx-configure-cart-entry'
-          );
-
-          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
-          expect(element.getAttribute('ng-reflect-read-only')).toBe('false');
-        });
-
-        it('should expose readonly$ as false in case readonly$ is false', () => {
-          mockCartItemContext.readonly$?.next(false);
-          fixture.detectChanges();
-          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
-            htmlElem,
-            'cx-configure-cart-entry'
-          );
-
-          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
-          expect(element.getAttribute('ng-reflect-read-only')).toBe('false');
-        });
-
-        it('should expose readonly$ as true in case readonly$ is true', () => {
-          mockCartItemContext.readonly$?.next(true);
-          fixture.detectChanges();
-          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
-            htmlElem,
-            'cx-configure-cart-entry'
-          );
-
-          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
-          expect(element.getAttribute('ng-reflect-read-only')).toBe('true');
-        });
-      });
-
       it('should prevent the rendering of "edit configuration" if context is SaveForLater', () => {
         mockCartItemContext.location$.next(PromotionLocation.SaveForLater);
         fixture.detectChanges();
@@ -283,7 +230,6 @@ describe('ConfiguratorCartEntryInfoComponent', () => {
 
       it('should allow the rendering of "edit configuration" if context is active cart', () => {
         mockCartItemContext.location$.next(PromotionLocation.ActiveCart);
-        mockCartItemContext.readonly$.next(null);
         fixture.detectChanges();
 
         const htmlElementAfterChanges = fixture.nativeElement;
@@ -381,11 +327,13 @@ describe('ConfiguratorCartEntryInfoComponent without cart item context', () => {
   let component: ConfiguratorCartEntryInfoComponent;
   let fixture: ComponentFixture<ConfiguratorCartEntryInfoComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ConfiguratorCartEntryInfoComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ConfiguratorCartEntryInfoComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfiguratorCartEntryInfoComponent);

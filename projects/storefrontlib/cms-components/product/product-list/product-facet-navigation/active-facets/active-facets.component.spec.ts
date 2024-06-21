@@ -36,17 +36,19 @@ describe('ActiveFacetsComponent', () => {
   let fixture: ComponentFixture<ActiveFacetsComponent>;
   let element: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule, RouterTestingModule, KeyboardFocusModule],
-      declarations: [ActiveFacetsComponent, MockCxIconComponent],
-      providers: [{ provide: FacetService, useClass: MockFacetService }],
-    })
-      .overrideComponent(ActiveFacetsComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule, RouterTestingModule, KeyboardFocusModule],
+        declarations: [ActiveFacetsComponent, MockCxIconComponent],
+        providers: [{ provide: FacetService, useClass: MockFacetService }],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ActiveFacetsComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ActiveFacetsComponent);

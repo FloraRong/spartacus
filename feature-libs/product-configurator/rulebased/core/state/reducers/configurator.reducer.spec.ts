@@ -637,24 +637,17 @@ describe('Configurator reducer', () => {
 
   describe('ReadOrderEntryConfigurationSuccess action', () => {
     it('should put configuration overview into the state', () => {
-      const sourceOverview: Configurator.Overview = {
+      const overview: Configurator.Overview = {
         configId: CONFIG_ID,
         productCode: PRODUCT_CODE,
-        groups: [{ id: '1' }, { id: '2' }],
       };
-
-      const targetOverview: Configurator.Overview = {
-        ...sourceOverview,
-        possibleGroups: sourceOverview.groups,
-      };
-
-      CONFIGURATION.overview = sourceOverview;
+      CONFIGURATION.overview = overview;
       const action = new ConfiguratorActions.ReadOrderEntryConfigurationSuccess(
         CONFIGURATION
       );
       const state = StateReduce.configuratorReducer(undefined, action);
 
-      expect(state.overview).toEqual(targetOverview);
+      expect(state.overview).toEqual(overview);
     });
 
     it('should copy price summary from OV to configuration', () => {

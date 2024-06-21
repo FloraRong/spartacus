@@ -20,6 +20,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { translationChunksConfig, translations } from '@spartacus/assets';
 import {
+  FeaturesConfig,
   I18nConfig,
   OccConfig,
   RoutingConfig,
@@ -87,7 +88,12 @@ if (!environment.production) {
         fallbackLang: 'en',
       },
     }),
-    provideConfig({ features: { level: '*' } }), // For the development environment and CI, feature level is always the highest.
+    provideConfig(<FeaturesConfig>{
+      // For the development environment and CI, feature level is always the highest.
+      features: {
+        level: '*',
+      },
+    }),
     provideConfig(<StoreFinderConfig>{
       // For security compliance, by default, google maps does not display.
       // Using special key value 'cx-development' allows google maps to display

@@ -17,7 +17,11 @@
     >
       <div class="cx-product-interests-sort top row">
         <label
-          class="cx-product-interests-form-group form-group col-sm-12 col-md-4 col-lg-4"
+          class="
+            cx-product-interests-form-group
+            form-group
+            col-sm-12 col-md-4 col-lg-4
+          "
           ><span>{{ 'myInterests.sortBy' | cxTranslate }}</span>
           <cx-sorting
             [sortOptions]="sortOptions"
@@ -31,7 +35,9 @@
           </cx-sorting>
         </label>
         <div
-          class="cx-product-interests-pagination cx-product-interests-thead-mobile"
+          class="
+            cx-product-interests-pagination cx-product-interests-thead-mobile
+          "
         >
           <cx-pagination
             [pagination]="pagination"
@@ -94,7 +100,9 @@
                       <div>
                         <div *ngIf="product.name" class="cx-name">
                           <a
-                            class="cx-link cx-product-interests-product-code-link"
+                            class="
+                              cx-link cx-product-interests-product-code-link
+                            "
                             [routerLink]="
                               { cxRoute: 'product', params: product } | cxUrl
                             "
@@ -125,7 +133,9 @@
                               {{ variant.name }}
                             </div>
                             <div
-                              class="cx-value cx-product-interests-variant-value"
+                              class="
+                                cx-value cx-product-interests-variant-value
+                              "
                             >
                               {{ variant.value }}
                             </div>
@@ -188,7 +198,11 @@
                 <div class="cx-actions cx-product-interests-remove-button">
                   <button
                     type="button"
-                    class="cx-product-interests-remove-btn link cx-action-link cx-remove-btn"
+                    class="
+                      cx-product-interests-remove-btn
+                      link
+                      cx-action-link cx-remove-btn
+                    "
                     [cxAtMessage]="'myInterests.itemRemoved' | cxTranslate"
                     [disabled]="isRemoveDisabled$ | async"
                     (click)="removeInterest(interest)"
@@ -204,7 +218,11 @@
 
       <div class="cx-product-interests-sort bottom row">
         <label
-          class="cx-product-interests-form-group cx-product-interests-thead-mobile form-group col-sm-12 col-md-4 col-lg-4"
+          class="
+            cx-product-interests-form-group cx-product-interests-thead-mobile
+            form-group
+            col-sm-12 col-md-4 col-lg-4
+          "
           ><span>{{ 'myInterests.sortBy' | cxTranslate }}</span>
           <cx-sorting
             [sortOptions]="sortOptions"

@@ -17,7 +17,7 @@ import {
   SpinnerModule,
 } from '@spartacus/storefront';
 import { CheckoutPaymentFormComponent } from './checkout-payment-form.component';
-import { CheckoutBillingAddressFormModule } from '../../checkout-billing-address';
+
 @NgModule({
   imports: [
     NgSelectA11yModule,
@@ -30,7 +30,6 @@ import { CheckoutBillingAddressFormModule } from '../../checkout-billing-address
     SpinnerModule,
     FormErrorsModule,
     FeaturesConfigModule,
-    CheckoutBillingAddressFormModule,
   ],
   declarations: [CheckoutPaymentFormComponent],
   exports: [CheckoutPaymentFormComponent],

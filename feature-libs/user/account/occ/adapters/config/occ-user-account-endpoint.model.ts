@@ -11,11 +11,6 @@ export interface UserAccountOccEndpoints {
    * Get user account details
    */
   user?: string | OccEndpoint;
-
-  /**
-   * Create one time password for user login
-   */
-  createVerificationToken?: string | OccEndpoint;
 }
 declare module '@spartacus/core' {
   interface OccEndpoints extends UserAccountOccEndpoints {}

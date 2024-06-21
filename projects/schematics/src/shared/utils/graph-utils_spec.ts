@@ -10,8 +10,6 @@ import {
   SPARTACUS_CUSTOMER_TICKETING,
   SPARTACUS_DIGITAL_PAYMENTS,
   SPARTACUS_EPD_VISUALIZATION,
-  SPARTACUS_ESTIMATED_DELIVERY_DATE,
-  SPARTACUS_OPPS,
   SPARTACUS_ORDER,
   SPARTACUS_ORGANIZATION,
   SPARTACUS_PDF_INVOICES,
@@ -144,7 +142,6 @@ describe('Graph utils', () => {
         SPARTACUS_ASM,
         SPARTACUS_SEGMENT_REFS,
         SPARTACUS_S4OM,
-        SPARTACUS_OPPS,
         SPARTACUS_EPD_VISUALIZATION,
         SPARTACUS_DIGITAL_PAYMENTS,
         SPARTACUS_CDS,
@@ -156,7 +153,6 @@ describe('Graph utils', () => {
         SPARTACUS_PRODUCT_CONFIGURATOR,
         SPARTACUS_PRODUCT,
         SPARTACUS_PICKUP_IN_STORE,
-        SPARTACUS_ESTIMATED_DELIVERY_DATE,
       ]);
     });
   });
@@ -195,7 +191,6 @@ describe('Graph utils', () => {
           "ASM-Customer-360",
           "Segment-Refs",
           "S4HANA-Order-Management",
-          "OPPS",
           "EPD-Visualization",
           "Digital-Payments",
           "CDS",
@@ -203,7 +198,6 @@ describe('Graph utils', () => {
           "CDC-B2B",
           "CDC",
           "SmartEdit",
-          "Estimated-Delivery-Date",
           "Qualtrics",
           "Future-Stock",
           "Product-Variants",

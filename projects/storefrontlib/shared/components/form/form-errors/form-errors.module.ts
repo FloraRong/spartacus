@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FeaturesConfigModule, I18nModule } from '@spartacus/core';
+import { CommonModule } from '@angular/common';
 import { FormErrorsComponent } from './form-errors.component';
+import { I18nModule } from '@spartacus/core';
 
 @NgModule({
-  imports: [CommonModule, I18nModule, FeaturesConfigModule],
+  imports: [CommonModule, I18nModule],
   declarations: [FormErrorsComponent],
   exports: [FormErrorsComponent],
 })

@@ -9,11 +9,9 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  inject,
 } from '@angular/core';
 import {
   ErrorModel,
-  FeatureConfigService,
   GlobalMessageService,
   GlobalMessageType,
   HttpErrorModel,
@@ -46,7 +44,6 @@ import { catchError, skip, switchMap, take, tap } from 'rxjs/operators';
 export class InvoicesListComponent implements OnInit, OnDestroy {
   /* For Enum use in HTML */
   ICON_TYPE = ICON_TYPE;
-  private featureConfig = inject(FeatureConfigService);
 
   protected PAGE_SIZE = 5; //Default page size
 
@@ -54,14 +51,8 @@ export class InvoicesListComponent implements OnInit, OnDestroy {
   sort = 'byInvoiceIdAsc';
 
   protected sortMapping: { [key: string]: string } = {
-    byCreatedAtAsc: this.featureConfig.isEnabled('pdfInvoicesSortByInvoiceDate')
-      ? 'createdAt:asc'
-      : 'invoiceDate:asc',
-    byCreatedAtDesc: this.featureConfig.isEnabled(
-      'pdfInvoicesSortByInvoiceDate'
-    )
-      ? 'createdAt:desc'
-      : 'invoiceDate:desc',
+    byCreatedAtAsc: 'invoiceDate:asc', //TODO: (CXINT-2438) update the sort code after the API is changed
+    byCreatedAtDesc: 'invoiceDate:desc', //TODO: (CXINT-2438) update the sort code after the API is changed
     byInvoiceIdAsc: 'invoiceId:asc',
     byInvoiceIdDesc: 'invoiceId:desc',
     byNetAmountAsc: 'netAmount:asc',
