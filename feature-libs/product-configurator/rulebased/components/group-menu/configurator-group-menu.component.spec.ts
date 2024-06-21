@@ -1,4 +1,4 @@
-import { Component, Directive, Input, Type } from '@angular/core';
+import { Component, Directive, Input } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterState } from '@angular/router';
@@ -15,6 +15,7 @@ import {
   DirectionService,
   HamburgerMenuService,
   ICON_TYPE,
+  BreakpointService,
 } from '@spartacus/storefront';
 import { NEVER, Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -125,7 +126,7 @@ const mockRouterStateIssueNavigation: any = {
 };
 
 class MockConfiguratorGroupService {
-  setMenuParentGroup() {}
+  setMenuParentGroup(): void {}
 
   getGroupStatus() {
     return of(null);
@@ -139,7 +140,7 @@ class MockConfiguratorGroupService {
     return null;
   }
 
-  navigateToGroup() {}
+  navigateToGroup(): void {}
 
   getCurrentGroup(): Observable<Configurator.Group> {
     return of(mockProductConfiguration.groups[0]);
@@ -174,6 +175,12 @@ class MockDirectionService {
   }
 }
 
+class MockBreakpointService {
+  isDown(): Observable<boolean> {
+    return breakpointObservable;
+  }
+}
+
 @Directive({
   selector: '[cxFocus]',
 })
@@ -187,6 +194,18 @@ export class MockFocusDirective {
 })
 class MockCxIconComponent {
   @Input() type: ICON_TYPE;
+}
+
+class MockConfiguratorStorefrontUtilsService {
+  createGroupId(groupId?: string): string | undefined {
+    if (groupId) {
+      return groupId + '-group';
+    }
+  }
+
+  scrollToConfigurationElement(): void {}
+  setFocus(): void {}
+  focusFirstActiveElement(): void {}
 }
 
 let component: ConfiguratorGroupMenuComponent;
@@ -204,6 +223,7 @@ let directionService: DirectionService;
 let direction: DirectionMode;
 let configUtils: ConfiguratorStorefrontUtilsService;
 let configExpertModeService: ConfiguratorExpertModeService;
+let breakpointObservable: Observable<boolean>;
 
 function initialize() {
   groupVisitedObservable = of(mockGroupVisited);
@@ -214,83 +234,76 @@ function initialize() {
   fixture.detectChanges();
 }
 
-describe('ConfigurationGroupMenuComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [I18nTestingModule, ReactiveFormsModule, NgSelectModule],
-        declarations: [
-          ConfiguratorGroupMenuComponent,
-          MockCxIconComponent,
-          MockFocusDirective,
-        ],
-        providers: [
-          HamburgerMenuService,
-          {
-            provide: Router,
-            useClass: MockRouter,
-          },
-          {
-            provide: RoutingService,
-            useClass: MockRoutingService,
-          },
-          {
-            provide: ConfiguratorCommonsService,
-            useClass: MockConfiguratorCommonsService,
-          },
-          {
-            provide: ConfiguratorGroupsService,
-            useClass: MockConfiguratorGroupService,
-          },
-          {
-            provide: DirectionService,
-            useClass: MockDirectionService,
-          },
-        ],
-      });
-    })
-  );
+describe('ConfiguratorGroupMenuComponent', () => {
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [I18nTestingModule, ReactiveFormsModule, NgSelectModule],
+      declarations: [
+        ConfiguratorGroupMenuComponent,
+        MockCxIconComponent,
+        MockFocusDirective,
+      ],
+      providers: [
+        HamburgerMenuService,
+        {
+          provide: Router,
+          useClass: MockRouter,
+        },
+        {
+          provide: RoutingService,
+          useClass: MockRoutingService,
+        },
+        {
+          provide: ConfiguratorCommonsService,
+          useClass: MockConfiguratorCommonsService,
+        },
+        {
+          provide: ConfiguratorGroupsService,
+          useClass: MockConfiguratorGroupService,
+        },
+        {
+          provide: DirectionService,
+          useClass: MockDirectionService,
+        },
+        {
+          provide: BreakpointService,
+          useClass: MockBreakpointService,
+        },
+        {
+          provide: ConfiguratorStorefrontUtilsService,
+          useClass: MockConfiguratorStorefrontUtilsService,
+        },
+      ],
+    });
+  }));
 
   beforeEach(() => {
     groupVisitedObservable = of(false);
 
-    configuratorGroupsService = TestBed.inject(
-      ConfiguratorGroupsService as Type<ConfiguratorGroupsService>
-    );
+    configuratorGroupsService = TestBed.inject(ConfiguratorGroupsService);
     spyOn(configuratorGroupsService, 'navigateToGroup').and.stub();
     spyOn(configuratorGroupsService, 'setMenuParentGroup').and.stub();
     spyOn(configuratorGroupsService, 'isGroupVisited').and.callThrough();
     isConflictGroupType = false;
     spyOn(configuratorGroupsService, 'isConflictGroupType').and.callThrough();
 
-    hamburgerMenuService = TestBed.inject(
-      HamburgerMenuService as Type<HamburgerMenuService>
-    );
+    hamburgerMenuService = TestBed.inject(HamburgerMenuService);
     spyOn(hamburgerMenuService, 'toggle').and.stub();
 
-    configUtils = TestBed.inject(
-      ConfiguratorStorefrontUtilsService as Type<ConfiguratorStorefrontUtilsService>
-    );
+    configUtils = TestBed.inject(ConfiguratorStorefrontUtilsService);
     spyOn(configUtils, 'setFocus').and.stub();
+    spyOn(configUtils, 'focusFirstActiveElement').and.stub();
 
-    configuratorUtils = TestBed.inject(
-      CommonConfiguratorUtilsService as Type<CommonConfiguratorUtilsService>
-    );
+    configuratorUtils = TestBed.inject(CommonConfiguratorUtilsService);
     configuratorUtils.setOwnerKey(mockProductConfiguration.owner);
 
-    configGroupMenuService = TestBed.inject(
-      ConfiguratorGroupMenuService as Type<ConfiguratorGroupMenuService>
-    );
+    configGroupMenuService = TestBed.inject(ConfiguratorGroupMenuService);
     spyOn(configGroupMenuService, 'switchGroupOnArrowPress').and.stub();
 
-    directionService = TestBed.inject(
-      DirectionService as Type<DirectionService>
-    );
+    directionService = TestBed.inject(DirectionService);
     spyOn(directionService, 'getDirection').and.callThrough();
 
-    configExpertModeService = TestBed.inject(
-      ConfiguratorExpertModeService as Type<ConfiguratorExpertModeService>
-    );
+    configExpertModeService = TestBed.inject(ConfiguratorExpertModeService);
   });
 
   it('should create component', () => {
@@ -962,6 +975,7 @@ describe('ConfigurationGroupMenuComponent', () => {
     beforeEach(() => {
       productConfigurationObservable = of(mockProductConfiguration);
       routerStateObservable = of(mockRouterState);
+      breakpointObservable = of(false);
       initialize();
     });
 
@@ -1705,6 +1719,84 @@ describe('ConfigurationGroupMenuComponent', () => {
 
     it('should return false for undefined input', () => {
       expect(component.isConflictGroupType(undefined)).toBe(false);
+    });
+  });
+
+  describe('handleFocusLoopInMobileMode', () => {
+    it('should not execute focus loop code if tab-key is pressed and we are not in mobile mode', () => {
+      breakpointObservable = of(false);
+      const event = new KeyboardEvent('keydown', {
+        code: 'Tab',
+      });
+      spyOn(configGroupMenuService, 'isBackBtnFocused').and.stub();
+      initialize();
+      component['handleFocusLoopInMobileMode'](event);
+      expect(configGroupMenuService.isBackBtnFocused).not.toHaveBeenCalled();
+    });
+
+    it('should not execute focus loop code if a key different from tab-key is pressed and we are in mobile mode', () => {
+      breakpointObservable = of(true);
+      const event = new KeyboardEvent('keydown', {
+        code: 'ArrowUp',
+      });
+      spyOn(configGroupMenuService, 'isBackBtnFocused').and.stub();
+      initialize();
+      component['handleFocusLoopInMobileMode'](event);
+      expect(configGroupMenuService.isBackBtnFocused).not.toHaveBeenCalled();
+    });
+
+    it('should not execute focus loop code if shift-tab-key is pressed and we are in mobile mode', () => {
+      breakpointObservable = of(true);
+      const event = new KeyboardEvent('keydown', {
+        code: 'Tab',
+        shiftKey: true,
+      });
+      spyOn(configGroupMenuService, 'isBackBtnFocused').and.stub();
+      initialize();
+      component['handleFocusLoopInMobileMode'](event);
+      expect(configGroupMenuService.isBackBtnFocused).not.toHaveBeenCalled();
+    });
+
+    it('should execute focusFirstActiveElement if tab-key is pressed in mobile mode and focus was on back button and there is no active groups in the group list', () => {
+      breakpointObservable = of(true);
+      const event = new KeyboardEvent('keydown', {
+        code: 'Tab',
+      });
+      spyOn(configGroupMenuService, 'isBackBtnFocused').and.returnValue(true);
+      spyOn(configGroupMenuService, 'isActiveGroupInGroupList').and.returnValue(
+        false
+      );
+      initialize();
+      component['handleFocusLoopInMobileMode'](event);
+      expect(configUtils.focusFirstActiveElement).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not execute focusFirstActiveElement if tab-key is pressed in mobile mode and focus was on back button and there is the active groups in the group list', () => {
+      breakpointObservable = of(true);
+      const event = new KeyboardEvent('keydown', {
+        code: 'Tab',
+      });
+      spyOn(configGroupMenuService, 'isBackBtnFocused').and.returnValue(true);
+      spyOn(configGroupMenuService, 'isActiveGroupInGroupList').and.returnValue(
+        true
+      );
+      initialize();
+      component['handleFocusLoopInMobileMode'](event);
+      expect(configUtils.focusFirstActiveElement).toHaveBeenCalledTimes(0);
+    });
+
+    it('should execute focusFirstActiveElement if tab-key is pressed in mobile mode and focus was not on back button', () => {
+      breakpointObservable = of(true);
+      const event = new KeyboardEvent('keydown', {
+        code: 'Tab',
+      });
+      spyOn(configGroupMenuService, 'isBackBtnFocused').and.returnValue(false);
+      spyOn(configGroupMenuService, 'isActiveGroupInGroupList').and.returnValue(
+        true
+      );
+      initialize();
+      component['handleFocusLoopInMobileMode'](event);
+      expect(configUtils.focusFirstActiveElement).toHaveBeenCalledTimes(1);
     });
   });
 });

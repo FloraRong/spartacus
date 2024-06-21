@@ -598,6 +598,61 @@ describe('ConfiguratorCartEntryBundleInfoComponent', () => {
           ],
         });
       });
+
+      describe('readonly$', () => {
+        beforeEach(() => {
+          mockCartItemContext.location$.next(PromotionLocation.ActiveCart);
+        });
+
+        it('should expose readonly$ as false in case readonly$ is undefined', () => {
+          mockCartItemContext.readonly$?.next(undefined);
+          fixture.detectChanges();
+          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
+            htmlElem,
+            'cx-configure-cart-entry'
+          );
+
+          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
+          expect(element.getAttribute('ng-reflect-read-only')).toBe('false');
+        });
+
+        it('should expose readonly$ as false in case readonly$ is null', () => {
+          mockCartItemContext.readonly$?.next(null);
+          fixture.detectChanges();
+          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
+            htmlElem,
+            'cx-configure-cart-entry'
+          );
+
+          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
+          expect(element.getAttribute('ng-reflect-read-only')).toBe('false');
+        });
+
+        it('should expose readonly$ as false in case readonly$ is false', () => {
+          mockCartItemContext.readonly$?.next(false);
+          fixture.detectChanges();
+          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
+            htmlElem,
+            'cx-configure-cart-entry'
+          );
+
+          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
+          expect(element.getAttribute('ng-reflect-read-only')).toBe('false');
+        });
+
+        it('should expose readonly$ as true in case readonly$ is true', () => {
+          mockCartItemContext.readonly$?.next(true);
+          fixture.detectChanges();
+          const element = CommonConfiguratorTestUtilsService.getHTMLElement(
+            htmlElem,
+            'cx-configure-cart-entry'
+          );
+
+          expect(element.hasAttribute('ng-reflect-read-only')).toBe(true);
+          expect(element.getAttribute('ng-reflect-read-only')).toBe('true');
+        });
+      });
+
       it('should prevent the rendering of "edit configuration" if context is SaveForLater', () => {
         mockCartItemContext.location$?.next(PromotionLocation.SaveForLater);
         fixture.detectChanges();
@@ -872,14 +927,12 @@ describe('ConfiguratorCartEntryBundleInfoComponent without cart item context', (
   let component: ConfiguratorCartEntryBundleInfoComponent;
   let fixture: ComponentFixture<ConfiguratorCartEntryBundleInfoComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [I18nTestingModule],
-        declarations: [ConfiguratorCartEntryBundleInfoComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [I18nTestingModule],
+      declarations: [ConfiguratorCartEntryBundleInfoComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfiguratorCartEntryBundleInfoComponent);
