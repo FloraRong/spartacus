@@ -81,31 +81,33 @@ describe('ConfigTextfieldAddToCartButtonComponent', () => {
     expect(seenText).toBe(buttonText);
   }
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule, RouterTestingModule],
-      declarations: [
-        ConfiguratorTextfieldAddToCartButtonComponent,
-        MockUrlPipe,
-      ],
-      providers: [
-        {
-          provide: ConfiguratorTextfieldService,
-          useClass: MockConfiguratorTextfieldService,
-        },
-        {
-          provide: RoutingService,
-          useClass: MockRoutingService,
-        },
-      ],
-    })
-      .overrideComponent(ConfiguratorTextfieldAddToCartButtonComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule, RouterTestingModule],
+        declarations: [
+          ConfiguratorTextfieldAddToCartButtonComponent,
+          MockUrlPipe,
+        ],
+        providers: [
+          {
+            provide: ConfiguratorTextfieldService,
+            useClass: MockConfiguratorTextfieldService,
+          },
+          {
+            provide: RoutingService,
+            useClass: MockRoutingService,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorTextfieldAddToCartButtonComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(

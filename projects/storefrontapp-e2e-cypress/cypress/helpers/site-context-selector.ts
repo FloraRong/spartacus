@@ -93,6 +93,8 @@ export function doPlaceOrder() {
 }
 
 export function addressBookNextStep() {
+  cy.get('cx-delivery-address .link').click({ force: true });
+
   const deliveryPage = waitForPage(
     CHECKOUT_DELIVERY_MODE_PATH,
     'getDeliveryPage'
@@ -119,6 +121,10 @@ export function deliveryModeNextStep() {
 }
 
 export function paymentDetailsNextStep() {
+  cy.get('cx-payment-method .link').click({
+    force: true,
+  });
+
   const reviewPage = waitForPage(CHECKOUT_REVIEW_ORDER_PATH, 'getReviewPage');
 
   cy.get('cx-payment-method .btn-primary').should('be.enabled').click();

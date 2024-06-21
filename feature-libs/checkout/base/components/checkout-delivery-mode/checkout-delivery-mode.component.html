@@ -19,8 +19,7 @@
           role="radio"
           type="radio"
           id="deliveryMode-{{ mode.code }}"
-          (change)="changeMode(mode.code, $event)"
-          (click)="changeMode(mode.code, $event)"
+          (change)="changeMode(mode.code)"
           [value]="mode.code"
           formControlName="deliveryModeId"
         />

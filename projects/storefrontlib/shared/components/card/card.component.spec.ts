@@ -69,19 +69,21 @@ describe('CardComponent', () => {
   let fixture: ComponentFixture<CardComponent>;
   let el: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [
-        CardComponent,
-        MockCxIconComponent,
-        MockAtMessageDirective,
-        FocusDirective,
-        MockCxTruncateTextPopoverComponent,
-        MockFeatureDirective,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [
+          CardComponent,
+          MockCxIconComponent,
+          MockAtMessageDirective,
+          FocusDirective,
+          MockCxTruncateTextPopoverComponent,
+          MockFeatureDirective,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CardComponent);

@@ -41,6 +41,7 @@ describe('Spartacus SAP EPD Visualization integration schematics: ng-add', () =>
     name: 'schematics-test',
     inlineStyle: false,
     inlineTemplate: false,
+    routing: false,
     style: Style.Scss,
     skipTests: false,
     projectRoot: '',
@@ -57,7 +58,8 @@ describe('Spartacus SAP EPD Visualization integration schematics: ng-add', () =>
     project: 'schematics-test',
     lazy: true,
     features: [],
-    baseUrl: 'https://epd-acc-eu20-consumer.visualization.eu20.acc.epd.dev.sap',
+    baseUrl:
+      'https://epd-acc-eu20-consumer.epdacc.cfapps.eu20.hana.ondemand.com',
   };
 
   const visualizationFeatureOptions: SpartacusEpdVisualizationOptions = {

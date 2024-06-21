@@ -12,14 +12,13 @@ import {
   AuthGuard,
   CmsConfig,
   ConfigModule,
-  FeaturesConfigModule,
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
 import {
   OrderDetailItemsComponent,
-  OrderDetailTotalsComponent,
   OrderDetailsService,
+  OrderDetailTotalsComponent,
   OrderOverviewComponent,
 } from '@spartacus/order/components';
 import { FormErrorsModule, SpinnerModule } from '@spartacus/storefront';
@@ -88,7 +87,6 @@ import { OrderDetailPermissionResultsComponent } from './order-detail-permission
         },
       },
     }),
-    FeaturesConfigModule,
   ],
   declarations: [
     OrderApprovalDetailFormComponent,

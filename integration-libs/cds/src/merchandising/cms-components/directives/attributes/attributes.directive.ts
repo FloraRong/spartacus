@@ -23,10 +23,7 @@ export class AttributesDirective implements OnChanges {
     this._attributesNamePrefix = attributesNamePrefix;
   }
 
-  constructor(
-    private renderer: Renderer2,
-    private elementRef: ElementRef
-  ) {}
+  constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 
   ngOnChanges(): void {
     if (this.cxAttributes) {

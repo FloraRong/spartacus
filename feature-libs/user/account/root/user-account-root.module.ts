@@ -20,10 +20,8 @@ export function defaultUserAccountComponentsConfig(): CmsConfig {
         cmsComponents: [
           'LoginComponent',
           'ReturningCustomerLoginComponent',
-          'VerifyOTPTokenComponent',
           'ReturningCustomerRegisterComponent',
           'MyAccountViewUserComponent',
-          'ReturningCustomerOTPLoginComponent',
         ],
       },
       // by default core is bundled together with components

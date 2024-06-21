@@ -96,24 +96,26 @@ describe('AddressBookComponent', () => {
   let el: DebugElement;
   let addressBookComponentService: AddressBookComponentService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        SpinnerModule,
-        I18nTestingModule,
-        CardModule,
-        RouterTestingModule,
-      ],
-      providers: [
-        {
-          provide: AddressBookComponentService,
-          useClass: MockComponentService,
-        },
-        { provide: GlobalMessageService, useClass: MockGlobalMessageService },
-      ],
-      declarations: [AddressBookComponent, MockAddressFormComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          SpinnerModule,
+          I18nTestingModule,
+          CardModule,
+          RouterTestingModule,
+        ],
+        providers: [
+          {
+            provide: AddressBookComponentService,
+            useClass: MockComponentService,
+          },
+          { provide: GlobalMessageService, useClass: MockGlobalMessageService },
+        ],
+        declarations: [AddressBookComponent, MockAddressFormComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AddressBookComponent);

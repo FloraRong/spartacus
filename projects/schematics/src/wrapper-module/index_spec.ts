@@ -26,7 +26,7 @@ import { createProgram, saveAndFormat } from '../shared/utils/program';
 import { getProjectTsConfigPaths } from '../shared/utils/project-tsconfig-paths';
 import {
   cartBaseFeatureModulePath,
-  cartBaseWrapperModulePath,
+  cartWrapperModulePath,
   checkoutFeatureModulePath,
   checkoutWrapperModulePath,
   digitalPaymentsFeatureModulePath,
@@ -55,6 +55,7 @@ describe('Spartacus Wrapper Module Schematics: ng g @spartacus/schematics:wrappe
     name: 'schematics-test',
     inlineStyle: false,
     inlineTemplate: false,
+    routing: false,
     style: Style.Scss,
     skipTests: false,
     projectRoot: '',
@@ -145,7 +146,7 @@ describe('Spartacus Wrapper Module Schematics: ng g @spartacus/schematics:wrappe
         cartBaseFeatureModulePath
       );
       const cartWrapperModule = program.getSourceFileOrThrow(
-        cartBaseWrapperModulePath
+        cartWrapperModulePath
       );
 
       expect(cartFeatureModule.print()).toMatchSnapshot();
@@ -249,9 +250,7 @@ describe('Spartacus Wrapper Module Schematics: ng g @spartacus/schematics:wrappe
   });
 
   describe('Checkout and DP', () => {
-    let program: any;
-
-    beforeEach(async () => {
+    it('Should order the imports in the wrapper and Spartacus features modules', async () => {
       appTree = await schematicRunner.runSchematic(
         'ng-add',
         {
@@ -265,51 +264,24 @@ describe('Spartacus Wrapper Module Schematics: ng g @spartacus/schematics:wrappe
         appTree
       );
 
-      program = createProgram(appTree, appTree.root.path, buildPath).program;
-    });
+      const { program } = createProgram(appTree, appTree.root.path, buildPath);
 
-    it('Should order the imports in the Spartacus features module - DP after checkout', async () => {
       const spartacusFeaturesModule = program.getSourceFileOrThrow(
         spartacusFeaturesModulePath
       );
-
-      const spartacusFeaturesModuleContent = spartacusFeaturesModule.getText();
-      const importsArrayStart =
-        spartacusFeaturesModuleContent.indexOf('imports: [');
-
-      const checkoutFeatureModuleIndex = spartacusFeaturesModuleContent.indexOf(
-        'CheckoutFeatureModule',
-        importsArrayStart
-      );
-      const dpFeatureModuleIndex = spartacusFeaturesModuleContent.indexOf(
-        'DigitalPaymentsFeatureModule',
-        importsArrayStart
-      );
-      expect(checkoutFeatureModuleIndex).toBeLessThan(dpFeatureModuleIndex);
-    });
-
-    it('Should order the imports in the wrapper module - DP after Checkout', async () => {
-      const checkoutWrapperModule = program.getSourceFileOrThrow(
-        checkoutWrapperModulePath
-      );
-
-      expect(checkoutWrapperModule.print()).toMatchSnapshot();
-    });
-
-    it('Should create DP feature module', async () => {
-      const dpFeaturesModule = program.getSourceFileOrThrow(
-        digitalPaymentsFeatureModulePath
-      );
-
-      expect(dpFeaturesModule.print()).toMatchSnapshot();
-    });
-
-    it('Should create checkout feature module', async () => {
       const checkoutFeatureModule = program.getSourceFileOrThrow(
         checkoutFeatureModulePath
       );
-
+      const checkoutWrapperModule = program.getSourceFileOrThrow(
+        checkoutWrapperModulePath
+      );
+      const dpFeaturesModule = program.getSourceFileOrThrow(
+        digitalPaymentsFeatureModulePath
+      );
+      expect(spartacusFeaturesModule.print()).toMatchSnapshot();
       expect(checkoutFeatureModule.print()).toMatchSnapshot();
+      expect(checkoutWrapperModule.print()).toMatchSnapshot();
+      expect(dpFeaturesModule.print()).toMatchSnapshot();
     });
   });
 
@@ -368,33 +340,15 @@ describe('Spartacus Wrapper Module Schematics: ng g @spartacus/schematics:wrappe
 
     it('should append the feature module after it, and not add a dynamic import to the feature module', () => {
       const { program } = createProgram(appTree, appTree.root.path, buildPath);
+      const spartacusFeaturesModule = program.getSourceFileOrThrow(
+        spartacusFeaturesModulePath
+      );
       const checkoutFeatureModule = program.getSourceFileOrThrow(
         checkoutFeatureModulePath
       );
       expect(program.getSourceFile(checkoutWrapperModulePath)).toBeFalsy();
+      expect(spartacusFeaturesModule.print()).toMatchSnapshot();
       expect(checkoutFeatureModule.print()).toMatchSnapshot();
-    });
-
-    it('Should order the imports in the Spartacus features module - DP after checkout', async () => {
-      const { program } = createProgram(appTree, appTree.root.path, buildPath);
-
-      const spartacusFeaturesModule = program.getSourceFileOrThrow(
-        spartacusFeaturesModulePath
-      );
-
-      const spartacusFeaturesModuleContent = spartacusFeaturesModule.getText();
-      const importsArrayStart =
-        spartacusFeaturesModuleContent.indexOf('imports: [');
-
-      const checkoutFeatureModuleIndex = spartacusFeaturesModuleContent.indexOf(
-        'CheckoutFeatureModule',
-        importsArrayStart
-      );
-      const dpFeatureModuleIndex = spartacusFeaturesModuleContent.indexOf(
-        'DigitalPaymentsFeatureModule',
-        importsArrayStart
-      );
-      expect(checkoutFeatureModuleIndex).toBeLessThan(dpFeatureModuleIndex);
     });
   });
 });

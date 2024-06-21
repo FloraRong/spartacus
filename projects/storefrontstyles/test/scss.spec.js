@@ -7,5 +7,7 @@ describe('Scss Styles', () => {
     path.resolve(process.cwd(), `test/**/*.spec.scss`)
   );
 
-  testFiles.forEach((file) => sassTrue.runSass({ describe, it }, file));
+  testFiles.forEach((file) =>
+    sassTrue.runSass({ file: file }, { describe, it })
+  );
 });

@@ -72,11 +72,6 @@ if (environment.b2b) {
         chunks: checkoutTranslationChunksConfig,
       },
     }),
-    provideConfig({
-      checkout: {
-        guest: true,
-      },
-    }),
     ...extensionProviders,
   ],
 })

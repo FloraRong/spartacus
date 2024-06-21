@@ -14,16 +14,6 @@ import {
   RULE_NAME as useProvideDefaultConfigFactoryName,
 } from './rules/use-provide-default-config-factory';
 
-import {
-  rule as useProvideDefaultFeatureToggles,
-  RULE_NAME as useProvideDefaultFeatureTogglesName,
-} from './rules/use-provide-default-feature-toggles';
-
-import {
-  rule as useProvideDefaultFeatureTogglesFactory,
-  RULE_NAME as useProvideDefaultFeatureTogglesFactoryName,
-} from './rules/use-provide-default-feature-toggles-factory';
-
 /**
  * Import your custom workspace rules at the top of this file.
  *
@@ -52,8 +42,5 @@ module.exports = {
   rules: {
     [useProvideDefaultConfigName]: useProvideDefaultConfig,
     [useProvideDefaultConfigFactoryName]: useProvideDefaultConfigFactory,
-    [useProvideDefaultFeatureTogglesName]: useProvideDefaultFeatureToggles,
-    [useProvideDefaultFeatureTogglesFactoryName]:
-      useProvideDefaultFeatureTogglesFactory,
   },
 };

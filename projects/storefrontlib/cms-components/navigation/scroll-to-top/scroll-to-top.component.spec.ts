@@ -1,17 +1,39 @@
-import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Component, DebugElement } from '@angular/core';
 import {
+  WindowRef,
   CmsScrollToTopComponent,
-  FeatureConfigService,
-  I18nTestingModule,
   ScrollBehavior,
+  I18nTestingModule,
 } from '@spartacus/core';
-import { of } from 'rxjs';
 import { CmsComponentData } from '../../../cms-structure/page/model/cms-component-data';
-import { SelectFocusUtility } from '../../../layout/a11y/index';
-import { IconTestingModule } from '../../misc/icon/testing/icon-testing.module';
 import { ScrollToTopComponent } from './scroll-to-top.component';
+import { IconTestingModule } from '../../misc/icon/testing/icon-testing.module';
+import { SelectFocusUtility } from '../../../layout/a11y/index';
+import { of } from 'rxjs';
+
+@Component({
+  template: `
+    <div style="height: 2000px;">
+      <h1>Test page</h1>
+      <cx-scroll-to-top></cx-scroll-to-top>
+      <button class="test"></button>
+    </div>
+  `,
+})
+class MockComponent {}
+
+class MockWinRef {
+  nativeWindow = window;
+  document = window.document;
+}
+
+class MockSelectFocusUtility {
+  findFirstFocusable(): HTMLElement {
+    return window.document.body;
+  }
+}
 
 const mockData: CmsScrollToTopComponent = {
   scrollBehavior: ScrollBehavior.SMOOTH,
@@ -21,122 +43,86 @@ const mockData: CmsScrollToTopComponent = {
 const MockCmsComponentData = <CmsComponentData<any>>{
   data$: of(mockData),
 };
-//TODO: (CXSPA-6522) - remove feature flag next major release.
-class MockFeatureConfigService {
-  isEnabled() {
-    return true;
-  }
-}
 
 describe('ScrollToTopComponent', () => {
-  let component: ScrollToTopComponent;
-  let fixture: ComponentFixture<ScrollToTopComponent>;
+  let component: MockComponent;
+  let fixture: ComponentFixture<MockComponent>;
+  let winRef: WindowRef;
   let focusUtility: SelectFocusUtility;
   let el: DebugElement;
-  let scrollBtn: HTMLElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [IconTestingModule, I18nTestingModule],
-      declarations: [ScrollToTopComponent],
+      declarations: [MockComponent, ScrollToTopComponent],
       providers: [
         {
           provide: CmsComponentData,
           useValue: MockCmsComponentData,
         },
-        {
-          provide: FeatureConfigService,
-          useClass: MockFeatureConfigService,
-        },
+        { provide: WindowRef, useClass: MockWinRef },
+        { provide: SelectFocusUtility, useClass: MockSelectFocusUtility },
       ],
     }).compileComponents();
 
     focusUtility = TestBed.inject(SelectFocusUtility);
-    fixture = TestBed.createComponent(ScrollToTopComponent);
+    winRef = TestBed.inject(WindowRef);
+    fixture = TestBed.createComponent(MockComponent);
 
     component = fixture.componentInstance;
     el = fixture.debugElement;
-    scrollBtn = el.query(By.css('.cx-scroll-to-top-btn')).nativeElement;
-    component.button = el.query(By.css('.cx-scroll-to-top-btn'));
   });
 
   it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set config on init', () => {
-    spyOn<any>(component, 'setConfig').and.callThrough();
-    component.ngOnInit();
-    expect(component['setConfig']).toHaveBeenCalled();
+  it('should not be displayed at top of page', () => {
+    fixture.detectChanges();
+    winRef.nativeWindow?.scrollTo(0, 0);
+    fixture.detectChanges();
+    const scrollComponent = el.query(By.css('.display'));
+    expect(scrollComponent).toBeNull();
   });
 
-  it('should scroll window to top when clicked', () => {
-    spyOn<any>(component['window'], 'scrollTo');
-
-    component.scrollToTop(new MouseEvent('click'));
-    expect(component['window']?.scrollTo as any).toHaveBeenCalledWith({
-      top: 0,
-      behavior: ScrollBehavior.SMOOTH,
-    });
-  });
-
-  describe('on focused out', () => {
-    beforeEach(() => {
-      component.display = true;
-      component['displayThreshold'] = 0;
-
-      spyOn<any>(component, 'switchDisplay').and.callThrough();
-    });
-
-    it('should not be displayed if on top of page', () => {
-      spyOnProperty<any>(component['window'], 'scrollY').and.returnValue(0);
-      component.onFocusOut();
-
-      expect(component['switchDisplay']).toHaveBeenCalled();
-      expect(component.display).toBe(false);
-    });
-
-    it('should be still displayed if not at top of page', () => {
-      spyOnProperty<any>(component['window'], 'scrollY').and.returnValue(1);
-
-      component.onFocusOut();
-
-      expect(component['switchDisplay']).toHaveBeenCalled();
-      expect(component.display).toBe(true);
-    });
-  });
-
-  it('should switch display on scroll', () => {
-    spyOn<any>(component, 'switchDisplay');
-    component.onScroll();
-
-    expect(component['switchDisplay']).toHaveBeenCalled();
-  });
-
-  it('should focus first focusable element after activated with keyboard and pressing tab', () => {
+  it('should be visible and scroll to top of page', () => {
+    fixture.detectChanges();
     spyOn(focusUtility, 'findFirstFocusable').and.callThrough();
-    scrollBtn.focus();
-    component['triggedByKeypress'] = true;
-    component['onTab'](new KeyboardEvent('keydown', { key: 'Tab' }));
+    spyOn(window, 'scrollTo').and.callThrough();
+    winRef.nativeWindow?.scrollTo(0, 200);
+    winRef.nativeWindow?.dispatchEvent(new Event('scroll'));
 
-    expect(focusUtility.findFirstFocusable).toHaveBeenCalled();
-    expect(document.activeElement).not.toBe(component.button.nativeElement);
+    fixture.detectChanges();
+
+    const scrollComponent = el.query(By.css('.display'));
+    const scrollBtn = el.query(By.css('.cx-scroll-to-top-btn')).nativeElement;
+
+    expect(scrollComponent.nativeElement).toBeTruthy();
+    expect(scrollBtn).toBeTruthy();
+
+    scrollBtn.click();
+
+    expect((window.scrollTo as jasmine.Spy).calls.allArgs()).toEqual([
+      [0, 200],
+      [{ top: 0, behavior: 'smooth' }],
+    ]);
   });
 
-  it('should reset triggedByKeypress flag when display is set to false', () => {
-    component['triggedByKeypress'] = true;
-    component.display = true;
-    scrollBtn.focus();
+  it('should focus top most focusable element of the page', () => {
+    fixture.detectChanges();
+    spyOn(window, 'scrollTo').and.callThrough();
+    spyOn(focusUtility, 'findFirstFocusable').and.callThrough();
+    winRef.nativeWindow?.scrollTo(0, 200);
+    winRef.nativeWindow?.dispatchEvent(new Event('scroll'));
 
-    Object.defineProperty(component, 'display', {
-      get() {
-        return false;
-      },
-      set() {},
-    });
+    fixture.detectChanges();
 
-    component['switchDisplay'].call(component);
+    const scrollBtn = el.query(By.css('.cx-scroll-to-top-btn')).nativeElement;
 
-    expect(component['triggedByKeypress']).toEqual(false);
+    scrollBtn.click();
+    const focusedElem = winRef.nativeWindow?.document
+      .activeElement as HTMLElement;
+
+    expect(focusedElem).toEqual(winRef.nativeWindow?.document.body);
   });
 });

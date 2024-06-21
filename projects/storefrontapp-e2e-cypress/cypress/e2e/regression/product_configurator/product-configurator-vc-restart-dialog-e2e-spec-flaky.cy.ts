@@ -16,7 +16,7 @@ const commerceRelease: configurationVc.CommerceRelease = {};
  * Requires commerce 2211.4 with feature flag enabled:
  * 'toggle.sapproductconfigservices.getDefaultConfigurationEnhancements.enabled=true'
  */
-context('Restart dialog for product configuration', () => {
+context('Restart Dialog for Product Configuration', () => {
   beforeEach(() => {
     cy.visit('/');
     clickAllowAllFromBanner();
@@ -48,21 +48,21 @@ context('Restart dialog for product configuration', () => {
     configurationVc.navigateToOverviewPage();
     configurationOv.checkNumberOfAttributesDisplayed(0); // default config has no selections
     configuration.clickExitConfigurationBtn();
-    configurationVc.clickOnConfigureBtnInCatalog();
+    configurationVc.clickOnConfigureBtnInCatalog(testProduct);
     restartDialog.checkIsClosed();
   });
 
-  it('should navigate back to product details page without a decision on close (CXSPA-1786)', () => {
+  it('navigate back to product details page without a decision on close (CXSPA-1786)', () => {
     restartDialog.close(testProduct);
 
-    configurationVc.clickOnConfigureBtnInCatalog();
+    configurationVc.clickOnConfigureBtnInCatalog(testProduct);
     restartDialog.checkIsOpen();
     restartDialog.checkDialog();
   });
 });
 
 function navigateToConfigurationAndCheckDialog() {
-  configurationVc.clickOnConfigureBtnInCatalog();
+  configurationVc.clickOnConfigureBtnInCatalog(testProduct);
   restartDialog.checkIsOpen();
   restartDialog.checkDialog();
 }

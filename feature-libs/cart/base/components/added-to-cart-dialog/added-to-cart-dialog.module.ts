@@ -8,12 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import {
-  FeaturesConfigModule,
-  I18nModule,
-  provideDefaultConfig,
-  UrlModule,
-} from '@spartacus/core';
+import { I18nModule, provideDefaultConfig, UrlModule } from '@spartacus/core';
 import {
   IconModule,
   ItemCounterModule,
@@ -39,7 +34,6 @@ import { defaultAddedToCartLayoutConfig } from './default-added-to-cart-layout.c
     I18nModule,
     ItemCounterModule,
     KeyboardFocusModule,
-    FeaturesConfigModule,
   ],
   providers: [provideDefaultConfig(defaultAddedToCartLayoutConfig)],
   declarations: [AddedToCartDialogComponent],

@@ -61,33 +61,35 @@ describe('MyAccountV2EmailComponent', () => {
 
   let service: UpdateEmailComponentService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        I18nTestingModule,
-        FormErrorsModule,
-        RouterTestingModule,
-        UrlTestingModule,
-        PasswordVisibilityToggleModule,
-      ],
-      declarations: [MyAccountV2EmailComponent, MockCxSpinnerComponent],
-      providers: [
-        {
-          provide: UpdateEmailComponentService,
-          useClass: MockMyAccountV2EmailService,
-        },
-        {
-          provide: UserProfileFacade,
-          useClass: MockNewProfileFacade,
-        },
-      ],
-    })
-      .overrideComponent(MyAccountV2EmailComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          ReactiveFormsModule,
+          I18nTestingModule,
+          FormErrorsModule,
+          RouterTestingModule,
+          UrlTestingModule,
+          PasswordVisibilityToggleModule,
+        ],
+        declarations: [MyAccountV2EmailComponent, MockCxSpinnerComponent],
+        providers: [
+          {
+            provide: UpdateEmailComponentService,
+            useClass: MockMyAccountV2EmailService,
+          },
+          {
+            provide: UserProfileFacade,
+            useClass: MockNewProfileFacade,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MyAccountV2EmailComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MyAccountV2EmailComponent);

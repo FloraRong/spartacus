@@ -51,7 +51,6 @@ import {
   distinctUntilChanged,
   filter,
   map,
-  mergeMap,
   switchMap,
   take,
   tap,
@@ -553,21 +552,6 @@ export class QuoteService implements QuoteFacade {
       filter((state) => state.data !== undefined),
       map((state) => state.data),
       map((quote) => quote as Quote)
-    );
-  }
-
-  downloadAttachment(
-    quoteCode: string,
-    attachmentId: string
-  ): Observable<Blob> {
-    return this.userIdService.takeUserId().pipe(
-      mergeMap((userId) => {
-        return this.quoteConnector.downloadAttachment(
-          userId,
-          quoteCode,
-          attachmentId
-        );
-      })
     );
   }
 }

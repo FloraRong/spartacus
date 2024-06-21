@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GlobalMessageService, I18nTestingModule } from '@spartacus/core';
+import { I18nTestingModule } from '@spartacus/core';
 import { PopoverModule, SplitViewService } from '@spartacus/storefront';
 import { IconTestingModule } from 'projects/storefrontlib/cms-components/misc/icon/testing/icon-testing.module';
 import { ViewComponent } from 'projects/storefrontlib/shared/components/split-view/view/view.component';
@@ -18,10 +18,6 @@ class MockItemService {
   key$ = of('key');
   current$ = of(mockItem);
   launchDetails = createSpy('launchDetails');
-}
-
-class MockGlobalMessageService {
-  add() {}
 }
 
 describe('CardComponent', () => {
@@ -45,8 +41,6 @@ describe('CardComponent', () => {
           provide: ItemService,
           useClass: MockItemService,
         },
-        { provide: GlobalMessageService, useClass: MockGlobalMessageService },
-
         SplitViewService,
       ],
     }).compileComponents();

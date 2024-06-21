@@ -20,18 +20,20 @@ describe('AnonymousConsentOpenDialogComponent', () => {
   let fixture: ComponentFixture<AnonymousConsentOpenDialogComponent>;
   let launchDialogService: LaunchDialogService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [AnonymousConsentOpenDialogComponent],
-      providers: [
-        {
-          provide: LaunchDialogService,
-          useClass: MockLaunchDialogService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [AnonymousConsentOpenDialogComponent],
+        providers: [
+          {
+            provide: LaunchDialogService,
+            useClass: MockLaunchDialogService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnonymousConsentOpenDialogComponent);

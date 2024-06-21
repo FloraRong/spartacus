@@ -11,21 +11,13 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  OnDestroy,
-  OnInit,
-  Optional,
   Output,
   Renderer2,
-  ViewChild,
-  inject,
 } from '@angular/core';
-import { Facet, FeatureConfigService } from '@spartacus/core';
-import { Observable, Subscription } from 'rxjs';
+import { Facet } from '@spartacus/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-  FocusConfig,
-  KeyboardFocusService,
-} from '../../../../../layout/a11y/keyboard-focus/index';
+import { FocusConfig } from '../../../../../layout/a11y/keyboard-focus/index';
 import { ICON_TYPE } from '../../../../misc/icon/icon.model';
 import { FacetGroupCollapsedState, FacetList } from '../facet.model';
 import { FacetComponent } from '../facet/facet.component';
@@ -36,13 +28,8 @@ import { FacetService } from '../services/facet.service';
   templateUrl: './facet-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FacetListComponent implements OnInit, OnDestroy {
-  protected subscriptions = new Subscription();
+export class FacetListComponent {
   private _isDialog: boolean;
-
-  @ViewChild('backToResultsBtn')
-  backToResultsBtn: ElementRef<HTMLButtonElement>;
-
   /**
    * Indicates that the facet navigation is rendered in dialog.
    */
@@ -70,29 +57,18 @@ export class FacetListComponent implements OnInit, OnDestroy {
     trap: true,
     block: true,
     focusOnEscape: true,
-    autofocus: 'cx-facet > button',
+    autofocus: 'cx-facet',
   };
 
   @HostListener('click') handleClick() {
     this.close();
   }
-  @Optional() focusService = inject(KeyboardFocusService, { optional: true });
-  @Optional() featureConfigService = inject(FeatureConfigService, {
-    optional: true,
-  });
 
   constructor(
     protected facetService: FacetService,
     protected elementRef: ElementRef,
     protected renderer: Renderer2
   ) {}
-
-  ngOnInit(): void {
-    // TODO: (CXSPA-7321) - Remove feature flag next major release
-    if (this.featureConfigService?.isEnabled('a11yFacetsDialogFocusHandling')) {
-      this.enableFocusHandlingOnFacetListChanges();
-    }
-  }
 
   /**
    * Toggles the facet group in case it is not expanded.
@@ -132,48 +108,5 @@ export class FacetListComponent implements OnInit, OnDestroy {
 
   block(event?: MouseEvent) {
     event?.stopPropagation();
-  }
-
-  protected enableFocusHandlingOnFacetListChanges(): void {
-    this.subscriptions.add(
-      this.facetService.facetList$.subscribe((facetList) =>
-        this.handleDialogFocus(facetList.facets)
-      )
-    );
-  }
-
-  protected handleDialogFocus(facets: Facet[]): void {
-    // Only apply new focus for the dialog view
-    if (!this.isDialog) {
-      return;
-    }
-
-    const focusKey = this.focusService?.get();
-    if (!focusKey) {
-      return;
-    }
-
-    const focusedFacet = facets.find((facet) =>
-      facet.values?.some((value) => {
-        return value.name === focusKey;
-      })
-    );
-    if (focusedFacet) {
-      return;
-    }
-
-    if (!facets?.length) {
-      // If there are no facets to display then focus on the "Back To Results" button
-      this.backToResultsBtn?.nativeElement.focus();
-      this.focusService?.clear();
-      return;
-    }
-
-    const firstAvailableFacet = facets[0];
-    this.focusService?.set(firstAvailableFacet.name);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 }

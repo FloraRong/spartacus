@@ -70,7 +70,11 @@ declare module '@schematics/angular/utility/workspace-models' {
   }
 }
 
-const DEPENDENCY_NAMES: string[] = ['@angular/platform-server', ANGULAR_SSR];
+const DEPENDENCY_NAMES: string[] = [
+  '@angular/platform-server',
+  ANGULAR_SSR,
+  'ts-loader',
+];
 
 export function modifyAppServerModuleFile(): Rule {
   return (tree: Tree, context: SchematicContext) => {

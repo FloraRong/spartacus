@@ -95,7 +95,7 @@ if [[ "${SSR}" = true ]]; then
         npm run e2e:run:ci:core:ssr
       fi
     else
-        npm run e2e:run:ci:ssr"${SUITE}"
+        npm run e2e:run:ci:ssr
     fi
 else
     npm run start:pwa &

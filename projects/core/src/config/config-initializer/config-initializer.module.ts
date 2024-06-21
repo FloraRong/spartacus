@@ -4,15 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { LOCATION_INITIALIZED } from '@angular/common';
 import {
   APP_INITIALIZER,
   ModuleWithProviders,
   NgModule,
   Optional,
-  inject,
 } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { LOCATION_INITIALIZED_MULTI } from '../../routing/location-initialized-multi/location-initialized-multi';
 import { Config } from '../config-tokens';
 import {
   CONFIG_INITIALIZER,
@@ -29,9 +28,6 @@ export function configInitializerFactory(
   return isReady;
 }
 
-/**
- * @deprecated since 2211.22  - should not be a public API
- */
 export function locationInitializedFactory(
   configInitializer: ConfigInitializerService
 ): Promise<Config> {
@@ -59,12 +55,9 @@ export class ConfigInitializerModule {
         },
         {
           // Hold on the initial navigation until the Spartacus configuration is stable
-          provide: LOCATION_INITIALIZED_MULTI,
-          useFactory: () => {
-            const configInitializer = inject(ConfigInitializerService);
-            return () => lastValueFrom(configInitializer.getStable());
-          },
-          multi: true,
+          provide: LOCATION_INITIALIZED,
+          useFactory: locationInitializedFactory,
+          deps: [ConfigInitializerService],
         },
       ],
     };

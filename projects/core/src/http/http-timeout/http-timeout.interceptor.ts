@@ -27,10 +27,7 @@ import { HTTP_TIMEOUT_CONFIG } from './http-timeout.config';
 export class HttpTimeoutInterceptor implements HttpInterceptor {
   protected logger = inject(LoggerService);
 
-  constructor(
-    protected windowRef: WindowRef,
-    protected config: OccConfig
-  ) {}
+  constructor(protected windowRef: WindowRef, protected config: OccConfig) {}
 
   /**
    * It throws an error when a request takes longer than the specified time.

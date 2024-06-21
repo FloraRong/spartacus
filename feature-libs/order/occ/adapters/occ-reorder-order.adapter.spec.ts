@@ -26,15 +26,17 @@ describe(`OccReorderOrderAdapter`, () => {
   let converter: ConverterService;
   let occEndpointService: OccEndpointsService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-        OccReorderOrderAdapter,
-        { provide: OccEndpointsService, useClass: MockOccEndpointsService },
-      ],
-    });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
+        providers: [
+          OccReorderOrderAdapter,
+          { provide: OccEndpointsService, useClass: MockOccEndpointsService },
+        ],
+      });
+    })
+  );
 
   beforeEach(() => {
     occAdapter = TestBed.inject(OccReorderOrderAdapter);

@@ -10,24 +10,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  ActiveCartFacade,
-  Cart,
-  CartUiEventAddToCart,
-  OrderEntry,
-} from '@spartacus/cart/base/root';
-import {
-  CmsComponent,
-  EventService,
-  I18nTestingModule,
-  Product,
-} from '@spartacus/core';
+import { AddedToCartDialogEventListener } from '@spartacus/cart/base/components';
+import { ActiveCartFacade, Cart, OrderEntry } from '@spartacus/cart/base/root';
+import { CmsComponent, I18nTestingModule, Product } from '@spartacus/core';
 import {
   CmsComponentData,
   CurrentProductService,
   IconModule,
-  LAUNCH_CALLER,
   LaunchDialogService,
+  LAUNCH_CALLER,
   SpinnerModule,
 } from '@spartacus/storefront';
 import { EMPTY, Observable, of } from 'rxjs';
@@ -91,10 +82,6 @@ class MockLaunchDialogService implements Partial<LaunchDialogService> {
   closeDialog(_reason: string): void {}
 }
 
-class MockEventService implements Partial<EventService> {
-  dispatch<T extends object>(_event: T): void {}
-}
-
 @Component({
   template: '',
   selector: 'cx-item-counter',
@@ -112,48 +99,51 @@ describe('CompactAddToCartComponent', () => {
   let service: ActiveCartFacade;
   let currentProductService: CurrentProductService;
   let el: DebugElement;
-  let eventService: EventService;
+  let listener: AddedToCartDialogEventListener;
 
   const mockCartEntry: OrderEntry = { entryNumber: 7 };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        BrowserAnimationsModule,
-        RouterTestingModule,
-        SpinnerModule,
-        I18nTestingModule,
-        ReactiveFormsModule,
-        IconModule,
-      ],
-      declarations: [CompactAddToCartComponent, MockItemCounterComponent],
-      providers: [
-        {
-          provide: LaunchDialogService,
-          useValue: MockLaunchDialogService,
-        },
-        { provide: ActiveCartFacade, useClass: MockActiveCartService },
-        {
-          provide: CurrentProductService,
-          useClass: MockCurrentProductService,
-        },
-        {
-          provide: CmsComponentData,
-          useValue: MockCmsComponentData,
-        },
-        { provide: EventService, useClass: MockEventService },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          BrowserAnimationsModule,
+          RouterTestingModule,
+          SpinnerModule,
+          I18nTestingModule,
+          ReactiveFormsModule,
+          IconModule,
+        ],
+        declarations: [CompactAddToCartComponent, MockItemCounterComponent],
+        providers: [
+          {
+            provide: LaunchDialogService,
+            useValue: MockLaunchDialogService,
+          },
+          { provide: ActiveCartFacade, useClass: MockActiveCartService },
+          {
+            provide: CurrentProductService,
+            useClass: MockCurrentProductService,
+          },
+          {
+            provide: CmsComponentData,
+            useValue: MockCmsComponentData,
+          },
+          AddedToCartDialogEventListener,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CompactAddToCartComponent);
     addToCartComponent = fixture.componentInstance;
     service = TestBed.inject(ActiveCartFacade);
     currentProductService = TestBed.inject(CurrentProductService);
-    eventService = TestBed.inject(EventService);
-
+    listener = TestBed.inject(AddedToCartDialogEventListener);
     el = fixture.debugElement;
+
+    spyOn(listener as any, 'openModal').and.stub();
 
     fixture.detectChanges();
   });
@@ -186,18 +176,12 @@ describe('CompactAddToCartComponent', () => {
     spyOn(service, 'addEntry').and.callThrough();
     spyOn(service, 'getEntries').and.returnValue(of([mockCartEntry]));
     spyOn(service, 'isStable').and.returnValue(of(true));
-    spyOn(eventService, 'dispatch').and.callThrough();
     addToCartComponent.quantity = 1;
-    const uiEvent: CartUiEventAddToCart = new CartUiEventAddToCart();
-    uiEvent.productCode = productCode;
-    uiEvent.numberOfEntriesBeforeAdd = 1;
-    uiEvent.quantity = 1;
-    uiEvent.pickupStoreName = undefined;
 
     addToCartComponent.addToCart();
 
     expect(service.addEntry).toHaveBeenCalledWith(productCode, 1, undefined);
-    expect(eventService.dispatch).toHaveBeenCalledWith(uiEvent);
+    expect(listener['openModal']).toHaveBeenCalledTimes(1);
   });
 
   describe('UI', () => {

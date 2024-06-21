@@ -1,88 +1,122 @@
 import { TestBed } from '@angular/core/testing';
-import { ActionsSubject, StoreModule } from '@ngrx/store';
-import { ConsentService } from '@spartacus/core';
-import { of } from 'rxjs';
-import { CdsConfig } from '../../config/cds-config';
-import { ConsentChangedPushEvent } from '../model/profile-tag.model';
+import {
+  Event as NgRouterEvent,
+  NavigationStart,
+  Router,
+} from '@angular/router';
+import { Action, ActionsSubject } from '@ngrx/store';
+import { ActiveCartFacade, Cart } from '@spartacus/cart/base/root';
+import { AuthActions, ConsentService } from '@spartacus/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
+import { CdsConfig } from '../../config';
 import { ProfileTagLifecycleService } from './profile-tag-lifecycle.service';
-import { fakeAsync, tick, flush } from '@angular/core/testing';
 
-describe('ProfileTagLifecycleService', () => {
-  let service: ProfileTagLifecycleService;
-  let consentService: jasmine.SpyObj<ConsentService>;
-  let actionsSubject: ActionsSubject;
+describe('profileTagLifecycleService', () => {
+  let profileTagLifecycleService: ProfileTagLifecycleService;
+  let getConsentBehavior;
+  let isConsentGivenValue;
+  let routerEventsBehavior;
+  let router;
+  let consentsService;
+  let activeCartService;
+  let cartBehavior;
+  let mockActionsSubject: ReplaySubject<Action>;
 
+  const mockCDSConfig: CdsConfig = {
+    cds: {
+      consentTemplateId: 'PROFILE',
+    },
+  };
+  function setVariables() {
+    getConsentBehavior = new BehaviorSubject<Object>(undefined);
+    isConsentGivenValue = false;
+    routerEventsBehavior = new BehaviorSubject<NgRouterEvent>(
+      new NavigationStart(0, 'test.com', 'popstate')
+    );
+    cartBehavior = new ReplaySubject<Cart>();
+    mockActionsSubject = new ReplaySubject<Action>();
+    consentsService = {
+      getConsent: () => getConsentBehavior,
+      isConsentGiven: () => isConsentGivenValue,
+    };
+    router = {
+      events: routerEventsBehavior,
+    };
+    activeCartService = {
+      getActive: () => cartBehavior,
+    };
+  }
   beforeEach(() => {
-    const consentServiceSpy = jasmine.createSpyObj('ConsentService', [
-      'getConsent',
-      'isConsentGiven',
-    ]);
+    setVariables();
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({})],
       providers: [
-        { provide: ConsentService, useValue: consentServiceSpy },
+        { provide: Router, useValue: router },
+        {
+          provide: ConsentService,
+          useValue: consentsService,
+        },
+        {
+          provide: ActiveCartFacade,
+          useValue: activeCartService,
+        },
         {
           provide: CdsConfig,
-          useValue: { cds: { consentTemplateId: 'templateId' } },
+          useValue: mockCDSConfig,
         },
-        ActionsSubject,
-        ProfileTagLifecycleService,
+        {
+          provide: ActionsSubject,
+          useValue: mockActionsSubject,
+        },
       ],
     });
-    service = TestBed.inject(ProfileTagLifecycleService);
-    consentService = TestBed.inject(
-      ConsentService
-    ) as jasmine.SpyObj<ConsentService>;
-
-    actionsSubject = TestBed.inject(ActionsSubject);
+    profileTagLifecycleService = TestBed.inject(ProfileTagLifecycleService);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(profileTagLifecycleService).toBeTruthy();
   });
-
-  it('Should emit an event if the profile consent changes to true,', (done: DoneFn) => {
-    const mockConsent = { code: 'TestCode' };
-    consentService.getConsent.and.returnValue(of(mockConsent));
-    consentService.isConsentGiven.and.returnValue(true);
-
-    service.consentChanged().subscribe((event: ConsentChangedPushEvent) => {
-      expect(event.data.granted).toBe(true);
-      done();
+  describe('Consent', () => {
+    it(`Should emit an event if the profile consent changes to true,`, () => {
+      let timesCalled = 0;
+      const subscription = profileTagLifecycleService
+        .consentChanged()
+        .pipe(tap(() => timesCalled++))
+        .subscribe();
+      isConsentGivenValue = true;
+      getConsentBehavior.next({ consent: 'test' });
+      subscription.unsubscribe();
+      expect(timesCalled).toEqual(1);
+    });
+    it(`Should emit an event if the profile consent changes to false,`, () => {
+      let timesCalled = 0;
+      const subscription = profileTagLifecycleService
+        .consentChanged()
+        .pipe(
+          filter((event) => Boolean(!event.data.granted)),
+          tap(() => timesCalled++)
+        )
+        .subscribe();
+      isConsentGivenValue = false;
+      getConsentBehavior.next({ consent: 'test' });
+      subscription.unsubscribe();
+      expect(timesCalled).toEqual(1);
     });
   });
 
-  it('Should emit an event if the profile consent changes to false,', (done: DoneFn) => {
-    const mockConsent = { code: 'TestCode' };
-    consentService.getConsent.and.returnValue(of(mockConsent));
-    consentService.isConsentGiven.and.returnValue(false);
-
-    service.consentChanged().subscribe((event: ConsentChangedPushEvent) => {
-      expect(event.data.granted).toBe(false);
-      done();
-    });
+  it(`Should call the push method first time a login is successful`, () => {
+    let timesCalled = 0;
+    const subscription = profileTagLifecycleService
+      .loginSuccessful()
+      .pipe(tap((_) => timesCalled++))
+      .subscribe();
+    mockActionsSubject.next({ type: AuthActions.LOGOUT });
+    mockActionsSubject.next({ type: AuthActions.LOGIN });
+    mockActionsSubject.next({ type: AuthActions.LOGOUT });
+    mockActionsSubject.next({ type: AuthActions.LOGOUT });
+    mockActionsSubject.next({ type: AuthActions.LOGIN });
+    mockActionsSubject.next({ type: AuthActions.LOGOUT });
+    subscription.unsubscribe();
+    expect(timesCalled).toEqual(2);
   });
-
-  it('Should emit an event if the profile consent changes to false if consent is undefined,', (done: DoneFn) => {
-    const mockConsent = undefined;
-    consentService.getConsent.and.returnValue(of(mockConsent));
-    consentService.isConsentGiven.and.returnValue(true);
-
-    service.consentChanged().subscribe((event: ConsentChangedPushEvent) => {
-      expect(event.data.granted).toBe(false);
-      done();
-    });
-  });
-
-  it('should return login successful event', fakeAsync(() => {
-    const mockAction = { type: 'LOGIN' };
-    actionsSubject.next(mockAction);
-    tick();
-
-    service.loginSuccessful().subscribe((result: boolean) => {
-      expect(result).toBe(true);
-    });
-
-    flush();
-  }));
 });

@@ -125,51 +125,53 @@ describe('ConfigAttributeHeaderComponent', () => {
     },
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule, IconModule],
-      declarations: [
-        ConfiguratorAttributeHeaderComponent,
-        MockConfiguratorShowMoreComponent,
-      ],
-      providers: [
-        { provide: IconLoaderService, useClass: MockIconFontLoaderService },
-        {
-          provide: ConfiguratorStorefrontUtilsService,
-          useClass: MockConfigUtilsService,
-        },
-        {
-          provide: ConfiguratorCommonsService,
-          useClass: MockConfiguratorCommonsService,
-        },
-        {
-          provide: ConfiguratorGroupsService,
-          useClass: MockConfiguratorGroupsService,
-        },
-        {
-          provide: ConfiguratorUISettingsConfig,
-          useValue: TestConfiguratorUISettings,
-        },
-
-        {
-          provide: ConfiguratorAttributeCompositionContext,
-          useValue: ConfiguratorTestUtils.getAttributeContext(),
-        },
-        {
-          provide: FeaturesConfig,
-          useValue: {
-            features: { level: '*' },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule, IconModule],
+        declarations: [
+          ConfiguratorAttributeHeaderComponent,
+          MockConfiguratorShowMoreComponent,
+        ],
+        providers: [
+          { provide: IconLoaderService, useClass: MockIconFontLoaderService },
+          {
+            provide: ConfiguratorStorefrontUtilsService,
+            useClass: MockConfigUtilsService,
           },
-        },
-      ],
-    })
-      .overrideComponent(ConfiguratorAttributeHeaderComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+          {
+            provide: ConfiguratorCommonsService,
+            useClass: MockConfiguratorCommonsService,
+          },
+          {
+            provide: ConfiguratorGroupsService,
+            useClass: MockConfiguratorGroupsService,
+          },
+          {
+            provide: ConfiguratorUISettingsConfig,
+            useValue: TestConfiguratorUISettings,
+          },
+
+          {
+            provide: ConfiguratorAttributeCompositionContext,
+            useValue: ConfiguratorTestUtils.getAttributeContext(),
+          },
+          {
+            provide: FeaturesConfig,
+            useValue: {
+              features: { level: '*' },
+            },
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorAttributeHeaderComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     config = configWithoutConflicts;

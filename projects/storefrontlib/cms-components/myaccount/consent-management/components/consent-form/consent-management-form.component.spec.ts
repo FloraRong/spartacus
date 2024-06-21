@@ -13,12 +13,14 @@ describe('ConsentManagementFormComponent', () => {
   let fixture: ComponentFixture<ConsentManagementFormComponent>;
   let el: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [ConsentManagementFormComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [ConsentManagementFormComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConsentManagementFormComponent);

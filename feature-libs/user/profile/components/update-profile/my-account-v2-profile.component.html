@@ -70,19 +70,7 @@
           name="firstName"
           formControlName="firstName"
         />
-        <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-        <cx-form-errors
-          *cxFeature="'formErrorsDescriptiveMessages'"
-          [translationParams]="{
-            label: 'updateProfileForm.firstName.label' | cxTranslate
-          }"
-          [control]="form.get('firstName')"
-        ></cx-form-errors>
-
-        <cx-form-errors
-          *cxFeature="'!formErrorsDescriptiveMessages'"
-          [control]="form.get('firstName')"
-        ></cx-form-errors>
+        <cx-form-errors [control]="form.get('firstName')"></cx-form-errors>
       </label>
 
       <label>
@@ -96,19 +84,7 @@
           name="lastName"
           formControlName="lastName"
         />
-        <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-        <cx-form-errors
-          *cxFeature="'formErrorsDescriptiveMessages'"
-          [translationParams]="{
-            label: 'updateProfileForm.lastName.label' | cxTranslate
-          }"
-          [control]="form.get('lastName')"
-        ></cx-form-errors>
-
-        <cx-form-errors
-          *cxFeature="'!formErrorsDescriptiveMessages'"
-          [control]="form.get('lastName')"
-        ></cx-form-errors>
+        <cx-form-errors [control]="form.get('lastName')"></cx-form-errors>
       </label>
 
       <label>
@@ -123,19 +99,7 @@
           formControlName="customerId"
           readonly
         />
-        <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-        <cx-form-errors
-          *cxFeature="'formErrorsDescriptiveMessages'"
-          [translationParams]="{
-            label: 'updateProfileForm.customerId' | cxTranslate
-          }"
-          [control]="form.get('customerId')"
-        ></cx-form-errors>
-
-        <cx-form-errors
-          *cxFeature="'!formErrorsDescriptiveMessages'"
-          [control]="form.get('customerId')"
-        ></cx-form-errors>
+        <cx-form-errors [control]="form.get('customerId')"></cx-form-errors>
       </label>
     </form>
 

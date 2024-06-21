@@ -9,7 +9,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   CmsConfig,
-  FeaturesConfigModule,
   I18nModule,
   provideDefaultConfig,
   UrlModule,
@@ -33,7 +32,6 @@ import { ProductScrollComponent } from './container/product-scroll/product-scrol
 import { ProductGridItemComponent } from './product-grid-item/product-grid-item.component';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { ProductViewComponent } from './product-view/product-view.component';
-import { ProductListService } from './product-list.service';
 
 @NgModule({
   imports: [
@@ -51,10 +49,8 @@ import { ProductListService } from './product-list.service';
     SpinnerModule,
     StarRatingModule,
     UrlModule,
-    FeaturesConfigModule,
   ],
   providers: [
-    ProductListService,
     provideDefaultConfig(<ViewConfig>defaultViewConfig),
     provideDefaultConfig(<CmsConfig>{
       cmsComponents: {

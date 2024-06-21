@@ -4,16 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Optional,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UpdatePasswordComponentService } from './update-password-component.service';
-import { RoutingService } from '@spartacus/core';
 
 @Component({
   selector: 'cx-update-password',
@@ -22,10 +16,6 @@ import { RoutingService } from '@spartacus/core';
   host: { class: 'user-form' },
 })
 export class UpdatePasswordComponent {
-  @Optional() protected routingService = inject(RoutingService, {
-    optional: true,
-  });
-
   constructor(protected service: UpdatePasswordComponentService) {}
 
   form: UntypedFormGroup = this.service.form;
@@ -33,9 +23,5 @@ export class UpdatePasswordComponent {
 
   onSubmit(): void {
     this.service.updatePassword();
-  }
-
-  navigateTo(cxRoute: string): void {
-    this.routingService?.go({ cxRoute });
   }
 }

@@ -48,45 +48,47 @@ describe('ConfiguratorAttributeInputFieldComponent', () => {
   const groupId = 'theGroupId';
   const userInput = 'theUserInput';
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ConfiguratorAttributeInputFieldComponent,
-        MockFocusDirective,
-      ],
-      imports: [ReactiveFormsModule, I18nTestingModule],
-      providers: [
-        {
-          provide: ConfiguratorUISettingsConfig,
-          useValue: defaultConfiguratorUISettingsConfig,
-        },
-        {
-          provide: ConfiguratorAttributeCompositionContext,
-          useValue: ConfiguratorTestUtils.getAttributeContext(),
-        },
-        {
-          provide: ConfiguratorCommonsService,
-          useClass: MockConfiguratorCommonsService,
-        },
-        {
-          provide: ConfiguratorStorefrontUtilsService,
-          useClass: MockConfigUtilsService,
-        },
-        {
-          provide: FeaturesConfig,
-          useValue: {
-            features: { level: '*' },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ConfiguratorAttributeInputFieldComponent,
+          MockFocusDirective,
+        ],
+        imports: [ReactiveFormsModule, I18nTestingModule],
+        providers: [
+          {
+            provide: ConfiguratorUISettingsConfig,
+            useValue: defaultConfiguratorUISettingsConfig,
           },
-        },
-      ],
-    })
-      .overrideComponent(ConfiguratorAttributeInputFieldComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+          {
+            provide: ConfiguratorAttributeCompositionContext,
+            useValue: ConfiguratorTestUtils.getAttributeContext(),
+          },
+          {
+            provide: ConfiguratorCommonsService,
+            useClass: MockConfiguratorCommonsService,
+          },
+          {
+            provide: ConfiguratorStorefrontUtilsService,
+            useClass: MockConfigUtilsService,
+          },
+          {
+            provide: FeaturesConfig,
+            useValue: {
+              features: { level: '*' },
+            },
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorAttributeInputFieldComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfiguratorAttributeInputFieldComponent);

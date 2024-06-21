@@ -17,7 +17,7 @@
           }
         } | cxUrl
       "
-      [queryParams]="queryParams$ | async"
+      [queryParams]="getQueryParams()"
       cxAutoFocus
       attr.aria-describedby="{{ getResolveIssuesA11yDescription() }}"
     >
@@ -26,16 +26,16 @@
   </ng-container>
 
   <ng-template #configureText>
-    <ng-container *ngIf="getDisplayOnly()">
+    <ng-container *ngIf="readOnly">
       {{
         'configurator.header.displayConfiguration' | cxTranslate
       }}</ng-container
     >
-    <ng-container *ngIf="!getDisplayOnly() && !msgBanner">
+    <ng-container *ngIf="!readOnly && !msgBanner">
       {{ 'configurator.header.editConfiguration' | cxTranslate }}
     </ng-container>
 
-    <ng-container *ngIf="!getDisplayOnly() && msgBanner">
+    <ng-container *ngIf="!readOnly && msgBanner">
       {{ 'configurator.header.resolveIssues' | cxTranslate }}
     </ng-container>
   </ng-template>

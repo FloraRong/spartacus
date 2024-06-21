@@ -1,9 +1,8 @@
 import { Component, DebugElement, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { I18nTestingModule } from '@spartacus/core';
-import { MockFeatureDirective } from 'projects/storefrontlib/shared/test/mock-feature-directive';
 import { DatePickerComponent } from './date-picker.component';
 
 @Component({
@@ -29,11 +28,7 @@ describe('DatePickerComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [I18nTestingModule, ReactiveFormsModule],
-      declarations: [
-        DatePickerComponent,
-        MockFormErrorComponent,
-        MockFeatureDirective,
-      ],
+      declarations: [DatePickerComponent, MockFormErrorComponent],
     }).compileComponents();
   });
 

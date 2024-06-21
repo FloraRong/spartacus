@@ -12,6 +12,7 @@
           (click)="showBody = !showBody"
           [attr.aria-expanded]="showBody"
           [attr.aria-label]="accordionText"
+          aria-hidden="true"
           class="cx-message-accordion-button link cx-action-link"
           type="button"
         >
@@ -26,6 +27,7 @@
           *ngIf="actionButtonText"
           (click)="buttonAction.emit()"
           [cxAtMessage]="actionButtonMessage"
+          aria-hidden="true"
           class="btn btn-link cx-action-link"
           type="button"
         >
@@ -38,6 +40,7 @@
         (click)="closeMessage.emit()"
         [attr.aria-label]="'common.close' | cxTranslate"
         [cxAtMessage]="'common.close' | cxTranslate"
+        aria-hidden="true"
         class="close"
         type="button"
       >

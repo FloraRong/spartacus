@@ -15,18 +15,7 @@
         [placeholder]="'orgUser.title' | cxTranslate"
       >
       </ng-select>
-
-      <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-      <cx-form-errors
-        *cxFeature="'formErrorsDescriptiveMessages'"
-        [translationParams]="{ label: 'orgUser.title' | cxTranslate }"
-        [control]="form.get('titleCode')"
-      ></cx-form-errors>
-
-      <cx-form-errors
-        *cxFeature="'!formErrorsDescriptiveMessages'"
-        [control]="form.get('titleCode')"
-      ></cx-form-errors>
+      <cx-form-errors [control]="form.get('titleCode')"></cx-form-errors>
     </label>
     <label>
       <span class="label-content required">{{
@@ -39,18 +28,7 @@
         placeholder="{{ 'orgUser.firstName' | cxTranslate }}"
         formControlName="firstName"
       />
-
-      <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-      <cx-form-errors
-        *cxFeature="'formErrorsDescriptiveMessages'"
-        [translationParams]="{ label: 'orgUser.firstName' | cxTranslate }"
-        [control]="form.get('firstName')"
-      ></cx-form-errors>
-
-      <cx-form-errors
-        *cxFeature="'!formErrorsDescriptiveMessages'"
-        [control]="form.get('firstName')"
-      ></cx-form-errors>
+      <cx-form-errors [control]="form.get('firstName')"></cx-form-errors>
     </label>
 
     <label>
@@ -64,18 +42,7 @@
         placeholder="{{ 'orgUser.lastName' | cxTranslate }}"
         formControlName="lastName"
       />
-
-      <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-      <cx-form-errors
-        *cxFeature="'formErrorsDescriptiveMessages'"
-        [translationParams]="{ label: 'orgUser.lastName' | cxTranslate }"
-        [control]="form.get('lastName')"
-      ></cx-form-errors>
-
-      <cx-form-errors
-        *cxFeature="'!formErrorsDescriptiveMessages'"
-        [control]="form.get('lastName')"
-      ></cx-form-errors>
+      <cx-form-errors [control]="form.get('lastName')"></cx-form-errors>
     </label>
 
     <label>
@@ -89,18 +56,7 @@
         placeholder="{{ 'orgUser.email' | cxTranslate }}"
         formControlName="email"
       />
-
-      <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-      <cx-form-errors
-        *cxFeature="'formErrorsDescriptiveMessages'"
-        [translationParams]="{ label: 'orgUser.email' | cxTranslate }"
-        [control]="form.get('email')"
-      ></cx-form-errors>
-
-      <cx-form-errors
-        *cxFeature="'!formErrorsDescriptiveMessages'"
-        [control]="form.get('email')"
-      ></cx-form-errors>
+      <cx-form-errors [control]="form.get('email')"></cx-form-errors>
     </label>
 
     <fieldset required="true" class="full-width" formArrayName="roles">
@@ -165,18 +121,7 @@
         [placeholder]="'orgUser.orgUnit' | cxTranslate"
       >
       </ng-select>
-
-      <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-      <cx-form-errors
-        *cxFeature="'formErrorsDescriptiveMessages'"
-        [translationParams]="{ label: 'orgUser.orgUnit' | cxTranslate }"
-        [control]="form.get('orgUnit.uid')"
-      ></cx-form-errors>
-
-      <cx-form-errors
-        *cxFeature="'!formErrorsDescriptiveMessages'"
-        [control]="form.get('orgUnit.uid')"
-      ></cx-form-errors>
+      <cx-form-errors [control]="form.get('orgUnit.uid')"></cx-form-errors>
     </label>
 
     <div *ngIf="isAssignedToApprovers" class="full-width">

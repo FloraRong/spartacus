@@ -61,7 +61,7 @@
 
         &.active,
         &:hover {
-          color: var(--cx-color-primary-accent);
+          color: var(--cx-color-primary);
           text-decoration: none;
         }
 
@@ -76,7 +76,7 @@
         }
 
         &:not(.active):hover:after {
-          opacity: 1;
+          opacity: 0.5;
         }
       }
     }

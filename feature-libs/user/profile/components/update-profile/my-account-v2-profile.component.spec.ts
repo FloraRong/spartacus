@@ -49,31 +49,33 @@ describe('MyAccountV2ProfileComponent', () => {
 
   let service: UpdateProfileComponentService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        I18nTestingModule,
-        FormErrorsModule,
-        RouterTestingModule,
-        UrlTestingModule,
-        NgSelectModule,
-        FeaturesConfigModule,
-      ],
-      declarations: [MyAccountV2ProfileComponent, MockCxSpinnerComponent],
-      providers: [
-        {
-          provide: UpdateProfileComponentService,
-          useClass: MockProfileService,
-        },
-      ],
-    })
-      .overrideComponent(MyAccountV2ProfileComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          ReactiveFormsModule,
+          I18nTestingModule,
+          FormErrorsModule,
+          RouterTestingModule,
+          UrlTestingModule,
+          NgSelectModule,
+          FeaturesConfigModule,
+        ],
+        declarations: [MyAccountV2ProfileComponent, MockCxSpinnerComponent],
+        providers: [
+          {
+            provide: UpdateProfileComponentService,
+            useClass: MockProfileService,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MyAccountV2ProfileComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MyAccountV2ProfileComponent);

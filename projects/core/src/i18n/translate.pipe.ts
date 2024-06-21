@@ -15,11 +15,7 @@ import {
 import { Subscription } from 'rxjs';
 import { LoggerService } from '../logger';
 import { ObjectComparisonUtils } from '../util/object-comparison-utils';
-import {
-  isTranslatable,
-  Translatable,
-  TranslatableParams,
-} from './translatable';
+import { Translatable, TranslatableParams } from './translatable';
 import { TranslationService } from './translation.service';
 
 @Pipe({ name: 'cxTranslate', pure: false })
@@ -37,7 +33,7 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
   ) {}
 
   transform(
-    input: Translatable | string | string[],
+    input: Translatable | string,
     options: TranslatableParams = {}
   ): string {
     if (!input) {
@@ -49,15 +45,14 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
       return '';
     }
 
-    if (isTranslatable(input) && input.raw) {
-      return input.raw;
+    if ((input as Translatable).raw) {
+      return (input as Translatable).raw ?? '';
     }
 
-    if (isTranslatable(input) && input.params) {
+    const key = typeof input === 'string' ? input : input.key;
+    if (typeof input !== 'string') {
       options = { ...options, ...input.params };
     }
-
-    const key = isTranslatable(input) ? input.key : input;
 
     this.translate(key, options);
     return this.translatedValue;

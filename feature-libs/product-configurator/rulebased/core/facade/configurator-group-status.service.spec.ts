@@ -22,12 +22,14 @@ describe('ConfiguratorGroupStatusService', () => {
   let classUnderTest: ConfiguratorGroupStatusService;
   let store: Store<StateWithConfigurator>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({})],
-      providers: [ConfiguratorUtilsService, ConfiguratorGroupStatusService],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({})],
+        providers: [ConfiguratorUtilsService, ConfiguratorGroupStatusService],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     classUnderTest = TestBed.inject(

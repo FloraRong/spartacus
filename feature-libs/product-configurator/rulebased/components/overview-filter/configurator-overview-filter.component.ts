@@ -4,22 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Component, inject, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { ConfiguratorCommonsService } from '../../core/facade/configurator-commons.service';
 import { Configurator } from '../../core/model/configurator.model';
-import { ConfiguratorStorefrontUtilsService } from '../service/configurator-storefront-utils.service';
 
 @Component({
   selector: 'cx-configurator-overview-filter',
   templateUrl: './configurator-overview-filter.component.html',
 })
 export class ConfiguratorOverviewFilterComponent implements OnChanges {
-  protected configuratorStorefrontUtilsService = inject(
-    ConfiguratorStorefrontUtilsService
-  );
-
   constructor(
     protected configuratorCommonsService: ConfiguratorCommonsService
   ) {}
@@ -39,7 +33,7 @@ export class ConfiguratorOverviewFilterComponent implements OnChanges {
   /**
    * Updates the overview based on the filters currently selected in the UI
    *
-   * @param config - current configuration with overview data
+   * @param {Configurator.ConfigurationWithOverview} config - current configuration with overview data
    */
   onFilter(config: Configurator.ConfigurationWithOverview) {
     const inputConfig = this.createInputConfig(
@@ -48,18 +42,6 @@ export class ConfiguratorOverviewFilterComponent implements OnChanges {
       this.collectGroupFilters(config.overview)
     );
     this.configuratorCommonsService.updateConfigurationOverview(inputConfig);
-  }
-
-  /**
-   * Verifies whether a product is a variant product in the display only view.
-   *
-   * @returns - if `baseProduct` property of the current product is defined
-   * and provides the product code of the base product,
-   * and the current product is in the display only view
-   * then returns `true`, otherwise `false`.
-   */
-  isDisplayOnlyVariant(): Observable<boolean> {
-    return this.configuratorStorefrontUtilsService.isDisplayOnlyVariant();
   }
 
   protected extractGroupFilterState(

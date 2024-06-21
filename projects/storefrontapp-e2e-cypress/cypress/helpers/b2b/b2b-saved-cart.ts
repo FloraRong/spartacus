@@ -155,7 +155,7 @@ export function saveActiveCart() {
           sampleData.savedActiveCartForm[0].description
         );
 
-        cy.get('button.btn-primary').click();
+        cy.get('button[aria-label="Save"]').click();
       });
 
       cy.wait(`@${alias}`).its('response.statusCode').should('eq', 200);
@@ -236,7 +236,7 @@ export function clickOnSubmitButton() {
 
 export function clickOnRestoreButton() {
   cy.get('cx-saved-cart-form-dialog').within(() => {
-    cy.get('button.btn-primary').click();
+    cy.get('button[aria-label="Restore"]').click();
   });
 }
 
@@ -390,7 +390,7 @@ export function restoreCart(
                 }
               }
 
-              cy.get('button.btn-primary').click();
+              cy.get('button[aria-label="Restore"]').click();
             });
 
             if (cloneSavedCart.isCloneCartActive) {
@@ -487,7 +487,7 @@ export function updateSavedCartAndDelete(
           cy.get('[formcontrolname="description"]').type(`
           {selectall}${sampleData.savedActiveCartForm[4].description}`);
 
-          cy.get('button.btn-primary').click();
+          cy.get('button[aria-label="Save"]').click();
         });
 
         cy.wait(`@${updatedSavedCartAlias}`)
@@ -530,7 +530,8 @@ export function updateSavedCartAndDelete(
               'contain',
               sampleData.savedActiveCartForm[4].description
             );
-            cy.get('button.btn-primary').click();
+
+            cy.get('button[aria-label="Delete"]').click();
           });
         }
 
@@ -594,7 +595,7 @@ export function updateSavedCartAndRestore(
           cy.get('[formcontrolname="description"]').type(`
           {selectall}${sampleData.savedActiveCartForm[4].description}`);
 
-          cy.get('button.btn-primary').click();
+          cy.get('button[aria-label="Save"]').click();
         });
 
         cy.wait(`@${updatedSavedCartAlias}`)

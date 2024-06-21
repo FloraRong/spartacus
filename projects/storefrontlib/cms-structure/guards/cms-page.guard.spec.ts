@@ -17,7 +17,6 @@ import {
 import { NEVER, of } from 'rxjs';
 import { CmsPageGuardService } from './cms-page-guard.service';
 import { CmsPageGuard } from './cms-page.guard';
-import { BeforeCmsPageGuardService } from './before-cms-page-guard.service';
 
 class MockRoutingService implements Partial<RoutingService> {
   getNextPageContext = () => of({} as any);
@@ -40,11 +39,6 @@ class MockRoutingConfigService {
   getLoadStrategy = () => {};
 }
 
-class MockBeforeCmsPageGuardService
-  implements Partial<BeforeCmsPageGuardService>
-{
-  canActivate = () => of(true);
-}
 const mockActivatedRouteSnapshot: ActivatedRouteSnapshot = {} as any;
 const mockRouterStateSnapshot: RouterStateSnapshot = {} as any;
 
@@ -52,8 +46,8 @@ describe('CmsPageGuard', () => {
   let routingService: RoutingService;
   let cmsService: CmsService;
   let service: CmsPageGuardService;
+  let protectedRoutesGuard: ProtectedRoutesGuard;
   let guard: CmsPageGuard;
-  let beforeCmsPageGuardService: BeforeCmsPageGuardService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -66,28 +60,22 @@ describe('CmsPageGuard', () => {
           provide: RoutingConfigService,
           useClass: MockRoutingConfigService,
         },
-        {
-          provide: BeforeCmsPageGuardService,
-          useClass: MockBeforeCmsPageGuardService,
-        },
       ],
       imports: [RouterTestingModule],
     });
 
     routingService = TestBed.inject(RoutingService);
     cmsService = TestBed.inject(CmsService);
+    protectedRoutesGuard = TestBed.inject(ProtectedRoutesGuard);
     service = TestBed.inject(CmsPageGuardService);
     guard = TestBed.inject(CmsPageGuard);
-    beforeCmsPageGuardService = TestBed.inject(BeforeCmsPageGuardService);
   });
 
   describe('canActivate', () => {
-    describe('when BeforeCmsPageGuardService.canActivate emits redirect url,', () => {
+    describe('when ProtectedRoutesGuard.canActivate emits redirect url,', () => {
       const urlTree = new UrlTree();
       beforeEach(() => {
-        spyOn(beforeCmsPageGuardService, 'canActivate').and.returnValue(
-          of(urlTree)
-        );
+        spyOn(protectedRoutesGuard, 'canActivate').and.returnValue(of(urlTree));
       });
 
       it('should emit redirect url', () => {
@@ -97,15 +85,13 @@ describe('CmsPageGuard', () => {
           .subscribe((value) => (result = value))
           .unsubscribe();
 
-        expect(result).toEqual(urlTree);
+        expect(result).toBe(urlTree);
       });
     });
 
-    describe('when BeforeCmsPageGuardService.canActivate emits true,', () => {
+    describe('when ProtectedRoutesGuard.canActivate emits true,', () => {
       beforeEach(() => {
-        spyOn(beforeCmsPageGuardService, 'canActivate').and.returnValue(
-          of(true)
-        );
+        spyOn(protectedRoutesGuard, 'canActivate').and.returnValue(of(true));
       });
 
       it('should force loading of CMS page for the anticipated page context', () => {

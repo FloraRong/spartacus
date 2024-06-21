@@ -13,6 +13,7 @@
       formcontrolname="cartNumber"
       [formControl]="cartId"
       (keydown.enter)="bindCartToCustomer()"
+      (blur)="resetInput()"
       [attr.aria-label]="'asm.bindCart.enterCartId' | cxTranslate"
     />
     <button

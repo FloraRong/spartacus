@@ -18,6 +18,7 @@
  * - schematics should also have version synced from the root package.json and library list of dependencies (should be done in schematics)
  */
 
+import chalk from 'chalk';
 import { execSync } from 'child_process';
 import fs, { readFileSync } from 'fs';
 import glob from 'glob';
@@ -43,7 +44,6 @@ import {
   reportProgress,
   success,
 } from './index';
-import {chalk} from "../chalk";
 
 // ------------ Utilities ------------
 

@@ -8,11 +8,6 @@ import { OccConfig } from '@spartacus/core';
 
 export const defaultOccUserAccountConfig: OccConfig = {
   backend: {
-    occ: {
-      endpoints: {
-        user: 'users/${userId}',
-        createVerificationToken: 'users/anonymous/verificationToken',
-      },
-    },
+    occ: { endpoints: { user: 'users/${userId}' } },
   },
 };

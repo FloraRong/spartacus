@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { AuthGuard, CmsConfig, FeatureConfigService } from '@spartacus/core';
+import { AuthGuard, CmsConfig } from '@spartacus/core';
 import { AdminGuard } from '@spartacus/organization/administration/core';
 import { ROUTE_PARAMS } from '@spartacus/organization/administration/root';
 import { TableConfig } from '@spartacus/storefront';
@@ -72,42 +72,11 @@ export const permissionCmsConfig: CmsConfig = {
   },
 };
 
-export function permissionTableConfigFactory(
-  featureConfigService?: FeatureConfigService
-): TableConfig {
-  // TODO: (CXSPA-7155) - Remove feature flag and legacy config next major release
-  if (featureConfigService?.isEnabled('a11yOrganizationLinkableCells')) {
-    return newPermissionTableConfig;
-  }
-  return permisionTableConfig;
+export function permissionTableConfigFactory(): TableConfig {
+  return permissionTableConfig;
 }
 
-export const newPermissionTableConfig: TableConfig = {
-  table: {
-    [OrganizationTableType.PERMISSION]: {
-      cells: ['code', 'active', 'limit', 'unit'],
-      options: {
-        cells: {
-          code: {
-            dataComponent: ActiveLinkCellComponent,
-            linkable: true,
-          },
-          active: {
-            dataComponent: StatusCellComponent,
-          },
-          unit: {
-            dataComponent: UnitCellComponent,
-          },
-          limit: {
-            dataComponent: LimitCellComponent,
-          },
-        },
-      },
-    },
-  },
-};
-
-export const permisionTableConfig: TableConfig = {
+export const permissionTableConfig: TableConfig = {
   table: {
     [OrganizationTableType.PERMISSION]: {
       cells: ['code', 'active', 'limit', 'unit'],

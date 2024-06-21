@@ -47,10 +47,9 @@ export function migrate(): Rule {
   // - a wrapper function returning Promise<Rule>
   // - passing the resolved `angularCompiler` as an argument down to other helper functions
   return async (tree: Tree, context: SchematicContext): Promise<Rule> => {
-    const angularCompiler =
-      await loadEsmModule<typeof import('@angular/compiler')>(
-        '@angular/compiler'
-      );
+    const angularCompiler = await loadEsmModule<
+      typeof import('@angular/compiler')
+    >('@angular/compiler');
 
     return (): Tree => {
       return migrateComponentMigration(

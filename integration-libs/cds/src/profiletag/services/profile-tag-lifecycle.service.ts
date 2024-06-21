@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { ActionsSubject } from '@ngrx/store';
-import { AuthActions, ConsentService } from '@spartacus/core';
+import { AuthActions, ConsentService, isNotUndefined } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { CdsConfig } from '../../config/cds-config';
@@ -26,12 +26,9 @@ export class ProfileTagLifecycleService {
     return this.consentService
       .getConsent(this.config.cds?.consentTemplateId ?? '')
       .pipe(
+        filter(isNotUndefined),
         map((profileConsent) => {
-          if (profileConsent) {
-            return this.consentService.isConsentGiven(profileConsent);
-          } else {
-            return false;
-          }
+          return this.consentService.isConsentGiven(profileConsent);
         }),
         map((granted) => {
           return new ConsentChangedPushEvent(granted);

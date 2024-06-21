@@ -44,14 +44,16 @@ describe('ProductImageZoomThumbnailsComponent', () => {
   let productImageZoomThumbnailsComponent: ProductImageZoomThumbnailsComponent;
   let fixture: ComponentFixture<ProductImageZoomThumbnailsComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ProductImageZoomThumbnailsComponent,
-        MockCarouselComponent,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ProductImageZoomThumbnailsComponent,
+          MockCarouselComponent,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductImageZoomThumbnailsComponent);

@@ -59,21 +59,23 @@ export class MockKeyboadFocusDirective {
 }
 
 describe('ConfiguratorOverviewFilterDialogComponent', () => {
-  beforeEach(waitForAsync(() => {
-    initializeMocks();
-    TestBed.configureTestingModule({
-      declarations: [
-        ConfiguratorOverviewFilterDialogComponent,
-        MockCxIconComponent,
-        MockConfiguratorOverviewFilterComponent,
-        MockKeyboadFocusDirective,
-      ],
-      imports: [I18nTestingModule],
-      providers: [
-        { provide: LaunchDialogService, useValue: mockLaunchDialogService },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      initializeMocks();
+      TestBed.configureTestingModule({
+        declarations: [
+          ConfiguratorOverviewFilterDialogComponent,
+          MockCxIconComponent,
+          MockConfiguratorOverviewFilterComponent,
+          MockKeyboadFocusDirective,
+        ],
+        imports: [I18nTestingModule],
+        providers: [
+          { provide: LaunchDialogService, useValue: mockLaunchDialogService },
+        ],
+      }).compileComponents();
+    })
+  );
 
   it('should create component', () => {
     initialize();

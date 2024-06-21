@@ -25,13 +25,15 @@ describe('AsmToggleuUiComponent', () => {
   let asmService: AsmService;
   let el: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [AsmToggleUiComponent],
-      providers: [{ provide: AsmService, useClass: MockAsmService }],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [AsmToggleUiComponent],
+        providers: [{ provide: AsmService, useClass: MockAsmService }],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AsmToggleUiComponent);

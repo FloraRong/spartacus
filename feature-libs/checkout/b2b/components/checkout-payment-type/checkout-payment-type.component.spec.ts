@@ -84,31 +84,33 @@ describe('CheckoutOnePaymentTypeComponent', () => {
 
   let checkoutStepService: CheckoutStepService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [CheckoutPaymentTypeComponent, MockSpinnerComponent],
-      providers: [
-        {
-          provide: CheckoutPaymentTypeFacade,
-          useClass: MockCheckoutOnePaymentTypeService,
-        },
-        {
-          provide: CheckoutStepService,
-          useClass: MockCheckoutStepService,
-        },
-        { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        {
-          provide: GlobalMessageService,
-          useClass: MockGlobalMessageService,
-        },
-      ],
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [CheckoutPaymentTypeComponent, MockSpinnerComponent],
+        providers: [
+          {
+            provide: CheckoutPaymentTypeFacade,
+            useClass: MockCheckoutOnePaymentTypeService,
+          },
+          {
+            provide: CheckoutStepService,
+            useClass: MockCheckoutStepService,
+          },
+          { provide: ActivatedRoute, useValue: mockActivatedRoute },
+          {
+            provide: GlobalMessageService,
+            useClass: MockGlobalMessageService,
+          },
+        ],
+      }).compileComponents();
 
-    checkoutStepService = TestBed.inject(
-      CheckoutStepService as Type<CheckoutStepService>
-    );
-  }));
+      checkoutStepService = TestBed.inject(
+        CheckoutStepService as Type<CheckoutStepService>
+      );
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckoutPaymentTypeComponent);
@@ -139,34 +141,36 @@ describe('CheckoutPaymentTypeComponent', () => {
   let checkoutStepService: CheckoutStepService;
   let el: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      declarations: [CheckoutPaymentTypeComponent, MockSpinnerComponent],
-      providers: [
-        {
-          provide: CheckoutPaymentTypeFacade,
-          useClass: MockCheckoutPaymentTypeService,
-        },
-        {
-          provide: CheckoutStepService,
-          useClass: MockCheckoutStepService,
-        },
-        { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        {
-          provide: GlobalMessageService,
-          useClass: MockGlobalMessageService,
-        },
-      ],
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        declarations: [CheckoutPaymentTypeComponent, MockSpinnerComponent],
+        providers: [
+          {
+            provide: CheckoutPaymentTypeFacade,
+            useClass: MockCheckoutPaymentTypeService,
+          },
+          {
+            provide: CheckoutStepService,
+            useClass: MockCheckoutStepService,
+          },
+          { provide: ActivatedRoute, useValue: mockActivatedRoute },
+          {
+            provide: GlobalMessageService,
+            useClass: MockGlobalMessageService,
+          },
+        ],
+      }).compileComponents();
 
-    checkoutPaymentTypeFacade = TestBed.inject(
-      CheckoutPaymentTypeFacade as Type<CheckoutPaymentTypeFacade>
-    );
-    checkoutStepService = TestBed.inject(
-      CheckoutStepService as Type<CheckoutStepService>
-    );
-  }));
+      checkoutPaymentTypeFacade = TestBed.inject(
+        CheckoutPaymentTypeFacade as Type<CheckoutPaymentTypeFacade>
+      );
+      checkoutStepService = TestBed.inject(
+        CheckoutStepService as Type<CheckoutStepService>
+      );
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckoutPaymentTypeComponent);

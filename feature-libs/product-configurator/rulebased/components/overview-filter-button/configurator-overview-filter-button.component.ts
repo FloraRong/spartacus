@@ -4,30 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  Component,
-  ElementRef,
-  HostBinding,
-  inject,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, HostBinding, ViewChild } from '@angular/core';
 import { ConfiguratorRouterExtractorService } from '@spartacus/product-configurator/common';
 import { LAUNCH_CALLER, LaunchDialogService } from '@spartacus/storefront';
 import { Observable, OperatorFunction } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { ConfiguratorCommonsService } from '../../core/facade/configurator-commons.service';
 import { Configurator } from '../../core/model/configurator.model';
-import { ConfiguratorStorefrontUtilsService } from '../service/configurator-storefront-utils.service';
 
 @Component({
   selector: 'cx-configurator-overview-filter-button',
   templateUrl: './configurator-overview-filter-button.component.html',
 })
 export class ConfiguratorOverviewFilterButtonComponent {
-  protected configuratorStorefrontUtilsService = inject(
-    ConfiguratorStorefrontUtilsService
-  );
-
   constructor(
     protected launchDialogService: LaunchDialogService,
     protected configuratorCommonsService: ConfiguratorCommonsService,
@@ -55,7 +44,7 @@ export class ConfiguratorOverviewFilterButtonComponent {
     );
 
   /**
-   * Retrieves the number of filters currently applied to the overview page
+   * get the number of filters currently applied to the overview page
    *
    * @param {Configurator.Overview} overview - current configuration overview data
    * @returns {number} - number of applied filters
@@ -68,8 +57,7 @@ export class ConfiguratorOverviewFilterButtonComponent {
   }
 
   /**
-   * Opens the filter modal
-   *
+   * opens the filter modal
    * @param {Configurator.ConfigurationWithOverview} config - current configuration with overview data
    */
   openFilterModal(config: Configurator.ConfigurationWithOverview) {
@@ -78,17 +66,5 @@ export class ConfiguratorOverviewFilterButtonComponent {
       this.filterButton,
       config
     );
-  }
-
-  /**
-   * Verifies whether a product is a variant product in the display only view.
-   *
-   * @returns - if `baseProduct` property of the current product is defined
-   * and provides the product code of the base product,
-   * and the current product is in the display only view
-   * then returns `true`, otherwise `false`.
-   */
-  isDisplayOnlyVariant(): Observable<boolean> {
-    return this.configuratorStorefrontUtilsService.isDisplayOnlyVariant();
   }
 }

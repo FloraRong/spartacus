@@ -14,7 +14,6 @@ import { findNodes } from '@schematics/angular/utility/ast-utils';
 import ts from 'typescript';
 import { findConstructor } from './file-utils';
 
-export const appModulePath = 'src/app/app.module.ts';
 export const spartacusFeaturesModulePath =
   'src/app/spartacus/spartacus-features.module.ts';
 
@@ -22,14 +21,12 @@ export const asmFeatureModulePath =
   'src/app/spartacus/features/asm/asm-feature.module.ts';
 export const cartBaseFeatureModulePath =
   'src/app/spartacus/features/cart/cart-base-feature.module.ts';
-export const cartBaseWrapperModulePath =
+export const cartWrapperModulePath =
   'src/app/spartacus/features/cart/cart-base-wrapper.module.ts';
 export const customerTicketingFeatureModulePath =
   'src/app/spartacus/features/customer-ticketing/customer-ticketing-feature.module.ts';
 export const customerTicketingWrapperModulePath =
   'src/app/spartacus/features/customer-ticketing/customer-ticketing-wrapper.module.ts';
-export const estimatedDeliveryDateFeatureModulePath =
-  'src/app/spartacus/features/estimated-delivery-date/estimated-delivery-date-feature.module.ts';
 export const importExportFeatureModulePath =
   'src/app/spartacus/features/cart/cart-import-export-feature.module.ts';
 export const quickOrderFeatureModulePath =
@@ -107,8 +104,6 @@ export const epdFeatureModulePath =
   'src/app/spartacus/features/epd-visualization/epd-visualization-feature.module.ts';
 export const segmentRefsFeatureModulePath =
   'src/app/spartacus/features/segment-refs/segment-refs-feature.module.ts';
-export const oppsFeatureModulePath =
-  'src/app/spartacus/features/opps/opps-feature.module.ts';
 
 export function writeFile(
   host: TempScopedNodeJsSyncHost,

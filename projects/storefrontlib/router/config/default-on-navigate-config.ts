@@ -11,6 +11,5 @@ export const defaultOnNavigateConfig: OnNavigateConfig = {
     active: true,
     ignoreQueryString: false,
     ignoreRoutes: [],
-    selectedHostElement: 'cx-storefront',
   },
 };

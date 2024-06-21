@@ -110,6 +110,10 @@ export const tabbingOrderConfig: TabbingOrderConfig = {
     { value: 'Method ofPayment', type: TabbingOrderTypes.LINK },
     { value: 'Cost Center', type: TabbingOrderTypes.SELECT },
     { type: TabbingOrderTypes.GENERIC_ELEMENT },
+    {
+      value: 'Ship to this address',
+      type: TabbingOrderTypes.GENERIC_BUTTON,
+    },
     backButton,
     continueButton,
   ],
@@ -349,10 +353,18 @@ export const tabbingOrderConfig: TabbingOrderConfig = {
       type: TabbingOrderTypes.FORM_FIELD,
     },
     {
+      value: 'Apply',
+      type: TabbingOrderTypes.BUTTON,
+    },
+    {
       value: 'productCode',
       type: TabbingOrderTypes.FORM_FIELD,
     },
     { type: TabbingOrderTypes.GENERIC_INPUT },
+    {
+      value: 'Add',
+      type: TabbingOrderTypes.BUTTON,
+    },
     {
       value: 'Proceed to Checkout',
       type: TabbingOrderTypes.BUTTON,
@@ -467,10 +479,18 @@ export const tabbingOrderConfig: TabbingOrderConfig = {
       type: TabbingOrderTypes.FORM_FIELD,
     },
     {
+      value: 'Apply',
+      type: TabbingOrderTypes.BUTTON,
+    },
+    {
       value: 'productCode',
       type: TabbingOrderTypes.FORM_FIELD,
     },
     { type: TabbingOrderTypes.GENERIC_INPUT },
+    {
+      value: 'Add',
+      type: TabbingOrderTypes.BUTTON,
+    },
     {
       value: 'Proceed to Checkout',
       type: TabbingOrderTypes.BUTTON,

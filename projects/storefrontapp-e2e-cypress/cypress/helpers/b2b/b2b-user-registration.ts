@@ -106,30 +106,26 @@ export function verifyTabbingOrder() {
 }
 
 export function verifyFormErrors() {
-  const requiredFirstNameFieldMessage = 'Field First name is required';
-  const requiredLastNameFieldMessage = 'Field Last name is required';
-  const requiredCompanyNameFieldMessage = 'Field Company name is required';
-  const requiredEmailNameFieldMessage = 'Field E-mail is required';
-  const notValidEmailMessage =
-    'Field E-mail has not a valid email format. Match pattern: example@yourdomain.com';
+  const requiredFieldMessage = 'This field is required';
+  const notValidEmailMessage = 'This is not a valid email format';
 
   cy.get(form).within(() => {
     cy.get('[formcontrolname="firstName"] + cx-form-errors').contains(
-      requiredFirstNameFieldMessage
+      requiredFieldMessage
     );
     cy.get('[formcontrolname="lastName"] + cx-form-errors').contains(
-      requiredLastNameFieldMessage
+      requiredFieldMessage
     );
     cy.get('[formcontrolname="companyName"] + cx-form-errors').contains(
-      requiredCompanyNameFieldMessage
+      requiredFieldMessage
     );
     cy.get('[formcontrolname="email"] + cx-form-errors').contains(
-      requiredEmailNameFieldMessage
+      requiredFieldMessage
     );
 
     cy.get('[formcontrolname="email"] + cx-form-errors').within(() => {
-      cy.get('p').contains(requiredEmailNameFieldMessage);
-      cy.get('p+p').should('contain', notValidEmailMessage);
+      cy.get('p').contains(requiredFieldMessage);
+      cy.get('p+p').contains(notValidEmailMessage);
     });
 
     cy.get('cx-form-errors p').should('have.length', 5);

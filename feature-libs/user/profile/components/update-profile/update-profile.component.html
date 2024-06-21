@@ -37,20 +37,7 @@
       }}"
       formControlName="firstName"
     />
-
-    <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-    <cx-form-errors
-      *cxFeature="'formErrorsDescriptiveMessages'"
-      [translationParams]="{
-        label: 'updateProfileForm.firstName.label' | cxTranslate
-      }"
-      [control]="form.get('firstName')"
-    ></cx-form-errors>
-
-    <cx-form-errors
-      *cxFeature="'!formErrorsDescriptiveMessages'"
-      [control]="form.get('firstName')"
-    ></cx-form-errors>
+    <cx-form-errors [control]="form.get('firstName')"></cx-form-errors>
   </label>
 
   <label>
@@ -66,20 +53,7 @@
       placeholder="{{ 'updateProfileForm.lastName.placeholder' | cxTranslate }}"
       formControlName="lastName"
     />
-
-    <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-    <cx-form-errors
-      *cxFeature="'formErrorsDescriptiveMessages'"
-      [translationParams]="{
-        label: 'updateProfileForm.lastName.label' | cxTranslate
-      }"
-      [control]="form.get('lastName')"
-    ></cx-form-errors>
-
-    <cx-form-errors
-      *cxFeature="'!formErrorsDescriptiveMessages'"
-      [control]="form.get('lastName')"
-    ></cx-form-errors>
+    <cx-form-errors [control]="form.get('lastName')"></cx-form-errors>
   </label>
 
   <label>
@@ -94,35 +68,15 @@
       formControlName="customerId"
       readonly
     />
-
-    <!-- TODO: (CXSPA-7315) Remove feature toggle in the next major -->
-    <cx-form-errors
-      *cxFeature="'formErrorsDescriptiveMessages'"
-      [translationParams]="{
-        label: 'updateProfileForm.customerId' | cxTranslate
-      }"
-      [control]="form.get('customerId')"
-    ></cx-form-errors>
-
-    <cx-form-errors
-      *cxFeature="'!formErrorsDescriptiveMessages'"
-      [control]="form.get('customerId')"
-    ></cx-form-errors>
+    <cx-form-errors [control]="form.get('lastName')"></cx-form-errors>
   </label>
 
-  <!-- TODO: (CXSPA-7252) - Remove feature flag next major release -->
-  <ng-container *cxFeature="'a11yUseButtonsForBtnLinks'">
-    <button class="btn btn-block btn-secondary" (click)="navigateTo('home')">
-      {{ 'common.cancel' | cxTranslate }}
-    </button>
-  </ng-container>
-  <ng-container *cxFeature="'!a11yUseButtonsForBtnLinks'">
-    <a
-      [routerLink]="{ cxRoute: 'home' } | cxUrl"
-      class="btn btn-block btn-secondary"
-      >{{ 'common.cancel' | cxTranslate }}</a
-    >
-  </ng-container>
+  <a
+    class="btn btn-block btn-secondary"
+    [routerLink]="{ cxRoute: 'home' } | cxUrl"
+  >
+    {{ 'common.cancel' | cxTranslate }}
+  </a>
 
   <button class="btn btn-block btn-primary" [disabled]="form.disabled">
     {{ 'common.save' | cxTranslate }}

@@ -105,29 +105,31 @@ describe('AddToWishListComponent', () => {
   let wishListFacade: WishListFacade;
   let el: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule, RouterTestingModule],
-      declarations: [
-        AddToWishListComponent,
-        MockIconComponent,
-        MockUrlPipe,
-        MockAtMessageDirective,
-      ],
-      providers: [
-        { provide: AuthService, useClass: MockAuthService },
-        { provide: WishListFacade, useClass: MockWishListService },
-        {
-          provide: CurrentProductService,
-          useClass: MockCurrentProductService,
-        },
-      ],
-    })
-      .overrideComponent(AddToWishListComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule, RouterTestingModule],
+        declarations: [
+          AddToWishListComponent,
+          MockIconComponent,
+          MockUrlPipe,
+          MockAtMessageDirective,
+        ],
+        providers: [
+          { provide: AuthService, useClass: MockAuthService },
+          { provide: WishListFacade, useClass: MockWishListService },
+          {
+            provide: CurrentProductService,
+            useClass: MockCurrentProductService,
+          },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(AddToWishListComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AddToWishListComponent);

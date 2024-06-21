@@ -66,24 +66,26 @@ describe('CancelOrderConfirmationComponent', () => {
   let fixture: ComponentFixture<CancelOrderConfirmationComponent>;
   let service: OrderAmendService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        RouterTestingModule,
-        I18nTestingModule,
-        ReactiveFormsModule,
-      ],
-      providers: [
-        { provide: OrderAmendService, useClass: MockOrderAmendService },
-      ],
-      declarations: [
-        CancelOrderConfirmationComponent,
-        MockAmendOrderActionComponent,
-        MockCancelOrReturnItemsComponent,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          RouterTestingModule,
+          I18nTestingModule,
+          ReactiveFormsModule,
+        ],
+        providers: [
+          { provide: OrderAmendService, useClass: MockOrderAmendService },
+        ],
+        declarations: [
+          CancelOrderConfirmationComponent,
+          MockAmendOrderActionComponent,
+          MockCancelOrReturnItemsComponent,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CancelOrderConfirmationComponent);

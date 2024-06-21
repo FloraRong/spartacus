@@ -36,24 +36,26 @@ describe('ForgotPasswordComponentService', () => {
   let routingService: RoutingService;
   let userPasswordFacade: UserPasswordFacade;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        RouterTestingModule,
-        I18nTestingModule,
-        FormErrorsModule,
-      ],
-      declarations: [],
-      providers: [
-        ForgotPasswordComponentService,
-        { provide: UserPasswordFacade, useClass: MockUserPasswordService },
-        { provide: RoutingService, useClass: MockRoutingService },
-        { provide: AuthConfigService, useClass: MockAuthConfigService },
-        { provide: GlobalMessageService, useClass: MockGlobalMessageService },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          ReactiveFormsModule,
+          RouterTestingModule,
+          I18nTestingModule,
+          FormErrorsModule,
+        ],
+        declarations: [],
+        providers: [
+          ForgotPasswordComponentService,
+          { provide: UserPasswordFacade, useClass: MockUserPasswordService },
+          { provide: RoutingService, useClass: MockRoutingService },
+          { provide: AuthConfigService, useClass: MockAuthConfigService },
+          { provide: GlobalMessageService, useClass: MockGlobalMessageService },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     service = TestBed.inject(ForgotPasswordComponentService);

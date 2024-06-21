@@ -56,44 +56,46 @@ describe('ConfiguratorAttributeSingleSelectionImageComponent', () => {
   const attributeName = 'attributeName';
   let config: Config;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ConfiguratorAttributeSingleSelectionImageComponent,
-        MockFocusDirective,
-        MockConfiguratorPriceComponent,
-      ],
-      imports: [
-        ReactiveFormsModule,
-        NgSelectModule,
-        I18nTestingModule,
-        IconTestingModule,
-        PopoverModule,
-      ],
-      providers: [
-        ConfiguratorStorefrontUtilsService,
-        {
-          provide: ConfiguratorGroupsService,
-          useClass: MockGroupService,
-        },
-        {
-          provide: ConfiguratorAttributeCompositionContext,
-          useValue: ConfiguratorTestUtils.getAttributeContext(),
-        },
-        {
-          provide: ConfiguratorCommonsService,
-          useClass: MockConfiguratorCommonsService,
-        },
-        { provide: Config, useClass: MockConfig },
-      ],
-    })
-      .overrideComponent(ConfiguratorAttributeSingleSelectionImageComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ConfiguratorAttributeSingleSelectionImageComponent,
+          MockFocusDirective,
+          MockConfiguratorPriceComponent,
+        ],
+        imports: [
+          ReactiveFormsModule,
+          NgSelectModule,
+          I18nTestingModule,
+          IconTestingModule,
+          PopoverModule,
+        ],
+        providers: [
+          ConfiguratorStorefrontUtilsService,
+          {
+            provide: ConfiguratorGroupsService,
+            useClass: MockGroupService,
+          },
+          {
+            provide: ConfiguratorAttributeCompositionContext,
+            useValue: ConfiguratorTestUtils.getAttributeContext(),
+          },
+          {
+            provide: ConfiguratorCommonsService,
+            useClass: MockConfiguratorCommonsService,
+          },
+          { provide: Config, useClass: MockConfig },
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(ConfiguratorAttributeSingleSelectionImageComponent, {
+          set: {
+            changeDetection: ChangeDetectionStrategy.Default,
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   function createImage(url: string, altText: string): Configurator.Image {
     const configImage: Configurator.Image = {

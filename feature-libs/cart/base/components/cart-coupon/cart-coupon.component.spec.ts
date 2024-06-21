@@ -15,7 +15,6 @@ import {
 } from '@spartacus/core';
 import { FormErrorsModule } from '@spartacus/storefront';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
-import { MockFeatureDirective } from 'projects/storefrontlib/shared/test/mock-feature-directive';
 import { EMPTY, of } from 'rxjs';
 import { CartCouponComponent } from './cart-coupon.component';
 
@@ -70,24 +69,22 @@ describe('CartCouponComponent', () => {
 
   const appliedVouchers: Voucher[] = [{ code: 'CustomerCoupon1' }];
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule, ReactiveFormsModule, FormErrorsModule],
-      declarations: [
-        CartCouponComponent,
-        MockAppliedCouponsComponent,
-        MockFeatureDirective,
-      ],
-      providers: [
-        { provide: ActiveCartFacade, useValue: mockActiveCartService },
-        { provide: CartVoucherFacade, useValue: mockCartVoucherService },
-        {
-          provide: CustomerCouponService,
-          useValue: mockCustomerCouponService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule, ReactiveFormsModule, FormErrorsModule],
+        declarations: [CartCouponComponent, MockAppliedCouponsComponent],
+        providers: [
+          { provide: ActiveCartFacade, useValue: mockActiveCartService },
+          { provide: CartVoucherFacade, useValue: mockCartVoucherService },
+          {
+            provide: CustomerCouponService,
+            useValue: mockCustomerCouponService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CartCouponComponent);

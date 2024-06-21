@@ -8,7 +8,6 @@ export * from './configurable-routes/index';
 export * from './external-routes/index';
 export * from './facade/routing-params.service';
 export * from './facade/routing.service';
-export * from './location-initialized-multi/location-initialized-multi';
 export * from './models/cms-route';
 export * from './models/page-context.model';
 export * from './protected-routes/index';

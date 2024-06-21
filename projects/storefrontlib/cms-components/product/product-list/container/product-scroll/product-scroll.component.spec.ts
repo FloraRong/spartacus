@@ -159,33 +159,35 @@ describe('ProductScrollComponent', () => {
   let fixture: ComponentFixture<ProductScrollComponent>;
   let el: DebugElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ProductScrollComponent,
-        ProductGridItemComponent,
-        MockProductListItemComponent,
-        MockUrlPipe,
-        MediaComponent,
-        MockStarRatingComponent,
-        MockAddToCartComponent,
-        MockStyleIconsComponent,
-        MockFeatureLevelDirective,
-      ],
-      imports: [
-        InfiniteScrollModule,
-        I18nTestingModule,
-        SpinnerModule,
-        RouterTestingModule,
-      ],
-      providers: [
-        {
-          provide: ProductListComponentService,
-          useClass: MockProductListComponentService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ProductScrollComponent,
+          ProductGridItemComponent,
+          MockProductListItemComponent,
+          MockUrlPipe,
+          MediaComponent,
+          MockStarRatingComponent,
+          MockAddToCartComponent,
+          MockStyleIconsComponent,
+          MockFeatureLevelDirective,
+        ],
+        imports: [
+          InfiniteScrollModule,
+          I18nTestingModule,
+          SpinnerModule,
+          RouterTestingModule,
+        ],
+        providers: [
+          {
+            provide: ProductListComponentService,
+            useClass: MockProductListComponentService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductScrollComponent);

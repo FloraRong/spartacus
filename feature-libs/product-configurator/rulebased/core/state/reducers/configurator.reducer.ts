@@ -267,16 +267,7 @@ function handleReadOrderEntryConfigurationSuccess(
   state: Configurator.Configuration,
   action: ConfiguratorActions.ReadOrderEntryConfigurationSuccess
 ): Configurator.Configuration | undefined {
-  const overview = action.payload.overview;
-  const configuration = overview
-    ? {
-        ...action.payload,
-        overview: {
-          ...overview,
-          possibleGroups: overview.groups,
-        },
-      }
-    : action.payload;
+  const configuration = { ...action.payload };
 
   const result: Configurator.Configuration = {
     ...state,
@@ -347,7 +338,6 @@ function handleSetMenuParentGroup(
     },
   };
 }
-
 function handleSetGroupsVisited(
   state: Configurator.Configuration,
   action: ConfiguratorActions.SetGroupsVisited
@@ -378,7 +368,6 @@ function handleSetGroupsVisited(
     },
   };
 }
-
 function handleChangeGroup(
   state: Configurator.Configuration,
   action: ConfiguratorActions.ChangeGroup

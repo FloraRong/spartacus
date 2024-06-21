@@ -42,11 +42,6 @@ context('Auxiliary Keys', () => {
               code: 'Space',
               force: true,
             });
-            cy.focused().trigger('keydown', {
-              key: ' ',
-              code: 'Space',
-              force: true,
-            });
             cy.get('div.wrapper')
               .should('have.length', 7)
               .first()

@@ -8,10 +8,7 @@ import * as configuration from '../../../helpers/product-configurator';
 import { clickAllowAllFromBanner } from '../../../helpers/anonymous-consents';
 import * as configurationOverviewVc from '../../../helpers/product-configurator-overview-vc';
 import * as configurationVc from '../../../helpers/product-configurator-vc';
-import * as configurationCart from '../../../helpers/product-configurator-cart';
 import * as common from '../../../helpers/common';
-import { clickOnConfigurationLink } from '../../../helpers/common';
-import { checkConfigPageDisplayed } from '../../../helpers/product-configurator-vc';
 
 const electronicsShop = 'electronics-spa';
 const testProduct = 'CONF_CAMERA_SL';
@@ -91,33 +88,17 @@ context('Product Configuration', () => {
     cy.visit('/');
   });
 
-  describe('Navigate to product configuration page', () => {
+  describe('Navigate to Product Configuration Page', () => {
     it('should be able to navigate from the product search result', () => {
       clickAllowAllFromBanner();
       configuration.searchForProduct(testProduct);
-      configurationVc.clickOnConfigureBtnInCatalog();
+      configurationVc.clickOnConfigureBtnInCatalog(testProduct);
     });
 
     it('should be able to navigate from the product details page', () => {
       clickAllowAllFromBanner();
       common.goToPDPage(electronicsShop, testProduct);
-      configurationVc.clickOnConfigureBtnInCatalog();
-    });
-
-    it('should be able to navigate from the add-to-cart dialog by clicking on "Edit Configuration" link', () => {
-      clickAllowAllFromBanner();
-      common.goToPDPage(electronicsShop, testProduct);
-      common.clickOnAddToCartBtnOnPD();
-      common.clickOnConfigurationLink();
-      configurationVc.checkConfigPageDisplayed();
-    });
-
-    it('should be able to navigate from the add-to-cart dialog by clicking on "Resolve Issues" link', () => {
-      clickAllowAllFromBanner();
-      common.goToPDPage(electronicsShop, testProduct);
-      common.clickOnAddToCartBtnOnPD();
-      common.clickOnResolveIssuesLink();
-      configurationVc.checkConfigPageDisplayed();
+      configurationVc.clickOnConfigureBtnInCatalog(testProduct);
     });
 
     it('should be able to navigate from the overview page', () => {
@@ -131,7 +112,7 @@ context('Product Configuration', () => {
     });
   });
 
-  describe('Configure product', () => {
+  describe('Configure Product', () => {
     it('should support image attribute type - single selection', () => {
       clickAllowAllFromBanner();
       configurationVc.goToConfigurationPage(
@@ -180,7 +161,7 @@ context('Product Configuration', () => {
     });
   });
 
-  describe('Group status', () => {
+  describe('Group Status', () => {
     it('should set group status for single level product', () => {
       clickAllowAllFromBanner();
 
@@ -305,8 +286,8 @@ context('Product Configuration', () => {
     });
   });
 
-  describe('Group handling', () => {
-    it('should navigate between groups using the previous and next button', () => {
+  describe('Group Handling', () => {
+    it('should navigate between groups', () => {
       clickAllowAllFromBanner();
       configurationVc.goToConfigurationPage(electronicsShop, testProduct);
       configurationVc.clickOnNextBtnAndWait(SPECIFICATION);
@@ -361,7 +342,7 @@ context('Product Configuration', () => {
     });
   });
 
-  describe('Retract mode for product configuration', () => {
+  describe('Retract mode for Product Configuration', () => {
     let configUISettings: any;
 
     beforeEach(() => {
@@ -432,7 +413,7 @@ context('Product Configuration', () => {
     });
   });
 
-  describe('Conflict solver', () => {
+  describe('Conflict Solver', () => {
     let configUISettings: any;
 
     beforeEach(() => {
@@ -448,7 +429,6 @@ context('Product Configuration', () => {
     afterEach(() => {
       configUISettings.productConfigurator.enableNavigationToConflict = false;
     });
-
     it('should support the conflict solving process', () => {
       configurationVc.goToConfigurationPage(
         electronicsShop,
@@ -519,7 +499,6 @@ context('Product Configuration', () => {
         );
       }
     });
-
     it('should display a success message on conflict resolution (CXSPA-2374)', () => {
       configurationVc.goToConfigurationPage(
         electronicsShop,
